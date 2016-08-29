@@ -1,0 +1,622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{71AABC1D-6183-4308-84E2-ADFD6DB2C881}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZONEDOCTOR</RootNamespace>
+    <AssemblyName>ZONEDOCTOR</AssemblyName>
+    <StartupObject>ZONEDOCTOR.Program</StartupObject>
+    <ApplicationIcon>Resources\ZONEDOCTOR_icon.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="!Static\Enums.cs" />
+    <Compile Include="!Static\Expansion.cs" />
+    <Compile Include="!Static\Icons.cs" />
+    <Compile Include="!Static\NewCursors.cs" />
+    <Compile Include="!Universal\Element.cs" />
+    <Compile Include="!Universal\History.cs" />
+    <Compile Include="!Universal\ListViewColumnSorter.cs" />
+    <Compile Include="!Universal\ToolTipLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Dialogues\Dialogue.cs" />
+    <Compile Include="Editor.Event Scripts\EventScripts.Controls.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Event Scripts\EventScripts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Event Scripts\EventScripts.Designer.cs">
+      <DependentUpon>EventScripts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="!Universal\Tilemap.cs" />
+    <Compile Include="Editor.Event Scripts\Interpreter.MapScripts.cs" />
+    <Compile Include="Editor.Event Scripts\Interpreter.VehicleScripts.cs" />
+    <Compile Include="Editor.Locations\Locations.Layers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.Treasures.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations\LocationTreasures.cs" />
+    <Compile Include="Editor.Locations\Locations\WorldTilemap.cs" />
+    <Compile Include="Editors\HexEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\HexEditor.Designer.cs">
+      <DependentUpon>HexEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Feature.Project\NotesDB.cs" />
+    <Compile Include="Feature.Undo\UndoCommands.cs" />
+    <Compile Include="Features\EditValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\EditValue.designer.cs">
+      <DependentUpon>EditValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\EditLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\EditLabel.designer.cs">
+      <DependentUpon>EditLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\ExportImages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\ExportImages.designer.cs">
+      <DependentUpon>ExportImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\IOArchitecture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\IOArchitecture.designer.cs">
+      <DependentUpon>IOArchitecture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\NewControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Features\NewExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\NewExceptionForm.designer.cs">
+      <DependentUpon>NewExceptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\NewMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\NewMessageBox.designer.cs">
+      <DependentUpon>NewMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Search.Designer.cs">
+      <DependentUpon>Search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\ToolStripControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="!Universal\CopyBuffer.cs" />
+    <Compile Include="!Static\Bits.cs" />
+    <Compile Include="!Static\Comp.cs" />
+    <Compile Include="Features\ZoomBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\ZoomBox.designer.cs">
+      <DependentUpon>ZoomBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\IOElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\IOElements.Designer.cs">
+      <DependentUpon>IOElements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\GraphicEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\GraphicEditor.Designer.cs">
+      <DependentUpon>GraphicEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.Locations\LocationsTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\LocationsTemplate.Designer.cs">
+      <DependentUpon>LocationsTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.Locations\TilemapEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\TilemapEditor.Designer.cs">
+      <DependentUpon>TilemapEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.Locations\TilesetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\TilesetEditor.Designer.cs">
+      <DependentUpon>TilesetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\PaletteEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\PaletteEditor.Designer.cs">
+      <DependentUpon>PaletteEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TileEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\TileEditor.Designer.cs">
+      <DependentUpon>TileEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.Editors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.Events.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.Exits.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.Maps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.NPCs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="!Universal\PaletteSet.cs" />
+    <Compile Include="Editor.Locations\Locations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations.designer.cs">
+      <DependentUpon>Locations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.Locations\Locations\LocationEvents.cs" />
+    <Compile Include="Editor.Locations\Locations\LocationExits.cs" />
+    <Compile Include="Editor.Locations\Locations\LocationMap.cs" />
+    <Compile Include="Editor.Locations\Locations\Location.cs" />
+    <Compile Include="Editor.Locations\Locations\LocationNPCs.cs" />
+    <Compile Include="!Universal\Overlay.cs" />
+    <Compile Include="Editor.Locations\Locations\PrioritySet.cs" />
+    <Compile Include="Editor.Locations\Locations\SerializedLocation.cs" />
+    <Compile Include="Editor.Locations\Locations\SoliditySet.cs" />
+    <Compile Include="Editor.Locations\Locations\SolidityTile.cs" />
+    <Compile Include="!Universal\Tile.cs" />
+    <Compile Include="!Universal\Subtile.cs" />
+    <Compile Include="Editor.Locations\Locations\LocationTilemap.cs" />
+    <Compile Include="!Universal\Tileset.cs" />
+    <Compile Include="Editor.Locations\Locations\LocationTemplate.cs" />
+    <Compile Include="!Static\Lists.cs" />
+    <Compile Include="!Static\Model.cs" />
+    <Compile Include="MRUManager.cs" />
+    <Compile Include="Feature.Project\Project.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Feature.Project\Project.Designer.cs">
+      <DependentUpon>Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Feature.Project\ProjectDB.cs" />
+    <Compile Include="Feature.Preview\Previewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Feature.Preview\Previewer.Designer.cs">
+      <DependentUpon>Previewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="ProgramController.cs" />
+    <Compile Include="Features\ProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\ProgressBar.Designer.cs">
+      <DependentUpon>ProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="!Universal\ToolTipLabel.resx">
+      <DependentUpon>ToolTipLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="About.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\EditValue.resx">
+      <DependentUpon>EditValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\EditLabel.resx">
+      <DependentUpon>EditLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\ExportImages.resx">
+      <DependentUpon>ExportImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\IOArchitecture.resx">
+      <DependentUpon>IOArchitecture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\NewExceptionForm.resx">
+      <DependentUpon>NewExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\NewMessageBox.resx">
+      <DependentUpon>NewMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\ZoomBox.resx">
+      <DependentUpon>ZoomBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor.Locations\Locations.resx">
+      <DependentUpon>Locations.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Form1.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>
+      </SubType>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Features\Restore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\Restore.Designer.cs">
+      <DependentUpon>Restore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor.Event Scripts\ActionScript.cs" />
+    <Compile Include="Editor.Event Scripts\ActionCommand.cs" />
+    <Compile Include="Editor.Event Scripts\EventActionCommand.cs" />
+    <Compile Include="Editor.Event Scripts\Interpreter.CharacterScripts.cs" />
+    <Compile Include="Editor.Event Scripts\Interpreter.cs" />
+    <Compile Include="Editor.Event Scripts\EventCommand.cs" />
+    <Compile Include="Editor.Event Scripts\Interpreter.EventScripts.cs" />
+    <Compile Include="Editor.Event Scripts\ScriptIterator.cs" />
+    <Compile Include="Editor.Event Scripts\EventScript.cs" />
+    <Compile Include="Editor.Event Scripts\TreeViewWrapper.cs">
+    </Compile>
+    <Compile Include="Editor.Event Scripts\ScriptEnums.cs" />
+    <Compile Include="!Universal\Settings.cs" />
+    <Compile Include="Features\ClearElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Features\ClearElements.Designer.cs">
+      <DependentUpon>ClearElements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="!Static\Do.cs" />
+    <Compile Include="!Universal\State.cs" />
+    <Compile Include="!Universal\SortedList.cs" />
+    <Compile Include="Feature.Undo\Command.cs" />
+    <Compile Include="Feature.Undo\CommandStack.cs" />
+    <Compile Include="Feature.Undo\TilemapEdit.cs" />
+    <Compile Include="SettingsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsEditor.Designer.cs">
+      <DependentUpon>SettingsEditor.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Toggle\solidityOff.gif" />
+    <None Include="Resources\Draw\swapTiles.gif" />
+    <None Include="Resources\Toggle\tags.gif" />
+    <None Include="Resources\maxstats.bin" />
+    <None Include="Resources\Main\TITLE_FG.gif" />
+    <None Include="Resources\Main\TITLE_BG.gif" />
+    <None Include="Resources\ZONEDOCTOR_icon.ico" />
+    <EmbeddedResource Include="Editor.Event Scripts\EventScripts.resx">
+      <DependentUpon>EventScripts.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HexEditor.resx">
+      <DependentUpon>HexEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Search.resx">
+      <DependentUpon>Search.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\IOElements.resx">
+      <DependentUpon>IOElements.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\GraphicEditor.resx">
+      <DependentUpon>GraphicEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor.Locations\LocationsTemplate.resx">
+      <DependentUpon>LocationsTemplate.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor.Locations\TilemapEditor.resx">
+      <DependentUpon>TilemapEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor.Locations\TilesetEditor.resx">
+      <DependentUpon>TilesetEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\PaletteEditor.resx">
+      <DependentUpon>PaletteEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Feature.Project\Project.resx">
+      <DependentUpon>Project.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TileEditor.resx">
+      <DependentUpon>TileEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Feature.Preview\Previewer.resx">
+      <DependentUpon>Previewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\ProgressBar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\Restore.resx">
+      <DependentUpon>Restore.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Features\ClearElements.resx">
+      <DependentUpon>ClearElements.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsEditor.resx">
+      <DependentUpon>SettingsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="bin\Debug\Lunar Compress.dll" />
+    <None Include="Resources\RomPreviewBaseSave.000" />
+    <None Include="Resources\RomPreviewBaseSave.zst" />
+    <None Include="Resources\Data\back.gif" />
+    <None Include="Resources\Data\foward.gif" />
+    <None Include="Resources\Toggle\buttonTogglePixelGrid.gif" />
+    <None Include="Resources\Draw\flip_small.gif" />
+    <None Include="Resources\Draw\heightDecrease.gif" />
+    <None Include="Resources\Draw\heightIncrease.gif" />
+    <None Include="Resources\Toggle\buttonBoundaries.gif" />
+    <None Include="Resources\Data\baseConversion.gif" />
+    <None Include="Resources\Main\about_small.gif" />
+    <None Include="Resources\Data\broom.gif" />
+    <None Include="Resources\Data\apply.gif" />
+    <None Include="Resources\Forms\alwaysOnTop.gif" />
+    <None Include="Resources\Data\addFromNotes.gif" />
+    <None Include="Resources\Data\addToNotes.gif" />
+    <None Include="Resources\Data\export_small.gif" />
+    <None Include="Resources\Data\import_small.gif" />
+    <None Include="Resources\Data\clear_small.gif" />
+    <None Include="Resources\Data\help_small.gif" />
+    <None Include="Resources\Draw\editAllLayers.gif" />
+    <None Include="Resources\Forms\collapseAll.gif" />
+    <None Include="Resources\Forms\dock.gif" />
+    <None Include="Resources\Data\cartridge.gif" />
+    <None Include="Resources\Forms\closeAll.gif" />
+    <None Include="Resources\Draw\crop.gif" />
+    <None Include="Resources\Data\clearModel.gif" />
+    <None Include="Resources\Data\cartridgeReload.gif" />
+    <None Include="Resources\Data\cartridgeClose.gif" />
+    <None Include="Resources\Toggle\buttonTreasure.gif" />
+    <None Include="Resources\Toggle\buttonZones.gif" />
+    <None Include="Resources\Draw\colorreplace.gif" />
+    <None Include="Resources\Cursors\CursorDraw.cur" />
+    <None Include="Resources\Cursors\CursorDropper.cur" />
+    <None Include="Resources\Cursors\CursorErase.cur" />
+    <None Include="Resources\Cursors\CursorFill.cur" />
+    <None Include="Resources\Cursors\CursorTemplate.cur" />
+    <None Include="Resources\Cursors\CursorZoomIn.cur" />
+    <None Include="Resources\Cursors\CursorZoomOut.cur" />
+    <Content Include="Resources\Draw\dropper_small.gif" />
+    <None Include="Resources\Data\duplicate_small.gif" />
+    <None Include="Resources\Data\edit_small.gif" />
+    <None Include="Resources\Forms\expandAll.gif" />
+    <None Include="Resources\Draw\fill_small.gif" />
+    <None Include="Resources\Data\hexEditor.gif" />
+    <None Include="Resources\Main\jumpTo.gif" />
+    <None Include="Resources\Data\exportBinary.gif" />
+    <None Include="Resources\Data\exportImage.gif" />
+    <None Include="Resources\Data\importImage.gif" />
+    <None Include="Resources\Data\exportData.gif" />
+    <None Include="Resources\Data\importData.gif" />
+    <None Include="Resources\Main\history.gif" />
+    <None Include="Resources\Data\importBinary.gif" />
+    <None Include="Resources\Data\exportTextAll.gif" />
+    <None Include="Resources\Data\importTextAll.gif" />
+    <None Include="Resources\Data\exportText.gif" />
+    <None Include="Resources\Data\importText.gif" />
+    <None Include="Resources\Main\gogo.gif" />
+    <Content Include="Resources\Data\label.gif" />
+    <Content Include="Resources\Draw\syncTiles.gif" />
+    <Content Include="Resources\Toggle\buttonEventField.gif" />
+    <Content Include="Resources\Toggle\buttonExitField.gif" />
+    <Content Include="Resources\Toggle\buttonNPC.gif" />
+    <Content Include="Resources\Toggle\buttonPhysical.gif" />
+    <Content Include="Resources\Toggle\buttonToggleGrid.gif" />
+    <Content Include="Resources\Toggle\buttonToggleMask.gif" />
+    <Content Include="Resources\Toggle\buttonToggleOrthGrid.gif" />
+    <None Include="Resources\Editor\preview.gif" />
+    <None Include="Resources\Data\movedown.gif" />
+    <None Include="Resources\Data\moveup.gif" />
+    <None Include="Resources\Data\search.gif" />
+    <None Include="Resources\Data\new_small.gif" />
+    <None Include="Resources\Data\open_small.gif" />
+    <None Include="Resources\Data\save_small.gif" />
+    <None Include="Resources\Draw\template_small.gif" />
+    <None Include="Resources\Draw\mirror_small.gif" />
+    <None Include="Resources\Editor\openPalettes.gif" />
+    <None Include="Resources\Editor\openTilesets.gif" />
+    <None Include="Resources\Editor\openMap.gif" />
+    <None Include="Resources\Editor\openTemplates.gif" />
+    <None Include="Resources\Editor\openTileEditor.gif" />
+    <None Include="Resources\Draw\selectAll_small.gif" />
+    <None Include="Resources\Editor\mainLevels.gif" />
+    <None Include="Resources\Data\publish.gif" />
+    <None Include="Resources\Data\settings.gif" />
+    <None Include="Resources\Data\romInfo.gif" />
+    <None Include="Resources\Data\saveAs_small.gif" />
+    <None Include="Resources\Data\recentFiles.gif" />
+    <None Include="Resources\Toggle\opacity.gif" />
+    <None Include="Resources\Forms\openAll.gif" />
+    <None Include="Resources\Forms\restoreAll.gif" />
+    <None Include="Resources\Forms\minimizeAll.gif" />
+    <None Include="Resources\Forms\numerize.gif" />
+    <None Include="Resources\Forms\reset.gif" />
+    <None Include="Resources\Toggle\priority1OFF.gif" />
+    <None Include="Resources\Toggle\priority1ON.gif" />
+    <None Include="Resources\Editor\openGraphics.gif" />
+    <None Include="Resources\Editor\mainEventScripts.gif" />
+    <None Include="Resources\Editor\mainNotes.gif" />
+    <None Include="Resources\Draw\moveToFront.gif" />
+    <Content Include="Resources\Toggle\setPalette.gif" />
+    <Content Include="Resources\Toggle\showMain.gif" />
+    <None Include="Resources\Data\signature.gif" />
+    <Content Include="Resources\Editor\spaceAnalyzer.gif" />
+    <None Include="Resources\Draw\switch.gif" />
+    <None Include="Resources\Main\zone eater.gif" />
+    <None Include="Resources\Toggle\zoomBox.gif" />
+    <None Include="Resources\Data\update.gif" />
+    <None Include="Resources\Forms\undock.gif" />
+    <None Include="Resources\Draw\widthIncrease.gif" />
+    <None Include="Resources\Draw\widthDecrease.gif" />
+    <None Include="Resources\_bg.gif" />
+    <None Include="Resources\_transparent.gif" />
+    <None Include="Resources\Data\transfer_small.gif" />
+    <None Include="Resources\Draw\copy_small.gif" />
+    <None Include="Resources\Draw\delete_small.gif" />
+    <None Include="Resources\Draw\cut_small.gif" />
+    <None Include="Resources\Draw\draw_small.gif" />
+    <None Include="Resources\Draw\erase_small.gif" />
+    <None Include="Resources\Draw\select_small.gif" />
+    <None Include="Resources\Draw\paste_small.gif" />
+    <None Include="Resources\Draw\undo_small.gif" />
+    <None Include="Resources\Draw\redo_small.gif" />
+    <None Include="Resources\Draw\zoomout_small.gif" />
+    <None Include="Resources\Draw\zoomin_small.gif" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
