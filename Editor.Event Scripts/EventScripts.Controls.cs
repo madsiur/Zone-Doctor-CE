@@ -237,7 +237,7 @@ namespace ZONEDOCTOR
                     labelEvtA6.Text = "@ Y";
                     int map = Bits.GetShort(esc.CommandData, 1);
                     evtNameA1.DropDownWidth = 300;
-                    evtNameA1.Items.AddRange(Lists.Numerize(Lists.LocationNames));
+                    evtNameA1.Items.AddRange(Model.GetLevelNames());
                     evtNameA1.Items.Add("previous world map, skipping reposition function");
                     evtNameA1.Items.Add("world map");
                     evtNameA1.Items.Add("<unknown or out-of-range map index>");
@@ -272,7 +272,7 @@ namespace ZONEDOCTOR
                     labelEvtA5.Text = "@ X";
                     labelEvtA6.Text = "@ Y";
                     map = Bits.GetShort(esc.CommandData, 1);
-                    evtNameA1.Items.AddRange(Lists.LocationNames);
+                    evtNameA1.Items.AddRange(Model.LocationNames);
                     evtNameA1.Items.Add("previous world map, skipping reposition function");
                     evtNameA1.Items.Add("world map");
                     evtNameA1.Items.Add("<unknown or out-of-range map index>");
@@ -317,7 +317,7 @@ namespace ZONEDOCTOR
                     labelEvtA2.Text = "Map";
                     evtNumA1.Value = esc.Param1; evtNumA1.Enabled = true;
                     map = Bits.GetShort(esc.CommandData, 2);
-                    evtNameA2.Items.AddRange(Lists.Numerize(Lists.LocationNames));
+                    evtNameA2.Items.AddRange(Model.GetLevelNames());
                     evtNameA2.DropDownWidth = 300;
                     evtNameA2.Items.Add("previous world map, skipping reposition function");
                     evtNameA2.Items.Add("world map");
@@ -1673,7 +1673,7 @@ namespace ZONEDOCTOR
                     labelEvtA6.Text = "@ Y";
                     int map = Bits.GetShort(asc.CommandData, 1);
                     evtNameA1.DropDownWidth = 300;
-                    evtNameA1.Items.AddRange(Lists.Numerize(Lists.LocationNames));
+                    evtNameA1.Items.AddRange(Model.GetLevelNames());
                     evtNameA1.Items.Add("previous world map, skipping reposition function");
                     evtNameA1.Items.Add("world map");
                     evtNameA1.Items.Add("<unknown or out-of-range map index>");

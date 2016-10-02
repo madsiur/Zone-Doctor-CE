@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using ZONEDOCTOR.Properties;
 using ZONEDOCTOR.ScriptsEditor;
+using ZONEDOCTOR._Static;
 
 namespace ZONEDOCTOR
 {
@@ -15,7 +16,7 @@ namespace ZONEDOCTOR
         private bool dockEditors;
         public bool DockEditors { get { return dockEditors; } set { dockEditors = value; } }
         #region Editor Windows
-        private Locations locations; public Locations Locations { get { return locations; } }
+        private Locations locations; public Locations Locations { get { return locations; } set { locations = value; } }
         private EventScripts eventScripts; public EventScripts EventScripts { get { return eventScripts; } }
         private Project project; public Project Project { get { return project; } }
         private Editor editor
@@ -58,6 +59,8 @@ namespace ZONEDOCTOR
             Editor.GuiMain(controls);
         }
         #region File Managing
+
+        // madsiur, check for expansion
         public bool OpenRomFile()
         {
             string filename;
@@ -73,6 +76,8 @@ namespace ZONEDOCTOR
                 Model.FileName = filename;
                 if (Model.ReadRom())
                 {
+                    Log.InitLog();
+                    Model.CheckExpansion();
                     settings.LastRomPath = Model.GetPathWithoutFileName();
                     settings.Save();
                     return true;
@@ -82,11 +87,15 @@ namespace ZONEDOCTOR
                 filename = "";
             return false;
         }
+
+        //madsiur, check for expansion
         public bool OpenRomFile(string filename)
         {
             Model.FileName = filename;
             if (Model.ReadRom())
             {
+                Log.InitLog();
+                Model.CheckExpansion();
                 settings.LastRomPath = Model.GetPathWithoutFileName();
                 settings.Save();
                 return true;

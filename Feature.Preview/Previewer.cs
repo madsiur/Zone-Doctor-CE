@@ -156,19 +156,19 @@ namespace ZONEDOCTOR
                         this.eventListBox.Items.Add(
                             "Enter Event - X:" + ent.DstX.ToString("00") +
                             " Y:" + ent.DstY.ToString("000") +
-                            " - Location: [" + ent.Destination.ToString("d3") + "] " + Lists.LocationNames[ent.Destination]);
+                            " - Location: [" + ent.Destination.ToString("d3") + "] " + Model.LocationNames[ent.Destination]);
                     else // A run event
                         this.eventListBox.Items.Add(
                             "Run Event - X:" + ent.DstX.ToString("00") +
                             " Y:" + ent.DstY.ToString("000") +
-                            " - Location: [" + ent.Destination.ToString("d3") + "] " + Lists.LocationNames[ent.Destination]);
+                            " - Location: [" + ent.Destination.ToString("d3") + "] " + Model.LocationNames[ent.Destination]);
                 }
                 else if (this.behavior == EType.Location)
                 {
                     this.eventListBox.Items.Add(
                         "Enter - X:" + ent.DstX.ToString("00") +
                         " Y:" + ent.DstY.ToString("000") +
-                        " - From Location: [" + ent.Destination.ToString("d3") + "] " + Lists.LocationNames[ent.Destination]);
+                        " - From Location: [" + ent.Destination.ToString("d3") + "] " + Model.LocationNames[ent.Destination]);
                 }
             }
             if (this.eventListBox.Items.Count > 0)

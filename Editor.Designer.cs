@@ -547,7 +547,7 @@ namespace ZONEDOCTOR
             this.Location = new System.Drawing.Point(5, 5);
             this.Name = "Editor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "ZONE DOCTOR - Final Fantasy 6 Editor";
+            this.Text = "Zone Doctor CE - Final Fantasy 6 Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();

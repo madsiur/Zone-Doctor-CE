@@ -204,8 +204,8 @@ namespace ZONEDOCTOR
                 tilemap.Tilemaps_Bytes[layer][counter] = (byte)tile;
                 if (layer == 2) // only L3 supports flipping tiles
                 {
-                    Bits.SetBit(tilemap.Tilemaps_Bytes[layer], counter, 6, mirror);
-                    Bits.SetBit(tilemap.Tilemaps_Bytes[layer], counter, 7, invert);
+                    //Bits.SetBit(tilemap.Tilemaps_Bytes[layer], counter, 6, mirror);
+                    //Bits.SetBit(tilemap.Tilemaps_Bytes[layer], counter, 7, invert);
                 }
                 counter++; offset += 2;
             }

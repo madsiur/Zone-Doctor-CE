@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 
 namespace ZONEDOCTOR
 {
@@ -45,16 +46,27 @@ namespace ZONEDOCTOR
             this.index = index;
             Disassemble();
         }
+        
         private void Disassemble()
         {
-            int pointerOffset = (index * 2) + 0x2D82F4;
+            //int pointerOffset = (index * 2) + 0x2D82F4;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int pointerOffset = (index * 2) + Model.BASE_CHEST_PTR;
+
             ushort offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
             ushort offsetEnd = Bits.GetShort(rom, pointerOffset);
             // no treasures for location
             if (offsetStart >= offsetEnd)
                 return;
-            int offset = offsetStart + 0x2D8634;
+
+            /*int offset = offsetStart + 0x2D8634;
             while (offset < offsetEnd + 0x2D8634)
+            {*/
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int offset = offsetStart + Model.BASE_CHEST;
+            while (offset < offsetEnd + Model.BASE_CHEST)
             {
                 Treasure tTreasure = new Treasure();
                 tTreasure.Disassemble(offset);
@@ -62,21 +74,35 @@ namespace ZONEDOCTOR
                 offset += 5;
             }
         }
+        
         public void Assemble(ref int offsetStart)
         {
-            int pointerOffset = (index * 2) + 0x2D82F4;
+            //int pointerOffset = (index * 2) + 0x2D82F4;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int pointerOffset = (index * 2) + Model.BASE_CHEST_PTR;
+
             // set the new pointer for the fields
             Bits.SetShort(rom, pointerOffset, offsetStart);  
             // no exit fields for location
             if (treasures.Count == 0)
-                return; 
-            int offset = offsetStart + 0x2D8634;
+                return;
+
+            //int offset = offsetStart + 0x2D8634;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int offset = offsetStart + Model.BASE_CHEST;
+
             foreach (Treasure t in treasures)
             {
                 t.Assemble(offset);
                 offset += 5;
             }
-            offsetStart = (ushort)(offset - 0x2D8634);
+
+            //offsetStart = (ushort)(offset - 0x2D8634);
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            offsetStart = (ushort)(offset - Model.BASE_CHEST);
         }
         // list managers
         public void Remove()
@@ -132,7 +158,17 @@ namespace ZONEDOCTOR
         {
             x = rom[offset++];
             y = rom[offset++];
-            checkMem = (ushort)(((Bits.GetShort(rom, offset) & 0x1FF) >> 3) + 0x1E40);
+
+            //madsiur
+            if (Model.IsChestsExpanded)
+            {
+                checkMem = (ushort)(((Bits.GetShort(rom, offset) & 0x3FF) >> 3) + 0x1E20);
+            }
+            else
+            {
+                checkMem = (ushort)(((Bits.GetShort(rom, offset) & 0x1FF) >> 3) + 0x1E40);
+            }
+
             checkBit = (byte)(rom[offset] & 0x07); offset++;
             switch (rom[offset] >> 4)
             {
@@ -149,7 +185,17 @@ namespace ZONEDOCTOR
         {
             rom[offset] = x; offset++;
             rom[offset] = y; offset++;
-            Bits.SetShortBits(rom, offset, (ushort)((checkMem - 0x1E40) << 3), 0x01F8);
+
+            //madsiur
+            if (Model.IsChestsExpanded)
+            {
+                Bits.SetShortBits(rom, offset, (ushort)((checkMem - 0x1E20) << 3), 0x03F8);
+            }
+            else
+            {
+                Bits.SetShortBits(rom, offset, (ushort)((checkMem - 0x1E40) << 3), 0x01F8);
+            }
+
             Bits.SetByteBits(rom, offset, checkBit, 0x07); offset++;
             rom[offset] &= 0x0F;
             switch (type)

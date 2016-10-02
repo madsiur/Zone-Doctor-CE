@@ -434,7 +434,7 @@ namespace ZONEDOCTOR
                         new Size((int)(16 * z), (int)(16 * z)));
                 r.X++; r.Y += 3;
                 r.Width -= 2; r.Height -= 2;
-                string name = Lists.Numerize(Lists.LocationNames, exit.Destination);
+                string name = Lists.Numerize(Model.LocationNames, exit.Destination);
                 RectangleF label = new RectangleF(new PointF(r.X, r.Y + r.Height),
                     g.MeasureString(name, font_, new PointF(0, 0), StringFormat.GenericDefault));
                 if (exit == exits.Exit)

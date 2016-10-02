@@ -166,8 +166,11 @@ namespace ZONEDOCTOR
                 }
                 else
                 {
-                    // create the serialized location
-                    SerializedLocation[] sLocations = new SerializedLocation[415];
+                    // madsiur, hardocoded value to variable
+
+                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                    SerializedLocation[] sLocations = new SerializedLocation[Model.NUM_LOCATIONS];
+
                     for (int i = 0; i < sLocations.Length; i++)
                     {
                         sLocations[i] = new SerializedLocation();
@@ -250,7 +253,9 @@ namespace ZONEDOCTOR
                 }
                 else
                 {
-                    SerializedLocation[] sLocations = new SerializedLocation[415];
+                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                    SerializedLocation[] sLocations = new SerializedLocation[Model.NUM_LOCATIONS];
+
                     for (int i = 0; i < sLocations.Length; i++)
                         sLocations[i] = new SerializedLocation();
                     try

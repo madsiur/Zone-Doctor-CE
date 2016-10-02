@@ -40,6 +40,12 @@ namespace ZONEDOCTOR
             foreach (EList elist in Model.ELists)
                 elists.Add(elist.Copy());
         }
+
+        public void ReplaceEList(EList list)
+        {
+            elists.RemoveAll(x => x.Name.Equals(list.Name));
+            elists.Add(list);
+        }
         // public functions
         public void AddIndex(int index, List<EIndex> arrayList)
         {

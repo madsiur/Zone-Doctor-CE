@@ -81,27 +81,42 @@ namespace ZONEDOCTOR
             }
             this.Updating = false;
         }
+        
         private int CalculateFreeExitShortSpace()
         {
             int used = 0;
-            for (int i = 0; i < 415; i++)
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 foreach (Exit exit in locations[i].LocationExits.Exits)
                     if (exit.Width == 0)
                         used += 6;
             }
-            return 0x1AFE - used;
+
+            //return 0x1AFE - used;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            return Model.SIZE_SHORT_EXIT_DATA - used;
         }
+
+        // madsiur, hardocoded value to variable
         private int CalculateFreeExitLongSpace()
         {
             int used = 0;
-            for (int i = 0; i < 415; i++)
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 foreach (Exit exit in locations[i].LocationExits.Exits)
                     if (exit.Width > 1)
                         used += 7;
             }
-            return 0x57E - used;
+
+            //return 0x57E - used;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            return Model.SIZE_LONG_EXIT_DATA - used;
         }
         //
         private void AddNewExit(Exit exit)

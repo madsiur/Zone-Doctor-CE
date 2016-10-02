@@ -60,20 +60,30 @@ namespace ZONEDOCTOR
         public LocationExits()
         {
         }
+        
         private void Disassemble()
         {
             int offset;
             ushort offsetStart = 0;
             ushort offsetEnd = 0;
             Exit tExit;
-            // short exits
-            int pointerOffset = (index * 2) + 0x1FBB00;
+
+            //int pointerOffset = (index * 2) + 0x1FBB00;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int pointerOffset = (index * 2) + Model.BASE_SHORT_EXIT_PTR;
+
             offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
             offsetEnd = Bits.GetShort(rom, pointerOffset);
             if (offsetStart < offsetEnd)
             {
-                offset = offsetStart + 0x1FBB00;
+                /*offset = offsetStart + 0x1FBB00;
                 while (offset < offsetEnd + 0x1FBB00)
+                {*/
+
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                offset = offsetStart + Model.BASE_SHORT_EXIT_PTR;
+                while (offset < offsetEnd + Model.BASE_SHORT_EXIT_PTR)
                 {
                     tExit = new Exit();
                     tExit.Disassemble(offset, false);
@@ -81,14 +91,23 @@ namespace ZONEDOCTOR
                     offset += 6;
                 }
             }
-            // long exits
-            pointerOffset = (index * 2) + 0x2DF480;
+
+            //pointerOffset = (index * 2) + 0x2DF480;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            pointerOffset = (index * 2) + Model.BASE_LONG_EXIT_PTR;
+
             offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
             offsetEnd = Bits.GetShort(rom, pointerOffset);
             if (offsetStart < offsetEnd)
             {
-                offset = offsetStart + 0x2DF480;
+                /*offset = offsetStart + 0x2DF480;
                 while (offset < offsetEnd + 0x2DF480)
+                {*/
+
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                offset = offsetStart + Model.BASE_LONG_EXIT_PTR;
+                while (offset < offsetEnd + Model.BASE_LONG_EXIT_PTR)
                 {
                     tExit = new Exit();
                     tExit.Disassemble(offset, true);
@@ -97,22 +116,36 @@ namespace ZONEDOCTOR
                 }
             }
         }
+        
         public void Assemble(ref int offsetShort, ref int offsetLong)
         {
-            Bits.SetShort(rom, (index * 2) + 0x1FBB00, offsetShort);  // set the new pointer for the fields
-            Bits.SetShort(rom, (index * 2) + 0x2DF480, offsetLong);  // set the new pointer for the fields
+            //Bits.SetShort(rom, (index * 2) + 0x1FBB00, offsetShort);  // set the new pointer for the fields
+            //Bits.SetShort(rom, (index * 2) + 0x2DF480, offsetLong);  // set the new pointer for the fields
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            Bits.SetShort(rom, (index * 2) + Model.BASE_SHORT_EXIT_PTR, offsetShort);  // set the new pointer for the fields
+            Bits.SetShort(rom, (index * 2) + Model.BASE_LONG_EXIT_PTR, offsetLong);  // set the new pointer for the fields
+
             foreach (Exit exit in exits)
             {
                 int offset;
                 if (exit.Width == 0)
                 {
-                    offset = offsetShort + 0x1FBB00;
+                    //offset = offsetShort + 0x1FBB00;
+
+                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                    offset = offsetShort + Model.BASE_SHORT_EXIT_PTR;
+
                     exit.Assemble(offset);
                     offsetShort += 6;
                 }
                 else
                 {
-                    offset = offsetLong + 0x2DF480;
+                    //offset = offsetLong + 0x2DF480;
+
+                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                    offset = offsetLong + Model.BASE_LONG_EXIT_PTR;
+
                     exit.Assemble(offset);
                     offsetLong += 7;
                 }

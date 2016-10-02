@@ -36,7 +36,8 @@ namespace ZONEDOCTOR
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Tilesets");
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Tilemaps");
             System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Solidity sets");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Locations", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Location names");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Locations", new System.Windows.Forms.TreeNode[] {
             treeNode2,
             treeNode3,
             treeNode4,
@@ -45,12 +46,13 @@ namespace ZONEDOCTOR
             treeNode7,
             treeNode8,
             treeNode9,
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("World of Birth");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("World of Ruin");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("World Maps", new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13});
+            treeNode10,
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("World of Birth");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("World of Ruin");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("World Maps", new System.Windows.Forms.TreeNode[] {
+            treeNode13,
+            treeNode14});
             this.elements = new System.Windows.Forms.TreeView();
             this.browseFreshRom = new System.Windows.Forms.Button();
             this.freshRomTextBox = new System.Windows.Forms.TextBox();
@@ -62,9 +64,9 @@ namespace ZONEDOCTOR
             // 
             // elements
             // 
-            this.elements.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.elements.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.elements.CheckBoxes = true;
             this.elements.Location = new System.Drawing.Point(12, 70);
             this.elements.Name = "elements";
@@ -88,21 +90,24 @@ namespace ZONEDOCTOR
             treeNode9.Text = "Tilemaps";
             treeNode10.Name = "SoliditySets";
             treeNode10.Text = "Solidity sets";
-            treeNode11.Name = "Locations";
-            treeNode11.Text = "Locations";
-            treeNode12.Name = "WorldOfBirth";
-            treeNode12.Text = "World of Birth";
-            treeNode13.Name = "WorldOfRuin";
-            treeNode13.Text = "World of Ruin";
-            treeNode14.Name = "WorldMaps";
-            treeNode14.Text = "World Maps";
+            treeNode11.Name = "LocationNames";
+            treeNode11.Text = "Location names";
+            treeNode12.Name = "Locations";
+            treeNode12.Text = "Locations";
+            treeNode13.Name = "WorldOfBirth";
+            treeNode13.Text = "World of Birth";
+            treeNode14.Name = "WorldOfRuin";
+            treeNode14.Text = "World of Ruin";
+            treeNode15.Name = "WorldMaps";
+            treeNode15.Text = "World Maps";
             this.elements.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
-            treeNode11,
-            treeNode14});
+            treeNode12,
+            treeNode15});
             this.elements.Size = new System.Drawing.Size(333, 282);
             this.elements.TabIndex = 2;
             this.elements.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.elements_AfterCheck);
+            this.elements.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.elements_AfterSelect);
             // 
             // browseFreshRom
             // 
@@ -117,8 +122,8 @@ namespace ZONEDOCTOR
             // 
             // freshRomTextBox
             // 
-            this.freshRomTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.freshRomTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.freshRomTextBox.Location = new System.Drawing.Point(12, 14);
             this.freshRomTextBox.Name = "freshRomTextBox";
             this.freshRomTextBox.ReadOnly = true;

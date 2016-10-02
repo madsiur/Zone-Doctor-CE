@@ -52,15 +52,22 @@ namespace ZONEDOCTOR
             eventsBytesLeft.BackColor = CalculateFreeEventSpace() >= 0 ? SystemColors.Control : Color.Red;
             this.Updating = false;
         }
+        
         private int CalculateFreeEventSpace()
         {
             int used = 0;
-            for (int i = 0; i < 415; i++)
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 for (int a = 0; a < locations[i].LocationEvents.Events.Count; a++)
                     used += 5;
             }
-            return 0x16CE - used;
+
+            //return 0x16CE - used;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            return Model.SIZE_EVENT_DATA - used;
         }
         //
         private void AddNewEvent(Event newEvent)

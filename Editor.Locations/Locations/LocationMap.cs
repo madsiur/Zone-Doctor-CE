@@ -121,10 +121,14 @@ namespace ZONEDOCTOR
             this.index = index;
             Disassemble();
         }
-        // assemblers
+        
         private void Disassemble()
         {
-            int offset = (index * 33) + 0x2D8F00;
+            //int offset = (index * 33) + 0x2D8F00;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int offset = (index * 33) + Model.BASE_LOCATION;
+
             messageBox = rom[offset++];
             warpEnabledX = (rom[offset] & 0x01) == 0x01;
             warpEnabled = (rom[offset] & 0x02) == 0x02;
@@ -153,8 +157,8 @@ namespace ZONEDOCTOR
             tilemapL1 = (ushort)(Bits.GetShort(rom, offset) & 0x3FF); offset++;
             tilemapL2 = (ushort)((Bits.GetShort(rom, offset) / 2 & 0x7FE) / 2); offset++;
             tilemapL3 = (ushort)(Bits.GetShort(rom, offset) / 16); offset++;
-            if (tilemapL1 > 0x15E) tilemapL1 = 0x15E;
-            if (tilemapL2 > 0x15E) tilemapL2 = 0x15E;
+            if (tilemapL1 > 510) tilemapL1 = 510;
+            if (tilemapL2 > 510) tilemapL2 = 510;
             offset++;
             // layer movement
             spriteMask = rom[offset++];
@@ -181,9 +185,16 @@ namespace ZONEDOCTOR
             prioritySet = rom[offset];
             battleZone = rom[index + 0x0F5600];
         }
+
+        // madsiur
+        // hardcoded value to variable for expansion purpose
         public void Assemble()
         {
-            int offset = (index * 33) + 0x2D8F00;
+            //int offset = (index * 33) + 0x2D8F00;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            int offset = (index * 33) + Model.BASE_LOCATION;
+
             rom[offset] = messageBox; offset++;
             Bits.SetBit(rom, offset, 0, warpEnabledX);
             Bits.SetBit(rom, offset, 1, warpEnabled);

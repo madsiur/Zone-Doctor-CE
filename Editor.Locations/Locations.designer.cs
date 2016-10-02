@@ -136,6 +136,8 @@ namespace ZONEDOCTOR
             this.label63 = new System.Windows.Forms.Label();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.tbMapName = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.mapPaletteSetNum = new System.Windows.Forms.NumericUpDown();
             this.label46 = new System.Windows.Forms.Label();
@@ -169,6 +171,8 @@ namespace ZONEDOCTOR
             this.mapTilesetL2Num = new System.Windows.Forms.NumericUpDown();
             this.mapTilesetL1Num = new System.Windows.Forms.NumericUpDown();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox22 = new System.Windows.Forms.GroupBox();
+            this.tbLocation = new System.Windows.Forms.TextBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.layerUnknownBits = new System.Windows.Forms.CheckedListBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -382,6 +386,7 @@ namespace ZONEDOCTOR
             this.toolStrip6.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.groupBox21.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapPaletteSetNum)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -402,6 +407,7 @@ namespace ZONEDOCTOR
             ((System.ComponentModel.ISupportInitialize)(this.mapTilesetL2Num)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapTilesetL1Num)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.groupBox22.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapBattleBG)).BeginInit();
@@ -460,7 +466,7 @@ namespace ZONEDOCTOR
             0,
             0,
             0});
-            this.locationNum.Location = new System.Drawing.Point(209, 2);
+            this.locationNum.Location = new System.Drawing.Point(211, 2);
             this.locationNum.Maximum = new decimal(new int[] {
             414,
             0,
@@ -500,7 +506,7 @@ namespace ZONEDOCTOR
             this.tabPage8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(260, 640);
+            this.tabPage8.Size = new System.Drawing.Size(260, 661);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "NPCS";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -516,7 +522,7 @@ namespace ZONEDOCTOR
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(260, 640);
+            this.panel9.Size = new System.Drawing.Size(260, 661);
             this.panel9.TabIndex = 0;
             // 
             // groupBox14
@@ -819,13 +825,13 @@ namespace ZONEDOCTOR
             // 
             // npcListBox
             // 
-            this.npcListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.npcListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.npcListBox.FormattingEnabled = true;
             this.npcListBox.IntegralHeight = false;
             this.npcListBox.Location = new System.Drawing.Point(0, 51);
             this.npcListBox.Name = "npcListBox";
-            this.npcListBox.Size = new System.Drawing.Size(126, 589);
+            this.npcListBox.Size = new System.Drawing.Size(126, 610);
             this.npcListBox.TabIndex = 496;
             this.npcListBox.SelectedIndexChanged += new System.EventHandler(this.npcListBox_SelectedIndexChanged);
             // 
@@ -1052,7 +1058,7 @@ namespace ZONEDOCTOR
             this.tabPage9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(260, 640);
+            this.tabPage9.Size = new System.Drawing.Size(260, 661);
             this.tabPage9.TabIndex = 3;
             this.tabPage9.Text = "FIELDS";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1068,7 +1074,7 @@ namespace ZONEDOCTOR
             this.panel52.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel52.Location = new System.Drawing.Point(0, 0);
             this.panel52.Name = "panel52";
-            this.panel52.Size = new System.Drawing.Size(260, 384);
+            this.panel52.Size = new System.Drawing.Size(260, 405);
             this.panel52.TabIndex = 0;
             // 
             // panel1
@@ -1331,7 +1337,7 @@ namespace ZONEDOCTOR
             this.exitListBox.IntegralHeight = false;
             this.exitListBox.Location = new System.Drawing.Point(0, 44);
             this.exitListBox.Name = "exitListBox";
-            this.exitListBox.Size = new System.Drawing.Size(125, 340);
+            this.exitListBox.Size = new System.Drawing.Size(125, 361);
             this.exitListBox.TabIndex = 498;
             this.exitListBox.SelectedIndexChanged += new System.EventHandler(this.exitListBox_SelectedIndexChanged);
             // 
@@ -1429,12 +1435,12 @@ namespace ZONEDOCTOR
             // 
             // panel68
             // 
-            this.panel68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel68.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.panel68.BackgroundImage = global::ZONEDOCTOR.Properties.Resources._bg;
             this.panel68.Location = new System.Drawing.Point(119, 608);
             this.panel68.Name = "panel68";
-            this.panel68.Size = new System.Drawing.Size(121, 59);
+            this.panel68.Size = new System.Drawing.Size(121, 80);
             this.panel68.TabIndex = 493;
             // 
             // label61
@@ -1458,7 +1464,7 @@ namespace ZONEDOCTOR
             this.panel2.Controls.Add(this.label63);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel2.Location = new System.Drawing.Point(0, 384);
+            this.panel2.Location = new System.Drawing.Point(0, 405);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(260, 256);
             this.panel2.TabIndex = 498;
@@ -1674,12 +1680,13 @@ namespace ZONEDOCTOR
             this.tabControl.Name = "tabControl";
             this.tabControl.Padding = new System.Drawing.Point(5, 4);
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(268, 666);
+            this.tabControl.Size = new System.Drawing.Size(268, 687);
             this.tabControl.TabIndex = 6;
             this.tabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Selecting);
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.groupBox21);
             this.tabPage4.Controls.Add(this.groupBox4);
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.groupBox1);
@@ -1687,10 +1694,31 @@ namespace ZONEDOCTOR
             this.tabPage4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(260, 640);
+            this.tabPage4.Size = new System.Drawing.Size(260, 661);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "MAPS";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.tbMapName);
+            this.groupBox21.Location = new System.Drawing.Point(3, 476);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(260, 48);
+            this.groupBox21.TabIndex = 241;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "Map Name (Zone Doctor CE)";
+            // 
+            // tbMapName
+            // 
+            this.tbMapName.Enabled = false;
+            this.tbMapName.Location = new System.Drawing.Point(6, 21);
+            this.tbMapName.MaxLength = 80;
+            this.tbMapName.Name = "tbMapName";
+            this.tbMapName.Size = new System.Drawing.Size(245, 21);
+            this.tbMapName.TabIndex = 0;
+            this.tbMapName.TabStop = false;
+            this.tbMapName.TextChanged += new System.EventHandler(this.tbMapName_TextChanged);
             // 
             // groupBox4
             // 
@@ -2103,6 +2131,7 @@ namespace ZONEDOCTOR
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox22);
             this.tabPage3.Controls.Add(this.groupBox11);
             this.tabPage3.Controls.Add(this.groupBox9);
             this.tabPage3.Controls.Add(this.messageName);
@@ -2115,15 +2144,35 @@ namespace ZONEDOCTOR
             this.tabPage3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(260, 640);
+            this.tabPage3.Size = new System.Drawing.Size(260, 661);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "LAYERS";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // groupBox22
+            // 
+            this.groupBox22.Controls.Add(this.tbLocation);
+            this.groupBox22.Location = new System.Drawing.Point(0, 33);
+            this.groupBox22.Name = "groupBox22";
+            this.groupBox22.Size = new System.Drawing.Size(260, 48);
+            this.groupBox22.TabIndex = 242;
+            this.groupBox22.TabStop = false;
+            this.groupBox22.Text = "Change Message";
+            // 
+            // tbLocation
+            // 
+            this.tbLocation.Location = new System.Drawing.Point(6, 21);
+            this.tbLocation.MaxLength = 80;
+            this.tbLocation.Name = "tbLocation";
+            this.tbLocation.Size = new System.Drawing.Size(245, 21);
+            this.tbLocation.TabIndex = 0;
+            this.tbLocation.TabStop = false;
+            this.tbLocation.TextChanged += new System.EventHandler(this.tbLocation_TextChanged);
+            // 
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.layerUnknownBits);
-            this.groupBox11.Location = new System.Drawing.Point(0, 579);
+            this.groupBox11.Location = new System.Drawing.Point(0, 630);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(260, 48);
             this.groupBox11.TabIndex = 7;
@@ -2153,7 +2202,7 @@ namespace ZONEDOCTOR
             this.groupBox9.Controls.Add(this.mapBattleBG);
             this.groupBox9.Controls.Add(this.label38);
             this.groupBox9.Controls.Add(this.mapBattleZone);
-            this.groupBox9.Location = new System.Drawing.Point(0, 394);
+            this.groupBox9.Location = new System.Drawing.Point(0, 445);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(260, 69);
             this.groupBox9.TabIndex = 7;
@@ -2304,6 +2353,7 @@ namespace ZONEDOCTOR
             this.messageName.Name = "messageName";
             this.messageName.Size = new System.Drawing.Size(194, 21);
             this.messageName.TabIndex = 119;
+            this.messageName.TabStop = false;
             this.messageName.SelectedIndexChanged += new System.EventHandler(this.layerMessageBox_SelectedIndexChanged);
             // 
             // groupBox10
@@ -2311,7 +2361,7 @@ namespace ZONEDOCTOR
             this.groupBox10.Controls.Add(this.layerEffects);
             this.groupBox10.Controls.Add(this.label1);
             this.groupBox10.Controls.Add(this.windowMask);
-            this.groupBox10.Location = new System.Drawing.Point(0, 467);
+            this.groupBox10.Location = new System.Drawing.Point(0, 518);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(260, 106);
             this.groupBox10.TabIndex = 7;
@@ -2396,7 +2446,7 @@ namespace ZONEDOCTOR
             this.groupBox5.Controls.Add(this.layerSubscreenL3);
             this.groupBox5.Controls.Add(this.layerColorMathL2);
             this.groupBox5.Controls.Add(this.layerMainscreenL3);
-            this.groupBox5.Location = new System.Drawing.Point(0, 33);
+            this.groupBox5.Location = new System.Drawing.Point(0, 84);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(260, 140);
             this.groupBox5.TabIndex = 7;
@@ -2720,7 +2770,7 @@ namespace ZONEDOCTOR
             this.groupBox8.Controls.Add(this.l2height);
             this.groupBox8.Controls.Add(this.label12);
             this.groupBox8.Controls.Add(this.l1height);
-            this.groupBox8.Location = new System.Drawing.Point(0, 302);
+            this.groupBox8.Location = new System.Drawing.Point(0, 353);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(260, 88);
             this.groupBox8.TabIndex = 7;
@@ -2878,7 +2928,7 @@ namespace ZONEDOCTOR
             this.groupBox6.Controls.Add(this.topSync);
             this.groupBox6.Controls.Add(this.layerMaskHighY);
             this.groupBox6.Controls.Add(this.layerMaskHighX);
-            this.groupBox6.Location = new System.Drawing.Point(0, 177);
+            this.groupBox6.Location = new System.Drawing.Point(0, 228);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(260, 69);
             this.groupBox6.TabIndex = 7;
@@ -2985,7 +3035,7 @@ namespace ZONEDOCTOR
             this.groupBox7.Controls.Add(this.layerL3UpShift);
             this.groupBox7.Controls.Add(this.label9);
             this.groupBox7.Controls.Add(this.layerL3LeftShift);
-            this.groupBox7.Location = new System.Drawing.Point(0, 250);
+            this.groupBox7.Location = new System.Drawing.Point(0, 301);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(260, 48);
             this.groupBox7.TabIndex = 7;
@@ -3073,7 +3123,7 @@ namespace ZONEDOCTOR
             this.tabPage1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(260, 640);
+            this.tabPage1.Size = new System.Drawing.Size(260, 661);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "TREASURES";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3088,7 +3138,7 @@ namespace ZONEDOCTOR
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(260, 640);
+            this.panel8.Size = new System.Drawing.Size(260, 661);
             this.panel8.TabIndex = 1;
             // 
             // groupBox19
@@ -3248,7 +3298,7 @@ namespace ZONEDOCTOR
             0,
             0});
             this.treasureCheckMem.Minimum = new decimal(new int[] {
-            7744,
+            7712,
             0,
             0,
             0});
@@ -3257,7 +3307,7 @@ namespace ZONEDOCTOR
             this.treasureCheckMem.TabIndex = 494;
             this.treasureCheckMem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.treasureCheckMem.Value = new decimal(new int[] {
-            7744,
+            7792,
             0,
             0,
             0});
@@ -3297,13 +3347,13 @@ namespace ZONEDOCTOR
             // 
             // treasureListBox
             // 
-            this.treasureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.treasureListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.treasureListBox.FormattingEnabled = true;
             this.treasureListBox.IntegralHeight = false;
             this.treasureListBox.Location = new System.Drawing.Point(0, 51);
             this.treasureListBox.Name = "treasureListBox";
-            this.treasureListBox.Size = new System.Drawing.Size(126, 589);
+            this.treasureListBox.Size = new System.Drawing.Size(126, 610);
             this.treasureListBox.TabIndex = 497;
             this.treasureListBox.SelectedIndexChanged += new System.EventHandler(this.treasureListBox_SelectedIndexChanged);
             // 
@@ -3452,7 +3502,7 @@ namespace ZONEDOCTOR
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(1020, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1010, 25);
             this.toolStrip1.TabIndex = 2;
             // 
             // navigateBck
@@ -3483,7 +3533,7 @@ namespace ZONEDOCTOR
             // 
             this.loadingLocation.Maximum = 512;
             this.loadingLocation.Name = "loadingLocation";
-            this.loadingLocation.Size = new System.Drawing.Size(400, 22);
+            this.loadingLocation.Size = new System.Drawing.Size(400, 24);
             this.loadingLocation.Step = 1;
             this.loadingLocation.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.loadingLocation.Visible = false;
@@ -3540,7 +3590,7 @@ namespace ZONEDOCTOR
             0,
             0,
             0});
-            this.entranceEvent.Location = new System.Drawing.Point(1, 3);
+            this.entranceEvent.Location = new System.Drawing.Point(551, 2);
             this.entranceEvent.Maximum = new decimal(new int[] {
             262143,
             0,
@@ -3569,7 +3619,7 @@ namespace ZONEDOCTOR
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(39, 11);
+            this.toolStripLabel2.Size = new System.Drawing.Size(39, 22);
             this.toolStripLabel2.Text = "MUSIC";
             // 
             // musicName
@@ -3580,7 +3630,7 @@ namespace ZONEDOCTOR
             this.musicName.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.musicName.IntegralHeight = false;
             this.musicName.Name = "musicName";
-            this.musicName.Size = new System.Drawing.Size(170, 21);
+            this.musicName.Size = new System.Drawing.Size(170, 25);
             this.musicName.SelectedIndexChanged += new System.EventHandler(this.musicName_SelectedIndexChanged);
             // 
             // toolStripSeparator4
@@ -3617,7 +3667,7 @@ namespace ZONEDOCTOR
             this.panelLocations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLocations.Location = new System.Drawing.Point(0, 50);
             this.panelLocations.Name = "panelLocations";
-            this.panelLocations.Size = new System.Drawing.Size(1020, 670);
+            this.panelLocations.Size = new System.Drawing.Size(1010, 691);
             this.panelLocations.TabIndex = 506;
             // 
             // toolStrip2
@@ -3650,7 +3700,7 @@ namespace ZONEDOCTOR
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip2.Size = new System.Drawing.Size(1020, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(1010, 25);
             this.toolStrip2.TabIndex = 507;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -4237,7 +4287,7 @@ namespace ZONEDOCTOR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1020, 720);
+            this.ClientSize = new System.Drawing.Size(1010, 741);
             this.Controls.Add(this.panelLocations);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStrip2);
@@ -4248,7 +4298,7 @@ namespace ZONEDOCTOR
             this.Location = new System.Drawing.Point(5, 5);
             this.Name = "Locations";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "LOCATIONS - Zone Doctor";
+            this.Text = "LOCATIONS - Zone Doctor CE";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Locations_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Locations_FormClosed);
             this.tabPage8.ResumeLayout(false);
@@ -4296,6 +4346,8 @@ namespace ZONEDOCTOR
             this.toolStrip6.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapPaletteSetNum)).EndInit();
@@ -4321,6 +4373,8 @@ namespace ZONEDOCTOR
             ((System.ComponentModel.ISupportInitialize)(this.mapTilesetL1Num)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.groupBox22.ResumeLayout(false);
+            this.groupBox22.PerformLayout();
             this.groupBox11.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
@@ -4684,6 +4738,10 @@ namespace ZONEDOCTOR
         private NumericUpDown animationBG;
         private ToolStripMenuItem importArchitectureToolStripMenuItem;
         private ToolStripMenuItem exportArchitectureToolStripMenuItem;
+        private GroupBox groupBox21;
+        private TextBox tbMapName;
+        private GroupBox groupBox22;
+        private TextBox tbLocation;
     }
 }
 

@@ -18,7 +18,11 @@ namespace ZONEDOCTOR
         private void InitializeLayerProperties()
         {
             this.Updating = true;
+
+            // madsiur, for location renaming feature [3.18.4-0.1]
             this.messageName.SelectedIndex = locationMap.MessageBox;
+            this.tbLocation.Text = this.messageName.SelectedItem.ToString();
+
             this.musicName.SelectedIndex = locationMap.Music;
             this.layerPrioritySet.Value = locationMap.PrioritySet;
             this.layerMainscreenL1.Checked = prioritySets[locationMap.PrioritySet].MainscreenL1;
@@ -73,7 +77,9 @@ namespace ZONEDOCTOR
         #region Event Handlers
         private void layerMessageBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // madsiur, for location renaming feature [3.18.4-0.1]
             locationMap.MessageBox = (byte)messageName.SelectedIndex;
+            tbLocation.Text = messageName.SelectedItem.ToString();
         }
         private void layerPrioritySet_ValueChanged(object sender, EventArgs e)
         {
@@ -386,7 +392,10 @@ namespace ZONEDOCTOR
         {
             if (this.Updating)
                 return;
+
+            // madsiur, for location renaming feature [3.18.4-0.1]
             locationMap.MessageBox = (byte)messageName.SelectedIndex;
+            tbLocation.Text = messageName.SelectedItem.ToString();
         }
         private void musicName_SelectedIndexChanged(object sender, EventArgs e)
         {

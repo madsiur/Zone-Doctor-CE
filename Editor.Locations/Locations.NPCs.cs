@@ -77,15 +77,22 @@ namespace ZONEDOCTOR
             npcsBytesLeft.BackColor = CalculateFreeNPCSpace() >= 0 ? SystemColors.Control : Color.Red;
             this.Updating = false;
         }
+        
         private int CalculateFreeNPCSpace()
         {
             int used = 0;
-            for (int i = 0; i < 415; i++)
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 for (int a = 0; a < locations[i].LocationNPCs.Npcs.Count; a++)
                     used += 9;
             }
-            return 0x4D6E - used;
+
+            //return 0x4D6E - used;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            return Model.SIZE_NPC_DATA - used;
         }
         //
         private void AddNewNPC()

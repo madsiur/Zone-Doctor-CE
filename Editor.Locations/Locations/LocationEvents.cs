@@ -46,18 +46,27 @@ namespace ZONEDOCTOR
             this.index = index;
             Disassemble();
         }
+
         private void Disassemble()
         {
             entranceEvent = Bits.GetInt24(rom, (index * 3) + 0x11FA00);
-            int pointerOffset = (index * 2) + 0x040000;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            //int pointerOffset = (index * 2) + 0x040000;
+            int pointerOffset = (index * 2) + Model.BASE_EVENT_PTR;
+
             ushort offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
             ushort offsetEnd = Bits.GetShort(rom, pointerOffset);
             // no event fields for location
             if (offsetStart >= offsetEnd) 
                 return;
-            //
-            int offset = offsetStart + 0x040000;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            /*int offset = offsetStart + 0x040000;
             while (offset < offsetEnd + 0x040000)
+            {*/
+            int offset = offsetStart + Model.BASE_EVENT_PTR;
+            while (offset < offsetEnd + Model.BASE_EVENT_PTR)
             {
                 Event tEvent = new Event();
                 tEvent.Disassemble(offset);
@@ -65,23 +74,37 @@ namespace ZONEDOCTOR
                 offset += 5;
             }
         }
+
+        // madsiur
+        // hardcoded value to variable for expansion purpose
         public void Assemble(ref int offsetStart)
         {
             Bits.SetShort(rom, (index * 3) + 0x11FA00, (ushort)entranceEvent);
             Bits.SetByte(rom, (index * 3) + 0x11FA02, (byte)(entranceEvent >> 16));
-            int pointerOffset = (index * 2) + 0x040000;
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            //int pointerOffset = (index * 2) + 0x040000;
+            int pointerOffset = (index * 2) + Model.BASE_EVENT_PTR;
+
             // set the new pointer for the fields
             Bits.SetShort(rom, pointerOffset, offsetStart);  
             // no event fields for location
             if (events.Count == 0) 
                 return;
-            int offset = offsetStart + 0x040000;
+            
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            //int offset = offsetStart + 0x040000;
+            int offset = offsetStart + Model.BASE_EVENT_PTR;
+
             foreach (Event e in events)
             {
                 e.Assemble(offset);
                 offset += 5;
             }
-            offsetStart = (ushort)(offset - 0x040000);
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            //offsetStart = (ushort)(offset - 0x040000);
+            offsetStart = (ushort)(offset - Model.BASE_EVENT_PTR);
         }
         // list managers
         public void Clear()

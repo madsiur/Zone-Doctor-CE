@@ -59,7 +59,12 @@ namespace ZONEDOCTOR
             this.mapBattleBGName.SelectedIndex = locationMap.BattleBG;
             this.mapBattleZone.Value = locationMap.BattleZone;
             this.mapRandomBattles.Checked = locationMap.RandomBattle;
+
+
+            this.tbMapName.Text = Model.LevelNames[index];
             this.Updating = false;
+
+            //madsiur
         }
         // set images
         private Image SetPaletteOverlay(Size s, Size u, int index)  // s = palette dimen, u = color dimen

@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using ZONEDOCTOR.Properties;
 using ZONEDOCTOR.Undo;
+using ZONEDOCTOR._Static;
 
 namespace ZONEDOCTOR
 {
@@ -56,18 +57,41 @@ namespace ZONEDOCTOR
             Model.LoadVarCompDataAbsPtrs();
             Model.DecompressWorldMaps();
             //
+
+            // madsiur, use expanded Location names list if ROM has expansion
+            if (Model.IsExpanded)
+            {
+                Model.UpdateElistLocation();
+                tbMapName.Enabled = true;
+            }
+            else
+            {
+                if ((int)settings.LastLocation > 415)
+                    settings.LastLocation = 0;
+            }
+
+            locationNum.Maximum = Model.NUM_LOCATIONS - 1;
+            mapTilemapL1Num.Maximum = Model.NUM_TILEMAPS - 1;
+            mapTilemapL2Num.Maximum = Model.NUM_TILEMAPS - 1;
+            mapTilemapL3Num.Maximum = Model.NUM_TILEMAPS - 1;
+
             this.locationInfo.Columns.AddRange(new ColumnHeader[] { new ColumnHeader(), new ColumnHeader() });
             this.analyzerInfo.Columns.AddRange(new ColumnHeader[] { new ColumnHeader(), new ColumnHeader() });
             Do.AddShortcut(toolStrip2, Keys.Control | Keys.S, new EventHandler(save_Click));
             Do.AddShortcut(toolStrip2, Keys.F1, help);
             Do.AddShortcut(toolStrip2, Keys.F2, baseConversion);
+
+            this.locationName.Items.AddRange(Model.GetLevelNames());
+            this.exitDestination.Items.AddRange(Model.GetLevelNames());
+
             searchWindow = new Search(locationNum, searchBox, searchLocationNames, locationName.Items);
             labelWindow = new EditLabel(locationName, locationNum, "Locations", true);
             new ToolTipLabel(this, baseConversion, help);
-            this.locationName.Items.AddRange(Lists.Numerize(Lists.LocationNames));
-            this.exitDestination.Items.AddRange(Lists.Numerize(Lists.LocationNames));
-            for (int i = 0; i < 73; i++)
-                this.messageName.Items.Add("{" + i.ToString("d3") + "}  " + Model.LocationNames[i]);
+            
+
+            // madsiur, for location renaming feature [3.18.4-0.1]
+            this.messageName.Items.AddRange(Model.LocationNames); 
+
             this.musicName.Items.AddRange(Lists.Numerize(Lists.MusicNames));
             this.treasurePropertyName.Items.AddRange(Lists.Numerize(Model.ItemNames.Names));
             this.Refreshing = true;
@@ -114,10 +138,11 @@ namespace ZONEDOCTOR
         {
             //CreateNewLocation_SetControls();
             //CreateNewLocation.WorkerReportsProgress = true;
-            CreateNewLocation_DoWork(); //CreateNewLocation.RunWorkerAsync();
+            CreateNewLocation_DoWork();
+            //CreateNewLocation.RunWorkerAsync();
             CreateNewLocation_RunWorkerCompleted();
-            //while (CreateNewLocation.IsBusy)
-            //    Application.DoEvents();
+            /*while (CreateNewLocation.IsBusy)
+                Application.DoEvents();*/
         }
         private void CreateNewLocation_SetControls()
         {
@@ -248,12 +273,23 @@ namespace ZONEDOCTOR
         private void SetLocationInfo()
         {
             List<string[]> items = new List<string[]>();
-            items.Add(new string[] { "Location map", ((index * 33) + 0x2D8F00).ToString("X6") });
-            items.Add(new string[] { "NPCs", ((index * 2) + (Bits.GetInt24(Model.ROM, 0x0052C3) - 0xC00000)).ToString("X6") });
+
+
+            /*items.Add(new string[] { "Location map", ((index * 33) + 0x2D8F00).ToString("X6") });
+            items.Add(new string[] { "NPCs", ((index * 2) + 0x041A16).ToString("X6")});
             items.Add(new string[] { "Exits (short)", ((index * 2) + 0x1FBB00).ToString("X6") });
             items.Add(new string[] { "Exits (long)", ((index * 2) + 0x2DF480).ToString("X6") });
             items.Add(new string[] { "Events", ((index * 2) + 0x040000).ToString("X6") });
-            items.Add(new string[] { "Treasures", ((index * 2) + 0x2D82F4).ToString("X6") });
+            items.Add(new string[] { "Treasures", ((index * 2) + 0x2D82F4).ToString("X6") });*/
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            items.Add(new string[] { "Location map", ((index * 33) + Model.BASE_LOCATION).ToString("X6") });
+            items.Add(new string[] { "NPCs", ((index * 2) + Model.BASE_NPC_PTR.ToString("X6")) });
+            items.Add(new string[] { "Exits (short)", ((index * 2) + Model.BASE_SHORT_EXIT_PTR).ToString("X6") });
+            items.Add(new string[] { "Exits (long)", ((index * 2) + Model.BASE_LONG_EXIT_PTR).ToString("X6") });
+            items.Add(new string[] { "Events", ((index * 2) + Model.BASE_EVENT_PTR).ToString("X6") });
+            items.Add(new string[] { "Treasures", ((index * 2) + Model.BASE_CHEST_PTR).ToString("X6") });
+
             ListViewItem[] listViewItems = new ListViewItem[items.Count];
             for (int i = 0; i < items.Count; i++)
                 listViewItems[i] = new ListViewItem(items[i]);
@@ -271,7 +307,12 @@ namespace ZONEDOCTOR
             List<string[]> items = new List<string[]>();
             int free = Model.Compress(Model.Tilesets, null, null, 0x1FBA00, 0x1E0000, 0x1FB400, "TILE SET", 3, 0x800, false);
             items.Add(new string[] { "Tilesets", free.ToString() });
-            free = Model.Compress(Model.Tilemaps, null, null, 0x19CD90, 0x19D1B0, 0x1E0000, "TILE MAP", 3, 0, true);
+
+            //free = Model.Compress(Model.Tilemaps, null, null, 0x19CD90, 0x19D1B0, 0x1E0000, "TILE MAP", 3, 0, true);
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            free = Model.Compress(Model.Tilemaps, null, null, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, Model.BASE_TILEMAP + Model.SIZE_TILEMAP_DATA, "TILE MAP", 3, 0, true);
+
             items.Add(new string[] { "Tilemaps", free.ToString() });
             free = Model.Compress(Model.SoliditySets, null, null, 0x19CD10, 0x19A800, 0x19CD10, "SOLIDITY SET", 2, 0x200, false);
             items.Add(new string[] { "Solidity sets", free.ToString() });
@@ -315,7 +356,8 @@ namespace ZONEDOCTOR
             bw.Close();
             fs.Close();
         }
-        // assemblers
+
+        // madsiur, hardocoded value to variable
         public void Assemble()
         {
             if (!this.Modified)
@@ -335,33 +377,38 @@ namespace ZONEDOCTOR
                 exits.CurrentExit = temp;
             int offsetShort = 0x0402;
             int offsetLong = 0x0402;
+
+            //shit!
             if (CalculateFreeExitShortSpace() >= 0 && CalculateFreeExitLongSpace() >= 0)
             {
-                for (int i = 0; i < 415; i++)
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationExits.Assemble(ref offsetShort, ref offsetLong);
             }
             else
                 MessageBox.Show("Exit fields were not saved. " + MaximumSpaceExceeded("exits"), "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             if (exits.Count > 0)
                 exits.CurrentExit = temp;
-            int offsetStart = 0x0342;
+            int offsetStart = 0x402;
             if (events.Count > 0)
                 temp = events.CurrentEvent;
             if (CalculateFreeEventSpace() >= 0)
             {
-                for (int i = 0; i < 415; i++)
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationEvents.Assemble(ref offsetStart);
             }
             else
                 MessageBox.Show("Event fields were not saved. " + MaximumSpaceExceeded("events"), "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             if (events.Count > 0)
                 events.CurrentEvent = temp;
-            offsetStart = 0x0342;
+            offsetStart = 0x402;
             if (npcs.Count > 0)
                 temp = npcs.CurrentNPC;
             if (CalculateFreeNPCSpace() >= 0)
             {
-                for (int i = 0; i < 415; i++)
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationNPCs.Assemble(ref offsetStart);
             }
             else
@@ -373,7 +420,8 @@ namespace ZONEDOCTOR
                 temp = treasures.CurrentTreasure;
             if (CalculateFreeTreasureSpace() >= 0)
             {
-                for (int i = 0; i < 415; i++)
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationTreasures.Assemble(ref offsetStart);
             }
             else
@@ -382,7 +430,12 @@ namespace ZONEDOCTOR
                 treasures.CurrentTreasure = temp;
             //
             RecompressLocationData();
-            Model.HexEditor.SetOffset((index * 33) + 0x2D8F00);
+
+            //Model.HexEditor.SetOffset((index * 33) + 0x2D8F00);
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            Model.HexEditor.SetOffset((index * 33) + Model.BASE_LOCATION);
+
             Model.HexEditor.Compare();
             this.Modified = false;
         }
@@ -427,7 +480,12 @@ namespace ZONEDOCTOR
                 Bits.SetBytes(Model.ROM, offset, Model.GraphicSets[i]);
             }
             Model.Compress(Model.SoliditySets, Model.ROM, Model.EditSoliditySets, 0x19CD10, 0x19A800, 0x19CD10, "SOLIDITY SET", 2, 0x200, false);
-            Model.Compress(Model.Tilemaps, Model.ROM, Model.EditTilemaps, 0x19CD90, 0x19D1B0, 0x1E0000, "TILE MAP", 3, 0, true);
+
+            //Model.Compress(Model.Tilemaps, Model.ROM, Model.EditTilemaps, 0x19CD90, 0x19D1B0, 0x1E0000, "TILE MAP", 3, 0, true);
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            Model.Compress(Model.Tilemaps, Model.ROM, Model.EditTilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, Model.BASE_TILEMAP + Model.SIZE_TILEMAP_DATA, "TILE MAP", 3, 0, true);
+
             Model.Compress(Model.Tilesets, Model.ROM, Model.EditTilesets, 0x1FBA00, 0x1E0000, 0x1FB400, "TILE SET", 3, 0x800, false);
             // LJ 2011-12-28: interoperability fix for FF3usME
             Model.SaveVarCompDataAbsPtrs();
@@ -741,7 +799,7 @@ namespace ZONEDOCTOR
             this.Refreshing = true;
             locationName.BeginUpdate();
             locationName.Items.Clear();
-            locationName.Items.AddRange(Lists.Numerize(Lists.LocationNames));
+            locationName.Items.AddRange(Model.GetLevelNames());
             locationName.SelectedIndex = index;
             locationName.EndUpdate();
             this.Refreshing = false;
@@ -938,6 +996,7 @@ namespace ZONEDOCTOR
                 return;
             fullUpdate = true;
         }
+
         private void clearAllComponentsAll_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
@@ -946,7 +1005,9 @@ namespace ZONEDOCTOR
                 "Are you sure you want to do this?", "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result != DialogResult.Yes)
                 return;
-            for (int i = 0; i < 415; i++)
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 locations[i].LocationMap.Clear();
                 locations[i].LocationEvents.Clear();
@@ -1447,9 +1508,14 @@ namespace ZONEDOCTOR
                 Model.STTilemap = Comp.Decompress(Model.ROM, 0x2F9D17, 0x4000);
             else
             {
-                Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
             }
             fullUpdate = true;
             if (!this.Refreshing)
@@ -1529,9 +1595,16 @@ namespace ZONEDOCTOR
                 //
                 Model.Decompress(Model.Tilesets, 0x1FBA00, 0x1E0000, "", 0x800, 3, locationMap.TilesetL1, locationMap.TilesetL1 + 1, null);
                 Model.Decompress(Model.Tilesets, 0x1FBA00, 0x1E0000, "", 0x800, 3, locationMap.TilesetL2, locationMap.TilesetL2 + 1, null);
-                Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+
+                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+
+                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+                Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
+
                 Model.Decompress(Model.SoliditySets, 0x19CD10, 0x19A800, "", 0x200, 2, locationMap.SoliditySet, locationMap.SoliditySet + 1, null);
                 //
                 Model.AnimatedGraphics = Bits.GetBytes(Model.ROM, 0x260000, 0x8000);
@@ -1542,7 +1615,11 @@ namespace ZONEDOCTOR
         // hex editor
         private void hexEditor_Click(object sender, EventArgs e)
         {
-            Model.HexEditor.SetOffset((index * 33) + 0x2D8F00);
+            //Model.HexEditor.SetOffset((index * 33) + 0x2D8F00);
+
+            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            Model.HexEditor.SetOffset((index * 33) + Model.BASE_LOCATION);
+
             Model.HexEditor.Compare();
             Model.HexEditor.Show();
         }
@@ -1619,5 +1696,63 @@ namespace ZONEDOCTOR
             temp.Show();
         }
         #endregion
+
+
+
+        private void tbLocation_TextChanged(object sender, EventArgs e)
+        {
+            if (this.Refreshing)
+                return;
+
+            string mess = tbLocation.Text;
+
+            if (mess.Length == 0)
+                mess = " ";
+
+            if (mess.Length <= 37)
+            {
+                if (!Bits.IsValidMapName(mess))
+                {
+                    MessageBox.Show("Invalid Message name: \"" + tbLocation.Text + "\". For allowed characters, see readme.", "FF6LE",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    tbLocation.Text = Model.LocationNames[messageName.SelectedIndex];
+                    tbLocation.Focus();
+                }
+                else
+                {
+                    int ind = messageName.SelectedIndex;
+                    Model.LocationNames[ind] = mess;
+                    messageName.Items.Clear();
+                    messageName.Items.AddRange(Model.LocationNames);
+                    messageName.SelectedIndex = ind;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid Message Name length. Message Name byte count must be inferior or equal to 37.",
+                    "FF6LE",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbLocation.Text = Model.LocationNames[messageName.SelectedIndex];
+                tbLocation.Focus();
+            }
+        }
+
+        private void tbMapName_TextChanged(object sender, EventArgs e)
+        {
+            if (this.Refreshing)
+                return;
+
+            string name = tbMapName.Text.Trim();
+            Model.LevelNames[index] = name;
+            string[] locNames = Model.GetLevelNames();
+            this.locationName.Items.Clear();
+            this.locationName.Items.AddRange(locNames);
+            this.locationName.SelectedIndex = index < this.locationName.Items.Count ? index : 0;
+
+            exitDestination.Items.Clear();
+            exitDestination.Items.AddRange(locNames);
+        }
+
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms; // remove later
 using System.IO;
@@ -10,6 +11,9 @@ using ZONEDOCTOR.ScriptsEditor;
 using ZONEDOCTOR.ScriptsEditor.Commands;
 using ZONEDOCTOR.Properties;
 using ZONEDOCTOR._Static;
+using System.Xml.Linq;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace ZONEDOCTOR
 {
@@ -75,18 +79,10 @@ namespace ZONEDOCTOR
             {
                 if (locationNames == null)
                 {
-                    locationNames = new string[73];
-                    for (int i = 0; i < locationNames.Length; i++)
-                    {
-                        locationNames[i] = "";
-                        int offset = Bits.GetShort(rom, i * 2 + 0x268400) + 0x0EF100;
-                        while (rom[offset] != 0)
-                        {
-                            byte temp = rom[offset++];
-                            locationNames[i] += Lists.DialogueTable[temp];
-                        }
-                    }
+                    locationNames = Parsing.GetLocationNames();
+                
                 }
+
                 return locationNames;
             }
             set { locationNames = value; }
@@ -123,7 +119,7 @@ namespace ZONEDOCTOR
         private static byte[][] graphicSets = new byte[82][];
         private static byte[][] graphicSetsL3 = new byte[19][];
         private static byte[][] tilesets = new byte[75][];
-        private static byte[][] tilemaps = new byte[351][];
+        private static byte[][] tilemaps = new byte[NUM_TILEMAPS][]; // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
         private static byte[][] soliditySets = new byte[43][];
         private static byte[] animatedGraphics;
         private static byte[] wobGraphicSet;
@@ -184,7 +180,12 @@ namespace ZONEDOCTOR
             get
             {
                 if (tilemaps[0] == null)
-                    Decompress(tilemaps, 0x19CD90, 0x19D1B0, "TILE MAP", 0x4000, 3, 0, tilemaps.Length, TilemapSizes);
+                {
+                    //Decompress(tilemaps, 0x19CD90, 0x19D1B0, "TILE MAP", 0x4000, 3, 0, tilemaps.Length, TilemapSizes);
+
+                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                    Decompress(tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "TILE MAP", 0x4000, 3, 0, tilemaps.Length, TilemapSizes);
+                }
                 return tilemaps;
             }
             set { tilemaps = value; }
@@ -301,9 +302,9 @@ namespace ZONEDOCTOR
         }
         public static bool[] EditGraphicSets = new bool[82];
         public static bool[] EditTilesets = new bool[75];
-        public static bool[] EditTilemaps = new bool[351];
+        public static bool[] EditTilemaps = new bool[NUM_TILEMAPS]; // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+        public static ushort[] TilemapSizes = new ushort[NUM_TILEMAPS]; // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
         public static bool[] EditSoliditySets = new bool[43];
-        public static ushort[] TilemapSizes = new ushort[351];
         public static bool EditWOBGraphicSet;
         public static bool EditWOBTilemap;
         public static bool EditWORGraphicSet;
@@ -320,7 +321,9 @@ namespace ZONEDOCTOR
             {
                 if (locations == null)
                 {
-                    locations = new Location[415];
+                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                    locations = new Location[NUM_LOCATIONS];
+
                     for (int i = 0; i < locations.Length; i++)
                         locations[i] = new Location(i);
                 }
@@ -996,7 +999,17 @@ namespace ZONEDOCTOR
                 else
                     offset = (int)(Bits.GetInt24(rom, pointer) + offsetStart);
                 if (i == arrays.Length - 1)
-                    original[i] = Bits.GetBytes(rom, offset, offsetEnd - offset);
+                {
+                    // madsiur, comp
+                    if (tileMaps && Model.IsExpanded)
+                    {
+                        original[i] = Expansion.DEFAULT_TILEMAP;
+                    }
+                    else
+                    {
+                        original[i] = Bits.GetBytes(rom, offset, offsetEnd - offset);
+                    }
+                }
                 else
                     original[i] = Bits.GetBytes(rom, offset, Bits.GetShort(rom, offset));
             }
@@ -1070,6 +1083,7 @@ namespace ZONEDOCTOR
         public static void LoadAll()
         {
             object dummy;
+            Model.LoadVarCompDataAbsPtrs();
             dummy = LocationNames;
             dummy = Dialogues;
             dummy = GraphicSets;
@@ -1113,9 +1127,23 @@ namespace ZONEDOCTOR
         public static void CreateListCollections()
         {
             ELists = new List<EList>();
-            ELists.Add(new EList("Locations", Lists.Copy(Lists.LocationNames)));
+            ELists.Add(new EList("Locations", Lists.Copy(LevelNames)));
             ELists.Add(new EList("Songs", Lists.Copy(Lists.MusicNames)));
         }
+        // madsiur
+        public static void UpdateElistLocation()
+        {
+            ELists.RemoveAll(x => x.Name.Equals("Locations"));
+            ELists.Add(new EList("Locations", Lists.Copy(LevelNames)));
+            Project.ReplaceEList(ELists.Find(x => x.Name.Equals("Locations")));
+        }
+
+        public static void UpdateElistLocationEntry(int ind, string text)
+        {
+            int index = ELists.FindIndex(x => x.Name.Equals("Locations"));
+            ELists[index].Labels[ind] = text;
+        }
+
         public static void ResetListCollections()
         {
             foreach (EList elist in ELists)
@@ -1131,7 +1159,7 @@ namespace ZONEDOCTOR
             switch (name)
             {
                 case "Battlefields": elist.Labels.CopyTo(Lists.BattlefieldNames, 0); break;
-                case "Levels": elist.Labels.CopyTo(Lists.LocationNames, 0); break;
+                case "Levels": elist.Labels.CopyTo(LevelNames, 0); break;
                 case "Songs": elist.Labels.CopyTo(Lists.MusicNames, 0); break;
             }
         }
@@ -1159,6 +1187,60 @@ namespace ZONEDOCTOR
         }
         #endregion
         #endregion
+
+        #region CE expansion variables
+
+        // CE Expansions
+        public static bool IsExpanded;
+        public static bool IsChestsExpanded;
+
+        // Settings file
+        public static XDocument SettingsFile;
+
+        // Map names
+        public static string[] LevelNames;
+
+        // Number of entries
+        public static int NUM_LOCATIONS;
+        public static int NUM_TILEMAPS;
+        public static int NUM_LOC_NAMES;
+
+        // Size of data
+        public static int SIZE_EVENT_PTR;
+        public static int SIZE_EVENT_DATA;
+        public static int SIZE_NPC_PTR;
+        public static int SIZE_NPC_DATA;
+        public static int SIZE_SHORT_EXIT_PTR;
+        public static int SIZE_SHORT_EXIT_DATA;
+        public static int SIZE_LONG_EXIT_PTR;
+        public static int SIZE_LONG_EXIT_DATA;
+        public static int SIZE_CHEST_PTR;
+        public static int SIZE_CHEST_DATA;
+        public static int SIZE_TILEMAP_PTR;
+        public static int SIZE_TILEMAP_DATA;
+        public static int SIZE_LOCATION;
+        public static int SIZE_LOC_NAMES;
+        public static int SIZE_LOC_NAMES_PTR;
+
+        // ROM Offsets
+        public static int BASE_EVENT_PTR;
+        public static int BASE_EVENT;
+        public static int BASE_NPC_PTR;
+        public static int BASE_NPC;
+        public static int BASE_SHORT_EXIT_PTR;
+        public static int BASE_SHORT_EXIT;
+        public static int BASE_LONG_EXIT_PTR;
+        public static int BASE_LONG_EXIT;
+        public static int BASE_CHEST_PTR;
+        public static int BASE_CHEST;
+        public static int BASE_TILEMAP_PTR;
+        public static int BASE_TILEMAP;
+        public static int BASE_LOCATION;
+        public static int BASE_LOC_NAMES_PTR;
+        public static int BASE_LOC_NAMES;
+
+        #endregion
+
         #region LJ 2011-12-28: interoperability fix for FF3usME
         public readonly static int OFFS_MAP_GFXPIX_PTR = 0x2EB200;      // offset for headerless ROM
         public readonly static int OFFS_WOB_MAP_DT_TL = 0x2ED434;		// at 0x2ED634 we have 15643 bytes for data, at 0x2F134F we have 8449 bytes for tiles, end at 0x2F3450
@@ -1273,314 +1355,629 @@ namespace ZONEDOCTOR
         }
         #endregion
 
-        private static int DatabankOff = 0;
-        private static int TilemapBankOff = 0;
-        private static int TilemapsSize = 0;
-        public static void ExpandMaps(string strdataBank, string strtilemapBank, int numBanks)
+        #region CE Functions
+
+        /// <summary>
+        /// madsiur [CE Edition 1.0]
+        /// Init sizes, number of entries and offset by fetching from the ROM.
+        /// </summary>
+        /// <param name="isExpanded">True if ROM has expansion</param>
+        public static void InitExpansionFields(bool isExpanded)
         {
-            string message = String.Empty;
-            bool error = false;
-            byte dataBank = 0;
-            byte tilemapBank = 0;
-
-            if (strdataBank.Equals(String.Empty))
+            //if ROM is expanded
+            if (isExpanded)
             {
-                message = "Please enter a valid bank for data expansion.";
-                error = true;
-            }
+                SIZE_EVENT_PTR = 0x402;
+                SIZE_EVENT_DATA = 0x3000;
+                SIZE_NPC_PTR = 0x402;
+                SIZE_NPC_DATA = 0x8BFF;
+                SIZE_SHORT_EXIT_PTR = 0x402;
+                SIZE_SHORT_EXIT_DATA = 0x3BFF;
+                SIZE_LONG_EXIT_PTR = 0x402;
+                SIZE_LONG_EXIT_DATA = 0xBFF;
+                SIZE_CHEST_PTR = 0x400;
+                SIZE_CHEST_DATA = 0x1000;
+                SIZE_TILEMAP_PTR = 0x5FD;
 
-            if (strtilemapBank.Equals(String.Empty) && !error)
-            {
-                message = "Please enter a valid starting bank for tilemaps expansion.";
-                error = true;
-            }
+                SIZE_LOCATION = 0x4200;
+                SIZE_LOC_NAMES = 0x2500;
 
-            if (!error)
-            {
-                if (!Byte.TryParse(strdataBank, out dataBank))
-                {
-                    message = "Bank number must be between $00 to $6F or from $C0 to $FF.";
-                    error = true;
-                }
-
-                if (!Byte.TryParse(strtilemapBank, out tilemapBank) && !error)
-                {
-                    message = "Bank number must be between $00 to $" + (0x70 - numBanks).ToString("X2") +
-                              " or from $C0 to $" + (0xFF - numBanks - 1).ToString("X2") + ".";
-                    error = true;
-                }
-            }
-
-            if (!error)
-            {
-                if (!Bits.IsValidBank(dataBank))
-                {
-                    message = "Bank number must be between $00 to $6F or from $C0 to $FF.";
-                    error = true;
-                }
-                else if (!Bits.IsValidBank(tilemapBank))
-                {
-                    message = "Bank number must be between $00 to $" + (0x70 - numBanks).ToString("X2") +
-                              " or from $C0 to $" + (0xFF - numBanks - 1).ToString("X2") + ".";
-                    error = true;
-                }
-            }
-
-            if (!error)
-            {
-                DatabankOff = Bits.ToHiROM(dataBank << 16);
-                TilemapBankOff = Bits.ToHiROM(tilemapBank << 16);
-                TilemapsSize = numBanks << 16;
-
-                DialogResult dialog =
-                    MessageBox.Show("You want to move / expand data from $" + DatabankOff.ToString("X6") + " to $" +
-                                    (DatabankOff + 0xFFFF).ToString("X6") +
-                                    " and move / expand tilemaps data from $" + TilemapBankOff.ToString("X6") + "to $" +
-                                    (TilemapBankOff + TilemapsSize - 1).ToString("X6"), "ZONE DOCTOR", MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question);
-
-                if (dialog == DialogResult.Yes)
-                {
-                    List<int[]> faults = new List<int[]>();
-                    validateROM(ref faults);
-
-                    if (faults.Count == 0)
-                    {
-                        expandROM();
-                    }
-                    else
-                    {
-                        message = "You have the following error(s) in your ROM:\n\n";
-
-                        for (int i = 0; i < faults.Count && i < 8; i++)
-                        {
-                            message += "\n" + (i + 1) + "- At offset $" + faults[i][2].ToString("X6") + ", value of $" +
-                                       faults[i][1].ToString("X6") + " found instead of expected $" + faults[i][0].ToString("X6") + "\n";
-                        }
-
-                        if (faults.Count > 8)
-                        {
-                            message += "\nDisplaying only the first 8 errors. You have more.\n";
-                        }
-
-                        dialog = MessageBox.Show(message + "\nThere will be problems with the ROM. Continue anyway?", "ZONE DOCTOR", MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Exclamation);
-
-                        if (dialog == DialogResult.Yes)
-                        {
-                            expandROM();
-                        }
-                    }
-
-                }
+                NUM_TILEMAPS = 511;
+                NUM_LOCATIONS = 511;
+                NUM_LOC_NAMES = 256;
             }
             else
             {
-                MessageBox.Show("Error! " + message, "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SIZE_EVENT_PTR = 0x342;
+                SIZE_EVENT_DATA = 0x16CE;
+                SIZE_NPC_PTR = 0x342;
+                SIZE_NPC_DATA = 0x4D6E;
+                SIZE_SHORT_EXIT_PTR = 0x402;
+                SIZE_SHORT_EXIT_DATA = 0x1AFE;
+                SIZE_LONG_EXIT_PTR = 0x402;
+                SIZE_LONG_EXIT_DATA = 0x57E;
+                SIZE_CHEST_PTR = 0x340;
+                SIZE_CHEST_DATA = 0x827;
+                SIZE_TILEMAP_PTR = 0x41D;
+                SIZE_TILEMAP_DATA = 0x42E50;
+                SIZE_LOCATION = 0x3580;
+                SIZE_LOC_NAMES = 0x500;
+
+                NUM_TILEMAPS = 351;
+                NUM_LOCATIONS = 415;
+                NUM_LOC_NAMES = 73;
+            }
+
+            // fetch offsets from the ROM
+            BASE_EVENT_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x00BCB5));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_EVENT_PTR", BASE_EVENT_PTR);
+            BASE_EVENT = Bits.ToAbs(BASE_EVENT_PTR + SIZE_EVENT_PTR);
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_EVENT", BASE_EVENT_PTR + SIZE_EVENT_PTR);
+            BASE_NPC_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x0052C3));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_NPC_PTR", BASE_NPC_PTR);
+            BASE_NPC = Bits.ToAbs(BASE_NPC_PTR + SIZE_NPC_PTR);
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_NPC", BASE_NPC_PTR + SIZE_NPC_PTR);
+            BASE_SHORT_EXIT_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x001A84));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_SHORT_EXIT_PTR", BASE_SHORT_EXIT_PTR);
+            BASE_SHORT_EXIT = Bits.ToAbs(BASE_SHORT_EXIT_PTR + SIZE_SHORT_EXIT_PTR);
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_SHORT_EXIT", BASE_SHORT_EXIT_PTR + SIZE_SHORT_EXIT_PTR);
+            BASE_LONG_EXIT_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x0018F1));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_LONG_EXIT_PTR", BASE_LONG_EXIT_PTR);
+            BASE_LONG_EXIT = Bits.ToAbs(BASE_LONG_EXIT_PTR + SIZE_LONG_EXIT_PTR);
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_LONG_EXIT", BASE_LONG_EXIT_PTR + SIZE_LONG_EXIT_PTR);
+            BASE_CHEST_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x004BE1));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_CHEST_PTR", BASE_CHEST_PTR);
+            BASE_CHEST = Bits.ToAbs(BASE_CHEST_PTR + SIZE_CHEST_PTR);
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_CHEST", BASE_CHEST_PTR + SIZE_CHEST_PTR);
+            BASE_TILEMAP_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x002893));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_TILEMAP_PTR", BASE_TILEMAP_PTR);
+            BASE_TILEMAP = Bits.ToAbs((rom[0x0028A4] << 16) + Bits.GetShort(rom, 0x002898));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_TILEMAP", (rom[0x0028A4] << 16) + Bits.GetShort(rom, 0x002898));
+            BASE_LOCATION = Bits.ToAbs(Bits.GetInt24(rom, 0x001CC0));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_LOCATION", Bits.GetInt24(rom, 0x001CC0));
+            BASE_LOC_NAMES_PTR = Bits.ToAbs(Bits.GetInt24(rom, 0x008009));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_LOC_NAMES_PTR", Bits.GetInt24(rom, 0x008009));
+            BASE_LOC_NAMES = Bits.ToAbs((rom[0x007FFE] << 16) + Bits.GetShort(rom, 0x00800D));
+            Log.SetEntry("InitFields (isExpanded = " + isExpanded + ")", "Init", "BASE_LOC_NAMES", (rom[0x007FFE] << 16) + Bits.GetShort(rom, 0x00800D));
+
+            tilemaps = new byte[NUM_TILEMAPS][];
+            EditTilemaps = new bool[NUM_TILEMAPS];
+            TilemapSizes = new ushort[NUM_TILEMAPS];
+        }
+
+        public static bool ExpandROM(int romOffset, int tilemapOffset, int tilemapSize, bool isZplus)
+        {
+            Log.InitLog();
+
+            try
+            {
+                // if user was using FF6LE+ or ZD+ before
+                if (isZplus)
+                {
+                    Log.SetEntry("IsZdPlus(true)");
+                    SIZE_EVENT_DATA = 0x1C46;
+                    SIZE_SHORT_EXIT_DATA = 0x2132;
+                    SIZE_NPC_DATA = 0x5606;
+                    SIZE_TILEMAP_DATA = 0x060000 > tilemapSize ? 0x60000 : tilemapSize; // Approximate but it is trimmed later on.
+                }
+
+                Log.SetEntry("In Expansion", "Init", "TilemapsSize", tilemapSize);
+                Log.SetEntry("In Expansion", "Init", "romOffset", romOffset);
+                Log.SetEntry("In Expansion", "Init", "tilemapOffset", tilemapOffset);
+
+                // Get original rom
+                byte[] EventPtrs = Bits.GetBytes(rom, BASE_EVENT_PTR, SIZE_EVENT_PTR);
+                byte[] Eventrom = Bits.GetBytes(rom, BASE_EVENT, SIZE_EVENT_DATA);
+                byte[] NpcPtrs = Bits.GetBytes(rom, BASE_NPC_PTR, SIZE_NPC_PTR);
+                byte[] Npcrom = Bits.GetBytes(rom, BASE_NPC, SIZE_NPC_DATA);
+                byte[] ShortExitPtrs = Bits.GetBytes(rom, BASE_SHORT_EXIT_PTR, SIZE_SHORT_EXIT_PTR);
+                byte[] ShortExitrom = Bits.GetBytes(rom, BASE_SHORT_EXIT, SIZE_SHORT_EXIT_DATA);
+                byte[] LongExitPtrs = Bits.GetBytes(rom, BASE_LONG_EXIT_PTR, SIZE_SHORT_EXIT_PTR);
+                byte[] LongExitrom = Bits.GetBytes(rom, BASE_LONG_EXIT, SIZE_LONG_EXIT_DATA);
+                byte[] ChestPtrs = Bits.GetBytes(rom, BASE_CHEST_PTR, SIZE_CHEST_PTR);
+                byte[] Chestrom = Bits.GetBytes(rom, BASE_CHEST, SIZE_CHEST_DATA);
+                byte[] TilemapPtrs = Bits.GetBytes(rom, BASE_TILEMAP_PTR, SIZE_TILEMAP_PTR);
+                byte[] Tilemaprom = Bits.GetBytes(rom, BASE_TILEMAP, SIZE_TILEMAP_DATA);
+                byte[] Locationrom = Bits.GetBytes(rom, BASE_LOCATION, SIZE_LOCATION);
+                byte[] LocNamesPtr = Bits.GetBytes(rom, BASE_LOC_NAMES_PTR, NUM_LOC_NAMES * 2);
+                byte[] LocNames = Bits.GetBytes(rom, BASE_LOC_NAMES, SIZE_LOC_NAMES);
+
+                Log.SetEntry("INIT ARRAYS");
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_EVENT_PTR", BASE_EVENT_PTR);
+                Log.SetEntry("EventPtrs", EventPtrs.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_EVENT", BASE_EVENT);
+                Log.SetEntry("Eventrom", Eventrom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_NPC_PTR", BASE_NPC_PTR);
+                Log.SetEntry("NpcPtrs", NpcPtrs.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_NPC", BASE_NPC);
+                Log.SetEntry("Npcrom", Npcrom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_SHORT_EXIT_PTR", BASE_SHORT_EXIT_PTR);
+                Log.SetEntry("ShortExitPtrs", ShortExitPtrs.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_SHORT_EXIT", BASE_SHORT_EXIT);
+                Log.SetEntry("ShortExitrom", ShortExitrom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_LONG_EXIT_PTR", BASE_LONG_EXIT_PTR);
+                Log.SetEntry("LongExitPtrs", LongExitPtrs.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_LONG_EXIT", BASE_LONG_EXIT);
+                Log.SetEntry("LongExitrom", LongExitrom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_CHEST_PTR", BASE_CHEST_PTR);
+                Log.SetEntry("ChestPtrs", ChestPtrs.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_CHEST", BASE_CHEST);
+                Log.SetEntry("Chestrom", Chestrom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_TILEMAP_PTR", BASE_TILEMAP_PTR);
+                Log.SetEntry("TilemapPtrs", TilemapPtrs.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_TILEMAP", BASE_TILEMAP);
+                Log.SetEntry("Tilemaprom", Tilemaprom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_LOCATION", BASE_LOCATION);
+                Log.SetEntry("Locationrom", Locationrom.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_LOC_NAMES_PTR", BASE_LOC_NAMES_PTR);
+                Log.SetEntry("LocNamesPtr", LocNamesPtr.Length);
+                Log.SetEntry("In Expansion", "Init Arrays", "BASE_LOC_NAMES", BASE_LOC_NAMES);
+                Log.SetEntry("LocNames", LocNames.Length);
+
+
+
+                // Erase original rom in ROM (except location names)
+                Bits.Fill(rom, Expansion.FILLER, BASE_EVENT_PTR, SIZE_EVENT_PTR + SIZE_EVENT_DATA);
+                Bits.Fill(rom, Expansion.FILLER, BASE_NPC_PTR, SIZE_NPC_PTR + SIZE_NPC_DATA);
+                Bits.Fill(rom, Expansion.FILLER, BASE_SHORT_EXIT_PTR, SIZE_SHORT_EXIT_PTR + SIZE_SHORT_EXIT_DATA);
+                Bits.Fill(rom, Expansion.FILLER, BASE_LONG_EXIT_PTR, SIZE_LONG_EXIT_PTR + SIZE_LONG_EXIT_DATA);
+                Bits.Fill(rom, Expansion.FILLER, BASE_CHEST_PTR, SIZE_CHEST_PTR + SIZE_CHEST_DATA);
+                Bits.Fill(rom, Expansion.FILLER, BASE_TILEMAP_PTR, SIZE_TILEMAP_PTR + SIZE_TILEMAP_DATA + 3);
+                Bits.Fill(rom, Expansion.FILLER, BASE_LOCATION, SIZE_LOCATION);
+
+                // Pointer incremention value (for 2 bytes pointers)
+                ushort inctPtr = (ushort)(Expansion.NEW_ENTRIES * 2);
+
+                Log.SetEntry("POINTERS INCREMENTATION");
+                Log.SetEntry("In Expansion", "Ptr inc", "inctPtr", inctPtr);
+                // Increment all pointers (except chests and tilemaps)
+                Bits.IncShort(EventPtrs, inctPtr);
+                Bits.IncShort(NpcPtrs, inctPtr);
+                Bits.IncShort(ShortExitPtrs, inctPtr);
+                Bits.IncShort(LongExitPtrs, inctPtr);
+
+                Log.SetEntry("MAXIMUMS FINDING");
+                // Get highests / last pointers
+                ushort LastEventPtr = (ushort)Bits.findArrayMax(EventPtrs, 2);
+                ushort LastNpcPtr = (ushort)Bits.findArrayMax(NpcPtrs, 2);
+                ushort LastShortExitPtr = (ushort)Bits.findArrayMax(ShortExitPtrs, 2);
+                ushort LastLongExitPtr = (ushort)Bits.findArrayMax(LongExitPtrs, 2);
+                ushort LastChestPtr = (ushort)Bits.findArrayMax(ChestPtrs, 2);
+                int LastTilemapPtr = Bits.findArrayMax(TilemapPtrs, 3);
+                ushort LastLocNamePtr = (ushort)Bits.findArrayMax(LocNamesPtr, 2);
+
+                // Create expansion pointers arrays
+                byte[] ExpEventPtrs = new byte[inctPtr];
+                byte[] ExpNpcPtrs = new byte[inctPtr];
+                byte[] ExpShortExitPtrs = new byte[inctPtr];
+                byte[] ExpLongExitPtrs = new byte[inctPtr];
+                byte[] ExpChestPtrs = new byte[inctPtr];
+                byte[] ExpTilemapPtrs = new byte[(511 - NUM_TILEMAPS) * 3];
+
+                Log.SetEntry("FILL EXP POINTERS ARRAY");
+                // Fill each array with highest pointer
+                Bits.FillShort(ExpEventPtrs, LastEventPtr);
+                Bits.FillShort(ExpNpcPtrs, LastNpcPtr);
+                Bits.FillShort(ExpShortExitPtrs, LastShortExitPtr);
+                Bits.FillShort(ExpLongExitPtrs, LastLongExitPtr);
+                Bits.FillShort(ExpChestPtrs, LastChestPtr);
+
+                Log.SetEntry("In Expansion", "Filling", "LastEventPtr", LastEventPtr);
+                Log.SetEntry("In Expansion", "Filling", "LastNpcPtr", LastNpcPtr);
+                Log.SetEntry("In Expansion", "Filling", "LastShortExitPtr", LastShortExitPtr);
+                Log.SetEntry("In Expansion", "Filling", "LastLongExitPtr", LastLongExitPtr);
+                Log.SetEntry("In Expansion", "Filling", "LastChestPtr", LastChestPtr);
+
+
+                Log.SetEntry("FILL TILEMAPS");
+                // Last pointer points to nothing so we need to resize tilemap rom accordingly.
+                Tilemaprom = Bits.GetBytes(Tilemaprom, 0, LastTilemapPtr);
+                Log.SetEntry("In Expansion", "Tilemaps", "LastTilemapPtr", LastTilemapPtr);
+                Log.SetEntry("Tilemaprom", Tilemaprom.Length);
+                Log.SetEntry("Expansion.DEFAULT_TILEMAP", Expansion.DEFAULT_TILEMAP.Length);
+
+                string lg1 = "";
+                Log.SetEntry("TILEMAPS NEW POINTERS");
+                // Since we're going to copy default tilemap numerous times, increase each pointer by its length
+                for (int i = 0; i < ExpTilemapPtrs.Length; i += 3)
+                {
+                    LastTilemapPtr += Expansion.DEFAULT_TILEMAP.Length;
+
+                    ExpTilemapPtrs[i] = (byte)(LastTilemapPtr & 0xFF);
+                    ExpTilemapPtrs[i + 1] = (byte)((LastTilemapPtr >> 8) & 0xFF);
+                    ExpTilemapPtrs[i + 2] = (byte)((LastTilemapPtr >> 16) & 0xFF);
+
+                    lg1 += Bits.GetInt24(ExpTilemapPtrs, i).ToString("X6") + " ";
+                    if (i % 16 == 0)
+                    {
+                        lg1 += "\n";
+                    }
+                }
+
+                Log.log.Add(lg1);
+                Log.SetEntry("END TILEMPAS POINTERS");
+
+
+                Bits.SetBytes(rom, Expansion.NEW_LOC_NAME, LocNamesPtr);
+                Bits.SetBytes(rom, Expansion.NEW_LOC_NAME + 0x200, LocNames);
+
+                ushort j = LastLocNamePtr;
+
+                while (rom[j] != 0)
+                    j++;
+
+                for (int i = NUM_LOC_NAMES; i < 256; i++)
+                {
+                    Bits.SetShort(rom, Expansion.NEW_LOC_NAME + i * 2, j);
+                    Bits.SetBytes(rom, Expansion.NEW_LOC_NAME + 0x200 + j, Expansion.DEFAULT_LOC_NAME);
+                    j += (ushort)Expansion.DEFAULT_LOC_NAME.Length;
+                }
+
+                // put back the banks offsets to absolute value because we are going to write to the ROM
+                romOffset = Bits.ToAbs(romOffset);
+                tilemapOffset = Bits.ToAbs(tilemapOffset);
+
+                Log.SetEntry("In Expansion", "Init Exp banks", "romOffset", romOffset);
+                Log.SetEntry("In Expansion", "Init Exp banks", "tilemapOffset", tilemapOffset);
+
+                // Inset events, npcs, exits, chests ptrs and rom
+                Log.SetEntry("Setrom Events");
+                Bits.setData(rom, BASE_EVENT_PTR, EventPtrs, ExpEventPtrs, Eventrom);
+                Log.SetEntry("Setrom NPC");
+                Bits.setData(rom, romOffset, NpcPtrs, ExpNpcPtrs, Npcrom);
+                Log.SetEntry("Setrom Short Exits");
+                Bits.setData(rom, romOffset + Expansion.NEW_SHORT_EXIT, ShortExitPtrs, ExpShortExitPtrs, ShortExitrom);
+                Log.SetEntry("Setrom Long Exits");
+                Bits.setData(rom, romOffset + Expansion.NEW_LONG_EXIT, LongExitPtrs, ExpLongExitPtrs, LongExitrom);
+                Log.SetEntry("Setrom Chests");
+                Bits.setData(rom, romOffset + Expansion.NEW_CHEST, ChestPtrs, ExpChestPtrs, Chestrom);
+
+                Log.SetEntry("LOCATIONS");
+                // Insert locations rom
+                int offset = Expansion.NEW_LOCATION;
+                Bits.SetBytes(rom, offset, Locationrom);
+
+                Log.SetEntry("In Expansion", "Set location rom", "offset", offset);
+                Log.SetEntry("Locationrom", Locationrom.Length);
+
+                offset += NUM_LOCATIONS * 33;
+
+                Log.SetEntry("In Expansion", "increase offset", "NUM_LOCATIONS * 33", NUM_LOCATIONS * 33);
+                Log.SetEntry("In Expansion", "increase offset", "offset", offset);
+                Log.SetEntry("Expansion.DEFAULT_LOCATION", Expansion.DEFAULT_LOCATION.Length);
+
+                for (int i = 0; i < Expansion.NEW_ENTRIES; i++)
+                {
+                    Log.SetEntry("In Expansion", "add location", "offset", offset);
+                    Bits.SetBytes(rom, offset, Expansion.DEFAULT_LOCATION);
+                    offset += Expansion.DEFAULT_LOCATION.Length;
+                }
+
+                Log.SetEntry("TILEMAPS");
+                // Get last tilemap pointer
+                LastTilemapPtr = Bits.findArrayMax(TilemapPtrs, 3);
+                Log.SetEntry("In Expansion", "get max", "LastTilemapPtr", LastTilemapPtr);
+
+                // Insert Tilemaps ptrs and rom
+                offset = BASE_TILEMAP_PTR;
+                Bits.SetBytes(rom, offset, TilemapPtrs);
+                Log.SetEntry("In Expansion", "set tilemaps A", "offset", offset);
+                Log.SetEntry("TilemapPtrs", TilemapPtrs.Length);
+                offset += SIZE_TILEMAP_PTR;
+                Bits.SetBytes(rom, offset, ExpTilemapPtrs);
+                Log.SetEntry("In Expansion", "set tilemaps B", "offset", offset);
+                Log.SetEntry("ExpTilemapPtrs", ExpTilemapPtrs.Length);
+                offset = tilemapOffset;
+                Bits.SetBytes(rom, offset, Tilemaprom);
+                Log.SetEntry("In Expansion", "set tilemaps C", "offset", offset);
+                Log.SetEntry("Tilemaprom", Tilemaprom.Length);
+                offset = tilemapOffset + LastTilemapPtr;
+
+                Log.SetEntry("Add new tilemaps");
+                for (int i = 0; i < (511 - NUM_TILEMAPS); i++)
+                {
+                    Log.SetEntry("In Expansion", "Add extra tilemap" + i, "offset", offset);
+                    Bits.SetBytes(rom, offset, Expansion.DEFAULT_TILEMAP);
+                    offset += Expansion.DEFAULT_TILEMAP.Length;
+                }
+
+                // We ned the new banks to HiROM
+                romOffset = Bits.ToHiROM(romOffset);
+
+                Log.SetEntry("In Expansion", "set rom bank", "romOffset", romOffset);
+
+                // ASM code changes for events, NPCs, Exits and Chests (LDAs)
+                Log.SetEntry("Writing Event ASM");
+                Bits.setAsmArray(rom, Expansion.ROM_EVENT, Expansion.ROM_EVENT_VAR, Bits.ToHiROM(BASE_EVENT_PTR));
+                Log.SetEntry("Writing NPC ASM");
+                Bits.setAsmArray(rom, Expansion.ROM_NPC, Expansion.ROM_NPC_VAR, romOffset);
+                Log.SetEntry("Writing Short Exit ASM");
+                Bits.setAsmArray(rom, Expansion.ROM_SHORT_EXIT, Expansion.ROM_SHORT_EXIT_VAR, romOffset + Expansion.NEW_SHORT_EXIT);
+                Log.SetEntry("Write Long Exit ASM");
+                Bits.setAsmArray(rom, Expansion.ROM_LONG_EXIT, Expansion.ROM_LONG_EXIT_VAR, romOffset + Expansion.NEW_LONG_EXIT);
+                Log.SetEntry("Write Chest ASM");
+                Bits.setAsmArray(rom, Expansion.ROM_CHEST, Expansion.ROM_CHEST_VAR_EXP, romOffset + Expansion.NEW_CHEST);
+
+                Log.SetEntry("Write Locations ASM");
+                // LDA change for Locations
+                Bits.SetInt24(rom, Bits.ToAbs(Expansion.ROM_LOCATION + 1), Bits.ToHiROM(Expansion.NEW_LOCATION));
+                Log.SetEntry("In Expansion", "Write Locations ASM", "Expansion.ROM_LOCATION", Expansion.ROM_LOCATION + 1);
+                Log.SetEntry("In Expansion", "Write Locations ASM", "Expansion.NEW_LOCATION", Bits.ToHiROM(Expansion.NEW_LOCATION));
+
+                Log.SetEntry("Set Tilemaps ADC & LDA");
+                // ADC and LDA changes for tilemaps
+                Bits.setAsmArray(rom, Expansion.ROM_TILEMAP_SHORT, (ushort)0x0000);
+                Bits.setAsmArray(rom, Expansion.ROM_TILEMAP_BYTE, Bits.ToHiROM((byte)(tilemapOffset >> 16)));
+
+                // ADC and LDA changes for loc names
+                Log.SetEntry("Writing Location Names ASM");
+                Bits.SetInt24(rom, 0x008009, Bits.ToHiROM(Expansion.NEW_LOC_NAME));
+                Bits.setAsmArray(rom, Expansion.ROM_LOC_NAME_SHORT, 0x4400);
+                Bits.setAsmArray(rom, Expansion.ROM_LOC_NAME_BYTE, 0xDA);
+
+                // load expanded variables values
+                InitExpansionFields(true);
+                IsExpanded = true;
+                LevelNames = Lists.expandedLocations;
+
+                locations = new Location[NUM_LOCATIONS];
+
+                for (int i = 0; i < locations.Length; i++)
+                    locations[i] = new Location(i);
+
+                Log.SetEntry("END OF LOG " + DateTime.Now.ToString(new CultureInfo("en-US")));
+                Log.WriteLog();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.SetEntry("In Expansion", "ERROR", e.Message, e.GetHashCode());
+                Log.SetEntry("END OF LOG " + DateTime.Now.ToString(new CultureInfo("en-US")));
+                Log.WriteLog();
+                return false;
             }
         }
 
-        private static void expandROM()
+        public static bool ExpandChests()
         {
-            // Get original data
-            byte[] EventPtrs = Bits.GetBytes(rom, Expansion.BASE_EVENT_PTR, Expansion.SIZE_EVENT_PTR);
-            byte[] EventData = Bits.GetBytes(rom, Expansion.BASE_EVENT, Expansion.SIZE_EVENT_DATA);
-            byte[] NpcPtrs = Bits.GetBytes(rom, Expansion.BASE_NPC_PTR, Expansion.SIZE_NPC_PTR);
-            byte[] NpcData = Bits.GetBytes(rom, Expansion.BASE_NPC, Expansion.SIZE_NPC_DATA);
-            byte[] ShortExitPtrs = Bits.GetBytes(rom, Expansion.BASE_SHORT_EXIT_PTR, Expansion.SIZE_SHORT_EXIT_PTR);
-            byte[] ShortExitData = Bits.GetBytes(rom, Expansion.BASE_SHORT_EXIT, Expansion.SIZE_SHORT_EXIT_DATA);
-            byte[] LongExitPtrs = Bits.GetBytes(rom, Expansion.BASE_LONG_EXIT_PTR, Expansion.SIZE_SHORT_EXIT_PTR);
-            byte[] LongExitData = Bits.GetBytes(rom, Expansion.BASE_LONG_EXIT, Expansion.SIZE_LONG_EXIT_DATA);
-            byte[] ChestPtrs = Bits.GetBytes(rom, Expansion.BASE_CHEST_PTR, Expansion.SIZE_CHEST_PTR);
-            byte[] ChestData = Bits.GetBytes(rom, Expansion.BASE_CHEST, Expansion.SIZE_CHEST_DATA);
-            byte[] TilemapPtrs = Bits.GetBytes(rom, Expansion.BASE_TILEMAP_PTR, Expansion.SIZE_TILEMAP_PTR);
-            byte[] TilemapData = Bits.GetBytes(rom, Expansion.BASE_TILEMAP, Expansion.SIZE_TILEMAP_DATA);
-            byte[] LocationData = Bits.GetBytes(rom, Expansion.BASE_LOCATION, Expansion.SIZE_LOCATION);
-
-            // Erase original data in ROM
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_EVENT_PTR, Expansion.SIZE_EVENT_PTR + Expansion.SIZE_EVENT_DATA);
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_NPC_PTR, Expansion.SIZE_NPC_PTR + Expansion.SIZE_NPC_DATA);
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_SHORT_EXIT_PTR, Expansion.SIZE_SHORT_EXIT_PTR + Expansion.SIZE_SHORT_EXIT_DATA);
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_LONG_EXIT_PTR, Expansion.SIZE_LONG_EXIT_PTR + Expansion.SIZE_LONG_EXIT_DATA);
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_CHEST_PTR, Expansion.SIZE_CHEST_PTR + Expansion.SIZE_CHEST_DATA);
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_TILEMAP_PTR, Expansion.SIZE_TILEMAP_PTR + Expansion.SIZE_TILEMAP_DATA + 3);
-            Bits.Fill(rom, Expansion.FILLER, Expansion.BASE_LOCATION, Expansion.SIZE_LOCATION);
-
-            // Pointer incremention value (for 2 bytes pointers)
-            ushort inctPtr = (ushort)(Expansion.NEW_ENTRIES * 2);
-
-            // Increment all pointers (except chests and tilemaps)
-            Bits.IncShort(EventPtrs, inctPtr);
-            Bits.IncShort(NpcPtrs, inctPtr);
-            Bits.IncShort(ShortExitPtrs, inctPtr);
-            Bits.IncShort(LongExitPtrs, inctPtr);
-
-            // Get highests / last pointers
-            ushort LastEventPtr = (ushort)Bits.findArrayMax(EventPtrs, 2);
-            ushort LastNpcPtr = (ushort)Bits.findArrayMax(NpcPtrs, 2);
-            ushort LastShortExitPtr = (ushort)Bits.findArrayMax(ShortExitPtrs, 2);
-            ushort LastLongExitPtr = (ushort)Bits.findArrayMax(LongExitPtrs, 2);
-            ushort LastChestPtr = (ushort)Bits.findArrayMax(ChestPtrs, 2);
-            int LastTilemapPtr = Bits.findArrayMax(TilemapPtrs, 3);
-
-            // Create expansion pointers arrays
-            byte[] ExpEventPtrs = new byte[inctPtr];
-            byte[] ExpNpcPtrs = new byte[inctPtr];
-            byte[] ExpShortExitPtrs = new byte[inctPtr];
-            byte[] ExpLongExitPtrs = new byte[inctPtr];
-            byte[] ExpChestPtrs = new byte[inctPtr];
-            byte[] ExpTilemapPtrs = new byte[Expansion.NEW_ENTRIES * 3];
-
-            // Fill each array with highest pointer
-            Bits.FillShort(ExpEventPtrs, LastEventPtr);
-            Bits.FillShort(ExpNpcPtrs, LastNpcPtr);
-            Bits.FillShort(ExpShortExitPtrs, LastShortExitPtr);
-            Bits.FillShort(ExpLongExitPtrs, LastLongExitPtr);
-            Bits.FillShort(ExpChestPtrs, LastChestPtr);
-
-            // Since we're going to copy default tilemap numerous times, increase each pointer by its length
-            for (int i = 0; i < ExpTilemapPtrs.Length; i += 3)
+            try
             {
-                LastTilemapPtr += Expansion.DEFAULT_TILEMAP.Length;
+                Bits.setAsmArray(rom, Expansion.ROM_EXP_CHEST_SHORT_MEM, 0x1E20);
+                Bits.setAsmArray(rom, Expansion.ROM_EXP_CHEST_SHORT_NUM, 0x03FF);
+                Bits.SetShort(rom, 0x00BB1F, 0x0060);
+                IsChestsExpanded = true;
 
-                ExpTilemapPtrs[i] = (byte)(LastTilemapPtr & 0xFF);
-                ExpTilemapPtrs[i + 1] = (byte)((LastTilemapPtr >> 8) & 0xFF);
-                ExpTilemapPtrs[i + 2] = (byte)((LastTilemapPtr >> 16) & 0xFF);
+                return true;
             }
-
-            // put back the banks offsets to absolute value because we are going to write to the ROM
-            DatabankOff = Bits.ToAbs(DatabankOff);
-            TilemapBankOff = Bits.ToAbs(TilemapBankOff);
-
-            // Inset events, npcs, exits, chests ptrs and data
-            Bits.setData(rom, Expansion.BASE_EVENT_PTR, EventPtrs, ExpEventPtrs, EventData);
-            Bits.setData(rom, DatabankOff, NpcPtrs, ExpNpcPtrs, NpcData);
-            Bits.setData(rom, DatabankOff + Expansion.NEW_SHORT_EXIT, ShortExitPtrs, ExpShortExitPtrs, ShortExitData);
-            Bits.setData(rom, DatabankOff + Expansion.NEW_LONG_EXIT, LongExitPtrs, ExpLongExitPtrs, LongExitData);
-            Bits.setData(rom, DatabankOff + Expansion.NEW_CHEST, ChestPtrs, ExpChestPtrs, ChestData);
-            
-            /*int offset = Expansion.BASE_EVENT_PTR;
-            Bits.SetBytes(rom, offset, EventPtrs);
-            offset += Expansion.SIZE_EVENT_PTR;
-            Bits.SetBytes(rom, offset, ExpEventPtrs);
-            offset += inctPtr;
-            Bits.SetBytes(rom, offset, EventData);
-            
-            offset = DatabankOff;
-            Bits.SetBytes(rom, offset, NpcPtrs);
-            offset += Expansion.SIZE_NPC_PTR;
-            Bits.SetBytes(rom, offset, ExpNpcPtrs);
-            offset += inctPtr;
-            Bits.SetBytes(rom, offset, NpcData);
-            
-            offset = DatabankOff + Expansion.NEW_SHORT_EXIT;
-            Bits.SetBytes(rom, offset, ShortExitPtrs);
-            offset += Expansion.SIZE_SHORT_EXIT_PTR;
-            Bits.SetBytes(rom, offset, ExpShortExitPtrs);
-            offset += inctPtr;
-            Bits.SetBytes(rom, offset, ShortExitData);
-            
-            offset = DatabankOff + Expansion.NEW_LONG_EXIT;
-            Bits.SetBytes(rom, offset, LongExitPtrs);
-            offset += Expansion.SIZE_LONG_EXIT_PTR;
-            Bits.SetBytes(rom, offset, ExpLongExitPtrs);
-            offset += inctPtr;
-            Bits.SetBytes(rom, offset, LongExitData);
-            
-            offset = DatabankOff + Expansion.NEW_CHEST;
-            Bits.SetBytes(rom, offset, ChestPtrs);
-            offset += Expansion.SIZE_CHEST_PTR;
-            Bits.SetBytes(rom, offset, ExpChestPtrs);
-            offset += inctPtr;
-            Bits.SetBytes(rom, offset, ChestData);*/
-
-            // Insert locations data
-            int offset = Expansion.NEW_LOCATION;
-            Bits.SetBytes(rom, offset, LocationData);
-            offset += Expansion.SIZE_LOCATION;
-
-            for (int i = 0; i < Expansion.NEW_ENTRIES; i++)
+            catch (Exception e)
             {
-                Bits.SetBytes(rom, offset, Expansion.DEFAULT_LOCATION);
-                offset += Expansion.DEFAULT_LOCATION.Length;
+                MessageBox.Show("Unable to perform chest expansion.\n\n Error: " + e.Message, "FF6LE",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
             }
-
-            // Get last tilemap pointer
-            LastTilemapPtr = Bits.findArrayMax(TilemapPtrs, 3);
-
-            // Insert Tilemaps ptrs and data
-            offset = Expansion.BASE_TILEMAP_PTR;
-            Bits.SetBytes(rom, offset, TilemapPtrs);
-            offset += Expansion.SIZE_TILEMAP_PTR;
-            Bits.SetBytes(rom, offset, ExpTilemapPtrs);
-            offset = TilemapBankOff;
-            Bits.SetBytes(rom, offset, TilemapData);
-            offset = TilemapBankOff + LastTilemapPtr;
-
-            for (int i = 0; i < Expansion.NEW_ENTRIES; i++)
-            {
-                Bits.SetBytes(rom, offset, Expansion.DEFAULT_TILEMAP);
-                offset += Expansion.DEFAULT_TILEMAP.Length;
-            }
-
-            // ASM code changes (LDAs and ADCs)
 
         }
 
-        private static void validateROM(ref List<int[]> faults)
+        public static List<int[]> ValidateChestExpansion()
         {
-            for (int i = 0; i < Expansion.ROM_EVENT.Length; i++)
+            List<int[]> faults = new List<int[]>();
+
+            for (int i = 0; i < Expansion.ROM_EXP_CHEST_SHORT_MEM.Length; i++)
             {
-                Bits.IsMatchingOffset(rom, Expansion.BASE_EVENT + Expansion.ROM_EVENT_VAR[i],
-                    Expansion.ROM_EVENT[i], ref faults);
+                Bits.IsMatchingShort(rom, 0x1E40, Expansion.ROM_EXP_CHEST_SHORT_MEM[i], ref faults);
+            }
+
+            for (int i = 0; i < Expansion.ROM_EXP_CHEST_SHORT_NUM.Length; i++)
+            {
+                Bits.IsMatchingShort(rom, 0x01FF, Expansion.ROM_EXP_CHEST_SHORT_NUM[i], ref faults);
+            }
+
+            Bits.IsMatchingShort(rom, 0x0030, 0x00BB1F, ref faults);
+
+            return faults;
+        }
+        public static List<int[]> ValidateROM(bool isZplus)
+        {
+            List<int[]> faults = new List<int[]>();
+            if (!isZplus)
+            {
+                for (int i = 0; i < Expansion.ROM_EVENT.Length; i++)
+                {
+                    Bits.IsMatchingOffset(rom, BASE_EVENT_PTR + Expansion.ROM_EVENT_VAR[i],
+                        Expansion.ROM_EVENT[i], ref faults);
+                }
             }
 
             for (int i = 0; i < Expansion.ROM_CHEST.Length; i++)
             {
-                Bits.IsMatchingOffset(rom, Expansion.BASE_CHEST + Expansion.ROM_CHEST_VAR[i],
+                Bits.IsMatchingOffset(rom, BASE_CHEST_PTR + Expansion.ROM_CHEST_VAR[i],
                     Expansion.ROM_CHEST[i], ref faults);
             }
 
-            for (int i = 0; i < Expansion.ROM_NPC.Length; i++)
+            if (!isZplus)
             {
-                Bits.IsMatchingOffset(rom, Expansion.BASE_NPC + Expansion.ROM_NPC_VAR[i],
-                    Expansion.ROM_NPC[i], ref faults);
+                for (int i = 0; i < Expansion.ROM_NPC.Length; i++)
+                {
+                    Bits.IsMatchingOffset(rom, BASE_NPC_PTR + Expansion.ROM_NPC_VAR[i],
+                        Expansion.ROM_NPC[i], ref faults);
+                }
             }
 
-            for (int i = 0; i < Expansion.ROM_LONG_EXIT.Length; i++)
+            if (!isZplus)
             {
-                Bits.IsMatchingOffset(rom, Expansion.BASE_LONG_EXIT + Expansion.ROM_LONG_EXIT_VAR[i],
-                    Expansion.ROM_LONG_EXIT[i], ref faults);
+                for (int i = 0; i < Expansion.ROM_LONG_EXIT.Length; i++)
+                {
+                    Bits.IsMatchingOffset(rom, BASE_LONG_EXIT_PTR + Expansion.ROM_LONG_EXIT_VAR[i],
+                        Expansion.ROM_LONG_EXIT[i], ref faults);
+                }
             }
 
-            for (int i = 0; i < Expansion.ROM_SHORT_EXIT.Length; i++)
+            if (!isZplus)
             {
-                Bits.IsMatchingOffset(rom, Expansion.BASE_SHORT_EXIT + Expansion.ROM_SHORT_EXIT_VAR[i],
-                    Expansion.ROM_SHORT_EXIT[i], ref faults);
+                for (int i = 0; i < Expansion.ROM_SHORT_EXIT.Length; i++)
+                {
+                    Bits.IsMatchingOffset(rom, BASE_SHORT_EXIT_PTR + Expansion.ROM_SHORT_EXIT_VAR[i],
+                        Expansion.ROM_SHORT_EXIT[i], ref faults);
+                }
             }
 
-            for (int i = 0; i < Expansion.ROM_TILEMAP_INT.Length; i++)
+            if (!isZplus)
             {
-                Bits.IsMatchingOffset(rom, Expansion.BASE_TILEMAP + Expansion.ROM_TILEMAP_INT_VAR[i],
-                    Expansion.ROM_TILEMAP_INT[i], ref faults);
+                for (int i = 0; i < Expansion.ROM_TILEMAP_INT.Length; i++)
+                {
+                    Bits.IsMatchingOffset(rom, BASE_TILEMAP_PTR + Expansion.ROM_TILEMAP_INT_VAR[i],
+                        Expansion.ROM_TILEMAP_INT[i], ref faults);
+                }
+
+
+                for (int i = 0; i < Expansion.ROM_TILEMAP_SHORT.Length; i++)
+                {
+                    Bits.IsMatchingShort(rom, Expansion.ROM_TILEMAP_SHORT_VAL[i], Expansion.ROM_TILEMAP_SHORT[i], ref faults);
+                }
+
+                for (int i = 0; i < Expansion.ROM_TILEMAP_BYTE.Length; i++)
+                {
+                    Bits.IsMatchingByte(rom, Expansion.ROM_TILEMAP_BYTE_VAL[i], Expansion.ROM_TILEMAP_BYTE[i], ref faults);
+                }
             }
 
-            for (int i = 0; i < Expansion.ROM_TILEMAP_SHORT.Length; i++)
+            for (int i = 0; i < Expansion.ROM_LOC_NAME_SHORT.Length; i++)
             {
-                Bits.IsMatchingOffset(rom, Expansion.ROM_TILEMAP_SHORT_VAL[i], Expansion.ROM_TILEMAP_SHORT[i], ref faults);
+                Bits.IsMatchingShort(rom, Expansion.ROM_LOC_NAME_SHORT_VAL[i], Expansion.ROM_LOC_NAME_SHORT[i], ref faults);
             }
 
-            for (int i = 0; i < Expansion.ROM_TILEMAP_BYTE.Length; i++)
+            for (int i = 0; i < Expansion.ROM_LOC_NAME_BYTE.Length; i++)
             {
-                Bits.IsMatchingOffset(rom, Expansion.ROM_TILEMAP_BYTE_VAL[i], Expansion.ROM_TILEMAP_BYTE[i], ref faults);
+                Bits.IsMatchingByte(rom, Expansion.ROM_LOC_NAME_BYTE_VAL[i], Expansion.ROM_LOC_NAME_BYTE[i], ref faults);
             }
 
-            int locationROM = Bits.GetInt24(rom, Expansion.ROM_LOCATION);
-
-            if (locationROM != Expansion.BASE_LOCATION)
+            if (Bits.ToHiROM(BASE_LOCATION) != (int)0xED8F00)
             {
-                faults.Add(new[] { Expansion.BASE_LOCATION, locationROM, Expansion.ROM_LOCATION });
+                faults.Add(new[] { Expansion.ROM_LOCATION + 1, Bits.ToHiROM(BASE_LOCATION), 0xED8F00 });
+            }
+
+            return faults;
+        }
+
+        public static void CheckExpansion()
+        {
+            IsExpanded = false;
+            IsChestsExpanded = false;
+
+            if (File.Exists(Settings.Default.SettingsFile))
+            {
+                try
+                {
+                    Model.SettingsFile = XDocument.Load(Settings.Default.SettingsFile);
+                    XElement root = Model.SettingsFile.Element("Settings");
+                    IsExpanded = bool.Parse(root.Element("MapExpansion").Value);
+                    IsChestsExpanded = bool.Parse(root.Element("ChestExpansion").Value);
+
+                    if (IsExpanded)
+                    {
+                        SIZE_TILEMAP_DATA = int.Parse(root.Element("NumBanksTilemap").Value) << 16;
+                        XElement mapNames = root.Element("MapNames");
+                        LevelNames = new string[mapNames.Elements().Count()];
+
+                        for (int i = 0; i < mapNames.Elements().Count(); i++)
+                        {
+                            LevelNames[i] = mapNames.Elements().ElementAt(i).Value;
+                        }
+                    }
+
+                    InitExpansionFields(IsExpanded);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Corrupted XML file. Default values will be loaded.\n\n Error: " + e.Message);
+                    InitExpansionFields(false);
+
+                    if (IsExpanded)
+                    {
+                        LevelNames = Lists.expandedLocations;
+                    }
+                    else
+                    {
+                        LevelNames = Lists.originalLocations;
+                    }
+                }
+            }
+            else
+            {
+                InitExpansionFields(false);
+                LevelNames = Lists.originalLocations;
+            }
+
+        }
+
+        public static void BuildSettingXml(int tilemapBank, int dataBank, int tilemapBankNum, bool mapExpansion, bool chestExpansion, bool isZplus, string[] locNames)
+        {
+            SettingsFile = new XDocument(new XElement("Settings",
+                new XElement("MapExpansion", mapExpansion.ToString()),
+                new XElement("ChestExpansion", chestExpansion.ToString()),
+                new XElement("FF6LEPlus", isZplus.ToString()),
+                new XElement("DataBank", dataBank.ToString("X2")),
+                new XElement("TilemapBank", tilemapBank.ToString("X2")),
+                new XElement("NumBanksTilemap", tilemapBankNum.ToString()),
+                new XElement("MapNames")));
+
+            for (int i = 0; i < locNames.Length; i++)
+            {
+                string name = LevelNames[i].Length < 6 ? LevelNames[i]: Bits.IsValidMapId(LevelNames[i].Substring(0, 6))
+                        ? LevelNames[i].Substring(6, LevelNames[i].Length - 6).Trim()
+                        : LevelNames[i].Trim();
+                SettingsFile.Element("Settings").Element("MapNames").Add(new XElement("Name", name));
             }
         }
+
+        public static void SaveXML()
+        {
+            if (File.Exists(Settings.Default.SettingsFile) && SettingsFile != null)
+            {
+                SettingsFile.Element("Settings").Element("MapNames").RemoveNodes();
+
+                for (int i = 0; i < LevelNames.Length; i++)
+                {
+                    string name = Bits.IsValidMapId(LevelNames[i].Substring(0, 6))
+                        ? LevelNames[i].Substring(6, LevelNames[i].Length - 6).Trim()
+                        : LevelNames[i].Trim();
+                    SettingsFile.Element("Settings").Element("MapNames").Add(new XElement("Name", name));
+                }
+
+                try
+                {
+                    SettingsFile.Save(Settings.Default.SettingsFile);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        "Unable to save XML settings file. You may not have write rights or file may not exist.\n\n  Error: " +
+                        e.Message, "FF6LE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public static string[] ConvertLocNames(StringCollection collection)
+        {
+            string[] locNames = new string[collection.Count];
+            collection.CopyTo(locNames, 0);
+            return locNames;
+        }
+
+        public static string[] GetLevelNames()
+        {
+            string[] locNames = new string[Model.LevelNames.Length];
+
+            for (int i = 0; i < locNames.Length; i++)
+            {
+                locNames[i] = "[$" + i.ToString("X3") + "] " + Model.LevelNames[i];
+            }
+
+            return locNames;
+        }
+
+        #endregion
     }
 }
