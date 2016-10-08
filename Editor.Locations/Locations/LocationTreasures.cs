@@ -49,9 +49,6 @@ namespace ZONEDOCTOR
         
         private void Disassemble()
         {
-            //int pointerOffset = (index * 2) + 0x2D82F4;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             int pointerOffset = (index * 2) + Model.BASE_CHEST_PTR;
 
             ushort offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
@@ -59,12 +56,7 @@ namespace ZONEDOCTOR
             // no treasures for location
             if (offsetStart >= offsetEnd)
                 return;
-
-            /*int offset = offsetStart + 0x2D8634;
-            while (offset < offsetEnd + 0x2D8634)
-            {*/
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             int offset = offsetStart + Model.BASE_CHEST;
             while (offset < offsetEnd + Model.BASE_CHEST)
             {
@@ -77,9 +69,6 @@ namespace ZONEDOCTOR
         
         public void Assemble(ref int offsetStart)
         {
-            //int pointerOffset = (index * 2) + 0x2D82F4;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             int pointerOffset = (index * 2) + Model.BASE_CHEST_PTR;
 
             // set the new pointer for the fields
@@ -87,10 +76,7 @@ namespace ZONEDOCTOR
             // no exit fields for location
             if (treasures.Count == 0)
                 return;
-
-            //int offset = offsetStart + 0x2D8634;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             int offset = offsetStart + Model.BASE_CHEST;
 
             foreach (Treasure t in treasures)
@@ -98,10 +84,7 @@ namespace ZONEDOCTOR
                 t.Assemble(offset);
                 offset += 5;
             }
-
-            //offsetStart = (ushort)(offset - 0x2D8634);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             offsetStart = (ushort)(offset - Model.BASE_CHEST);
         }
         // list managers
@@ -159,7 +142,7 @@ namespace ZONEDOCTOR
             x = rom[offset++];
             y = rom[offset++];
 
-            //madsiur
+            //madsiur, CE Edition
             if (Model.IsChestsExpanded)
             {
                 checkMem = (ushort)(((Bits.GetShort(rom, offset) & 0x3FF) >> 3) + 0x1E20);
@@ -186,7 +169,7 @@ namespace ZONEDOCTOR
             rom[offset] = x; offset++;
             rom[offset] = y; offset++;
 
-            //madsiur
+            //madsiur, CE Edition
             if (Model.IsChestsExpanded)
             {
                 Bits.SetShortBits(rom, offset, (ushort)((checkMem - 0x1E20) << 3), 0x03F8);

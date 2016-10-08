@@ -100,17 +100,13 @@ namespace ZONEDOCTOR
         private int CalculateFreeTreasureSpace()
         {
             int used = 0;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 for (int a = 0; a < locations[i].LocationTreasures.Treasures.Count; a++)
                     used += 5;
             }
-
-            //return 0x827 - used;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             return Model.SIZE_CHEST_DATA - used;
         }
         //
@@ -142,11 +138,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more treasures. The maximum number of treasures allowed per location is 32.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the treasure. " + MaximumSpaceExceeded("treasure"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void AddNewTreasure(Treasure e)
         {
@@ -176,11 +172,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more treasures. The maximum number of treasures allowed per location is 32.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the treasure. " + MaximumSpaceExceeded("treasure"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
         #region Event Handlers

@@ -52,7 +52,7 @@ namespace ZONEDOCTOR
             if (overlay.Select == null || overlay.Select.Size == new Size(0, 0))
             {
                 MessageBox.Show("Need to make a selection before creating a new template.",
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             // now create the template from the selection
@@ -152,7 +152,7 @@ namespace ZONEDOCTOR
                 if (template != lt && templateRenameText.Text == lt.Name)
                 {
                     MessageBox.Show("Cannot rename " + lt.Name + ". A template with the name you specified already exists.",
-                       "ZONE DOCTOR");
+                      Model.APPNAME);
                     return;
                 }
                 else if (template == lt && template.Name == templateRenameText.Text)

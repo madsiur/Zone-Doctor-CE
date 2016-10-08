@@ -60,7 +60,7 @@ namespace ZONEDOCTOR
         }
         #region File Managing
 
-        // madsiur, check for expansion
+        
         public bool OpenRomFile()
         {
             string filename;
@@ -76,7 +76,7 @@ namespace ZONEDOCTOR
                 Model.FileName = filename;
                 if (Model.ReadRom())
                 {
-                    Log.InitLog();
+                    //madsiur, CE Edition
                     Model.CheckExpansion();
                     settings.LastRomPath = Model.GetPathWithoutFileName();
                     settings.Save();
@@ -87,14 +87,13 @@ namespace ZONEDOCTOR
                 filename = "";
             return false;
         }
-
-        //madsiur, check for expansion
+        
         public bool OpenRomFile(string filename)
         {
             Model.FileName = filename;
             if (Model.ReadRom())
             {
-                Log.InitLog();
+                //madsiur, CE Edition
                 Model.CheckExpansion();
                 settings.LastRomPath = Model.GetPathWithoutFileName();
                 settings.Save();

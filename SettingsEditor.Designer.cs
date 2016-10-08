@@ -26,6 +26,7 @@ namespace ZONEDOCTOR
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsEditor));
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.customDirectoryTextBox = new System.Windows.Forms.TextBox();
             this.buttonDefault = new System.Windows.Forms.Button();
@@ -421,9 +422,9 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.buttonDefault);
             this.Controls.Add(this.checkedListBox1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsEditor";
-            this.Text = "ZONE DOCTOR - Settings";
+            this.Text = "ZONE DOCTOR CE - Settings";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

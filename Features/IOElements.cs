@@ -166,9 +166,6 @@ namespace ZONEDOCTOR
                 }
                 else
                 {
-                    // madsiur, hardocoded value to variable
-
-                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                     SerializedLocation[] sLocations = new SerializedLocation[Model.NUM_LOCATIONS];
 
                     for (int i = 0; i < sLocations.Length; i++)
@@ -253,7 +250,6 @@ namespace ZONEDOCTOR
                 }
                 else
                 {
-                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                     SerializedLocation[] sLocations = new SerializedLocation[Model.NUM_LOCATIONS];
 
                     for (int i = 0; i < sLocations.Length; i++)

@@ -51,8 +51,6 @@ namespace ZONEDOCTOR
         {
             entranceEvent = Bits.GetInt24(rom, (index * 3) + 0x11FA00);
 
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
-            //int pointerOffset = (index * 2) + 0x040000;
             int pointerOffset = (index * 2) + Model.BASE_EVENT_PTR;
 
             ushort offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
@@ -61,10 +59,6 @@ namespace ZONEDOCTOR
             if (offsetStart >= offsetEnd) 
                 return;
 
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
-            /*int offset = offsetStart + 0x040000;
-            while (offset < offsetEnd + 0x040000)
-            {*/
             int offset = offsetStart + Model.BASE_EVENT_PTR;
             while (offset < offsetEnd + Model.BASE_EVENT_PTR)
             {
@@ -75,15 +69,11 @@ namespace ZONEDOCTOR
             }
         }
 
-        // madsiur
-        // hardcoded value to variable for expansion purpose
         public void Assemble(ref int offsetStart)
         {
             Bits.SetShort(rom, (index * 3) + 0x11FA00, (ushort)entranceEvent);
             Bits.SetByte(rom, (index * 3) + 0x11FA02, (byte)(entranceEvent >> 16));
 
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
-            //int pointerOffset = (index * 2) + 0x040000;
             int pointerOffset = (index * 2) + Model.BASE_EVENT_PTR;
 
             // set the new pointer for the fields
@@ -91,9 +81,7 @@ namespace ZONEDOCTOR
             // no event fields for location
             if (events.Count == 0) 
                 return;
-            
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
-            //int offset = offsetStart + 0x040000;
+
             int offset = offsetStart + Model.BASE_EVENT_PTR;
 
             foreach (Event e in events)
@@ -102,8 +90,6 @@ namespace ZONEDOCTOR
                 offset += 5;
             }
 
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
-            //offsetStart = (ushort)(offset - 0x040000);
             offsetStart = (ushort)(offset - Model.BASE_EVENT_PTR);
         }
         // list managers

@@ -65,14 +65,9 @@ namespace ZONEDOCTOR
             this.index = index;
             Disassemble();
         }
-
-        // madsiur
-        // hardcoded value to variable for expansion purpose
+        
         private void Disassemble()
         {
-            //int location = (int)(Bits.GetInt24(rom, 0x0052C3) - 0xC00000);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             int location = Model.BASE_NPC_PTR;
             
 
@@ -94,9 +89,6 @@ namespace ZONEDOCTOR
         
         public void Assemble(ref int offsetStart)
         {
-            //int location = (int)(Bits.GetInt24(rom, 0x0052C3) - 0xC00000);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             int location = Model.BASE_NPC_PTR;
 
             int pointerOffset = (index * 2) + location;

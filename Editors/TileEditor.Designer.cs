@@ -468,13 +468,13 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.groupBoxSolidWM);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TileEditor";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "TILE EDITOR";
+            this.Text = "TILE EDITOR - Zone Doctor CE";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TileEditor_FormClosing);
             this.panel111.ResumeLayout(false);

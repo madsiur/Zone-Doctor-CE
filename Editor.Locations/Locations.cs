@@ -58,7 +58,7 @@ namespace ZONEDOCTOR
             Model.DecompressWorldMaps();
             //
 
-            // madsiur, use expanded Location names list if ROM has expansion
+            //madsiur, CE Edition
             if (Model.IsExpanded)
             {
                 Model.UpdateElistLocation();
@@ -87,9 +87,9 @@ namespace ZONEDOCTOR
             searchWindow = new Search(locationNum, searchBox, searchLocationNames, locationName.Items);
             labelWindow = new EditLabel(locationName, locationNum, "Locations", true);
             new ToolTipLabel(this, baseConversion, help);
-            
 
-            // madsiur, for location renaming feature [3.18.4-0.1]
+
+            //madsiur, CE Edition
             this.messageName.Items.AddRange(Model.LocationNames); 
 
             this.musicName.Items.AddRange(Lists.Numerize(Lists.MusicNames));
@@ -275,14 +275,7 @@ namespace ZONEDOCTOR
             List<string[]> items = new List<string[]>();
 
 
-            /*items.Add(new string[] { "Location map", ((index * 33) + 0x2D8F00).ToString("X6") });
-            items.Add(new string[] { "NPCs", ((index * 2) + 0x041A16).ToString("X6")});
-            items.Add(new string[] { "Exits (short)", ((index * 2) + 0x1FBB00).ToString("X6") });
-            items.Add(new string[] { "Exits (long)", ((index * 2) + 0x2DF480).ToString("X6") });
-            items.Add(new string[] { "Events", ((index * 2) + 0x040000).ToString("X6") });
-            items.Add(new string[] { "Treasures", ((index * 2) + 0x2D82F4).ToString("X6") });*/
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            //madsiur, CE Edition
             items.Add(new string[] { "Location map", ((index * 33) + Model.BASE_LOCATION).ToString("X6") });
             items.Add(new string[] { "NPCs", ((index * 2) + Model.BASE_NPC_PTR.ToString("X6")) });
             items.Add(new string[] { "Exits (short)", ((index * 2) + Model.BASE_SHORT_EXIT_PTR).ToString("X6") });
@@ -308,9 +301,7 @@ namespace ZONEDOCTOR
             int free = Model.Compress(Model.Tilesets, null, null, 0x1FBA00, 0x1E0000, 0x1FB400, "TILE SET", 3, 0x800, false);
             items.Add(new string[] { "Tilesets", free.ToString() });
 
-            //free = Model.Compress(Model.Tilemaps, null, null, 0x19CD90, 0x19D1B0, 0x1E0000, "TILE MAP", 3, 0, true);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            //madsiur, CE Edition
             free = Model.Compress(Model.Tilemaps, null, null, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, Model.BASE_TILEMAP + Model.SIZE_TILEMAP_DATA, "TILE MAP", 3, 0, true);
 
             items.Add(new string[] { "Tilemaps", free.ToString() });
@@ -356,8 +347,7 @@ namespace ZONEDOCTOR
             bw.Close();
             fs.Close();
         }
-
-        // madsiur, hardocoded value to variable
+        
         public void Assemble()
         {
             if (!this.Modified)
@@ -381,12 +371,11 @@ namespace ZONEDOCTOR
             //shit!
             if (CalculateFreeExitShortSpace() >= 0 && CalculateFreeExitLongSpace() >= 0)
             {
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationExits.Assemble(ref offsetShort, ref offsetLong);
             }
             else
-                MessageBox.Show("Exit fields were not saved. " + MaximumSpaceExceeded("exits"), "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Exit fields were not saved. " + MaximumSpaceExceeded("exits"), Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             if (exits.Count > 0)
                 exits.CurrentExit = temp;
             int offsetStart = 0x402;
@@ -394,12 +383,11 @@ namespace ZONEDOCTOR
                 temp = events.CurrentEvent;
             if (CalculateFreeEventSpace() >= 0)
             {
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationEvents.Assemble(ref offsetStart);
             }
             else
-                MessageBox.Show("Event fields were not saved. " + MaximumSpaceExceeded("events"), "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Event fields were not saved. " + MaximumSpaceExceeded("events"), Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             if (events.Count > 0)
                 events.CurrentEvent = temp;
             offsetStart = 0x402;
@@ -407,12 +395,11 @@ namespace ZONEDOCTOR
                 temp = npcs.CurrentNPC;
             if (CalculateFreeNPCSpace() >= 0)
             {
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationNPCs.Assemble(ref offsetStart);
             }
             else
-                MessageBox.Show("NPCs were not saved. " + MaximumSpaceExceeded("NPCs"), "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("NPCs were not saved. " + MaximumSpaceExceeded("NPCs"), Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             if (npcs.Count > 0)
                 npcs.CurrentNPC = temp;
             offsetStart = 0;
@@ -420,20 +407,16 @@ namespace ZONEDOCTOR
                 temp = treasures.CurrentTreasure;
             if (CalculateFreeTreasureSpace() >= 0)
             {
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 for (int i = 0; i < Model.NUM_LOCATIONS; i++)
                     locations[i].LocationTreasures.Assemble(ref offsetStart);
             }
             else
-                MessageBox.Show("Treasures were not saved. " + MaximumSpaceExceeded("treasures"), "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Treasures were not saved. " + MaximumSpaceExceeded("treasures"), Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             if (treasures.Treasures.Count > 0)
                 treasures.CurrentTreasure = temp;
             //
             RecompressLocationData();
-
-            //Model.HexEditor.SetOffset((index * 33) + 0x2D8F00);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             Model.HexEditor.SetOffset((index * 33) + Model.BASE_LOCATION);
 
             Model.HexEditor.Compare();
@@ -480,16 +463,14 @@ namespace ZONEDOCTOR
                 Bits.SetBytes(Model.ROM, offset, Model.GraphicSets[i]);
             }
             Model.Compress(Model.SoliditySets, Model.ROM, Model.EditSoliditySets, 0x19CD10, 0x19A800, 0x19CD10, "SOLIDITY SET", 2, 0x200, false);
-
-            //Model.Compress(Model.Tilemaps, Model.ROM, Model.EditTilemaps, 0x19CD90, 0x19D1B0, 0x1E0000, "TILE MAP", 3, 0, true);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             Model.Compress(Model.Tilemaps, Model.ROM, Model.EditTilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, Model.BASE_TILEMAP + Model.SIZE_TILEMAP_DATA, "TILE MAP", 3, 0, true);
 
             Model.Compress(Model.Tilesets, Model.ROM, Model.EditTilesets, 0x1FBA00, 0x1E0000, 0x1FB400, "TILE SET", 3, 0x800, false);
             // LJ 2011-12-28: interoperability fix for FF3usME
             Model.SaveVarCompDataAbsPtrs();
         }
+
         private void RecompressWorldMaps(ProgressBar progressBar)
         {
             object dummy;
@@ -504,23 +485,26 @@ namespace ZONEDOCTOR
             // LJ: this preps the data pointer to the expanded bank, every section shall be stiched to each other, so this will be incremented in the following lines
             Model.m_savedExpandedBytes = 0;
             // lSmcOffsetExpBank = Model.OFFS_FF3ED_DTE_D_EX + Model.m_savedExpandedBytes;
-            lSmcOffsetExpBank = ((m_expBank - 0xC0) * 0x10000) + Model.m_savedExpandedBytes;
+            lSmcOffsetExpBank = ((m_expBank - 0xC0)*0x10000) + Model.m_savedExpandedBytes;
             // LJ 2011-12-28: WOB map data and tile set
-            lRemBytesInRegBank = Model.LEN_WOB_MAP_DT_TL; // LJ: this is remaining bytes for both mini-maps, for sure at least one of 'em 'll fit
+            lRemBytesInRegBank = Model.LEN_WOB_MAP_DT_TL;
+                // LJ: this is remaining bytes for both mini-maps, for sure at least one of 'em 'll fit
             lSmcOffsetRegBank = Model.OFFS_WOB_MAP_DT_TL;
             //
+
             #region WOB Tilemap
+
             byte[] compressed = new byte[0x10000];
             int size = Comp.Compress(Model.WOBTilemap, compressed);
             // data bigger than remaining bytes in regular section
             if (size > lRemBytesInRegBank)
             {
                 // file is expanded, park the data in expanded section
-                if (Model.GetFileSize() == 0x400000)  // LJ: only deal with 32-Mbit expansion for the moment
+                if (Model.GetFileSize() == 0x400000) // LJ: only deal with 32-Mbit expansion for the moment
                 {
                     if (size <= lRemBytesInExpBank)
                     {
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOB] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOB] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
                         Bits.SetBytes(Model.ROM, lSmcOffsetExpBank, compressed, 0, size);
                         lSmcOffsetExpBank += size;
                         lRemBytesInExpBank -= size;
@@ -528,10 +512,10 @@ namespace ZONEDOCTOR
                     else
                     {
                         MessageBox.Show(
-                           "Recompressed WOB tilemap exceeds allotted space in exp. bank.\n" +
-                           "The WOB tilemap was not saved.",
-                           "WARNING: NOT ENOUGH SPACE FOR WOB TILEMAP",
-                           MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            "Recompressed WOB tilemap exceeds allotted space in exp. bank.\n" +
+                            "The WOB tilemap was not saved.",
+                            "WARNING: NOT ENOUGH SPACE FOR WOB TILEMAP",
+                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                 }
                 // file is not expanded, there is nothing that we can do further
@@ -548,24 +532,27 @@ namespace ZONEDOCTOR
             else
             {
                 lRemBytesInRegBank -= size;
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOB] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOB] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
                 Bits.SetBytes(Model.ROM, lSmcOffsetRegBank, compressed, 0, size);
                 lSmcOffsetRegBank += size;
             }
             progressBar.PerformStep("COMPRESSING WOB TILEMAP");
+
             #endregion
+
             #region WOB Tileset/Graphic Set
+
             compressed = new byte[0x2480];
             size = Comp.Compress(Model.WOBGraphicSet, compressed);
             // data bigger than remaining bytes in regular section
             if (size > lRemBytesInRegBank)
             {
                 // file is expanded, park the data in expanded section
-                if (Model.GetFileSize() == 0x400000)  // LJ: only deal with 32-Mbit expansion for the moment
+                if (Model.GetFileSize() == 0x400000) // LJ: only deal with 32-Mbit expansion for the moment
                 {
                     if (size <= lRemBytesInExpBank)
                     {
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOB] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOB] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
                         Bits.SetBytes(Model.ROM, lSmcOffsetExpBank, compressed, 0, size);
                         lSmcOffsetExpBank += size;
                         lRemBytesInExpBank -= size;
@@ -573,35 +560,39 @@ namespace ZONEDOCTOR
                     else
                     {
                         MessageBox.Show(
-                           "Recompressed WOB tileset exceeds allotted space in exp. bank.\n" +
-                           "The WOB tileset was not saved.",
-                           "WARNING: NOT ENOUGH SPACE FOR WOB TILESET",
-                           MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            "Recompressed WOB tileset exceeds allotted space in exp. bank.\n" +
+                            "The WOB tileset was not saved.",
+                            "WARNING: NOT ENOUGH SPACE FOR WOB TILESET",
+                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                 }
                 // file is not expanded, there is nothing that we can do further
                 else
                 {
                     MessageBox.Show(
-                       "Recompressed WOB tileset exceeds allotted space.\n" +
-                       "The WOB tileset was not saved.",
-                       "WARNING: NOT ENOUGH SPACE FOR WOB TILESET",
-                       MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        "Recompressed WOB tileset exceeds allotted space.\n" +
+                        "The WOB tileset was not saved.",
+                        "WARNING: NOT ENOUGH SPACE FOR WOB TILESET",
+                        MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             }
             // data fits in regular section
             else
             {
                 lRemBytesInRegBank -= size;
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOB] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOB] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
                 Bits.SetBytes(Model.ROM, lSmcOffsetRegBank, compressed, 0, size);
                 lSmcOffsetRegBank += size;
             }
             progressBar.PerformStep("COMPRESSING WOB TILESET");
+
             #endregion
+
             #region WOR Tilemap
+
             // LJ 2011-12-28: WOR map Model.ROM and tile set
-            lRemBytesInRegBank = Model.LEN_WOR_MAP_DT_TL; // LJ: this is remaining bytes for both mini-maps, for sure at least one of 'em 'll fit
+            lRemBytesInRegBank = Model.LEN_WOR_MAP_DT_TL;
+                // LJ: this is remaining bytes for both mini-maps, for sure at least one of 'em 'll fit
             lSmcOffsetRegBank = Model.OFFS_WOR_MAP_DT_TL;
             // 
             compressed = new byte[0x10000];
@@ -610,12 +601,12 @@ namespace ZONEDOCTOR
             if (size > lRemBytesInRegBank)
             {
                 // file is expanded, park the data in expanded section
-                if (Model.GetFileSize() == 0x400000)  // LJ: only deal with 32-Mbit expansion for the moment
+                if (Model.GetFileSize() == 0x400000) // LJ: only deal with 32-Mbit expansion for the moment
                 {
                     if (size <= lRemBytesInExpBank)
                     {
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR2] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR2] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
                         Bits.SetBytes(Model.ROM, lSmcOffsetExpBank, compressed, 0, size);
                         lSmcOffsetExpBank += size;
                         lRemBytesInExpBank -= size;
@@ -623,10 +614,10 @@ namespace ZONEDOCTOR
                     else
                     {
                         MessageBox.Show(
-                           "Recompressed WOR tilemap exceeds allotted space in exp. bank.\n" +
-                           "The WOR tilemap was not saved.",
-                           "WARNING: NOT ENOUGH SPACE FOR WOR TILEMAP",
-                           MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            "Recompressed WOR tilemap exceeds allotted space in exp. bank.\n" +
+                            "The WOR tilemap was not saved.",
+                            "WARNING: NOT ENOUGH SPACE FOR WOR TILEMAP",
+                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                 }
                 // file is not expanded, there is nothing that we can do further
@@ -643,25 +634,28 @@ namespace ZONEDOCTOR
             else
             {
                 lRemBytesInRegBank -= size;
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR2] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MAP_WOR2] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
                 Bits.SetBytes(Model.ROM, lSmcOffsetRegBank, compressed, 0, size);
                 lSmcOffsetRegBank += size;
             }
             progressBar.PerformStep("COMPRESSING WOR TILEMAP");
+
             #endregion
+
             #region WOR Tileset/Graphic Set
+
             compressed = new byte[0x2480];
             size = Comp.Compress(Model.WORGraphicSet, compressed);
             // data bigger than remaining bytes in regular section
             if (size > lRemBytesInRegBank)
             {
                 // file is expanded, park the data in expanded section
-                if (Model.GetFileSize() == 0x400000)  // LJ: only deal with 32-Mbit expansion for the moment
+                if (Model.GetFileSize() == 0x400000) // LJ: only deal with 32-Mbit expansion for the moment
                 {
                     if (size <= lRemBytesInExpBank)
                     {
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOR] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOR] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
                         Bits.SetBytes(Model.ROM, lSmcOffsetExpBank, compressed, 0, size);
                         lSmcOffsetExpBank += size;
                         lRemBytesInExpBank -= size;
@@ -669,35 +663,39 @@ namespace ZONEDOCTOR
                     else
                     {
                         MessageBox.Show(
-                           "Recompressed WOR tileset exceeds allotted space in exp. bank.\n" +
-                           "The WOR tileset was not saved.",
-                           "WARNING: NOT ENOUGH SPACE FOR WOR TILESET",
-                           MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            "Recompressed WOR tileset exceeds allotted space in exp. bank.\n" +
+                            "The WOR tileset was not saved.",
+                            "WARNING: NOT ENOUGH SPACE FOR WOR TILESET",
+                            MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
                 }
                 // file is not expanded, there is nothing that we can do further
                 else
                 {
                     MessageBox.Show(
-                       "Recompressed WOR tileset exceeds allotted space.\n" +
-                       "The WOR tileset was not saved.",
-                       "WARNING: NOT ENOUGH SPACE FOR WOR TILESET",
-                       MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        "Recompressed WOR tileset exceeds allotted space.\n" +
+                        "The WOR tileset was not saved.",
+                        "WARNING: NOT ENOUGH SPACE FOR WOR TILESET",
+                        MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             }
             // data fits in regular section
             else
             {
                 lRemBytesInRegBank -= size;
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOR] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_TILE_WOR] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
                 Bits.SetBytes(Model.ROM, lSmcOffsetRegBank, compressed, 0, size);
                 lSmcOffsetRegBank += size;
             }
             progressBar.PerformStep("COMPRESSING WOR TILESET");
+
             #endregion
+
             #region WOB mini-map
+
             // LJ 2011-12-28: Mini-maps data is now handled by FF3LE, though not modified yet
-            lRemBytesInRegBank = Model.LEN_WOB_WOR_MMAP; // LJ: this is remaining bytes for both mini-maps, for sure at least one of 'em 'll fit
+            lRemBytesInRegBank = Model.LEN_WOB_WOR_MMAP;
+                // LJ: this is remaining bytes for both mini-maps, for sure at least one of 'em 'll fit
             lSmcOffsetRegBank = Model.OFFS_WOB_WOR_MMAP;
             // TODO: get the code from FF3Ed that auto-creates the mini-map from what the user had done to the map Model.ROM
             compressed = new byte[0x800];
@@ -706,11 +704,11 @@ namespace ZONEDOCTOR
             if (size > lRemBytesInRegBank)
             {
                 // file is expanded, park the data in expanded section
-                if (Model.GetFileSize() == 0x400000)  // LJ: only deal with 32-Mbit expansion for the moment
+                if (Model.GetFileSize() == 0x400000) // LJ: only deal with 32-Mbit expansion for the moment
                 {
                     if (size <= lRemBytesInExpBank)
                     {
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOB] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOB] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
                         Bits.SetBytes(Model.ROM, lSmcOffsetExpBank, compressed, 0, size);
                         lSmcOffsetExpBank += size;
                         lRemBytesInExpBank -= size;
@@ -738,13 +736,16 @@ namespace ZONEDOCTOR
             else
             {
                 lRemBytesInRegBank -= size;
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOB] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOB] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
                 Bits.SetBytes(Model.ROM, lSmcOffsetRegBank, compressed, 0, size);
                 lSmcOffsetRegBank += size;
             }
             progressBar.PerformStep("COMPRESSING WOB MINI-MAP...");
+
             #endregion
+
             #region WOR mini-map
+
             // TODO: get the code from FF3Ed that auto-creates the mini-map from what the user had done to the map Model.ROM
             compressed = new byte[0x800];
             size = Comp.Compress(Model.WORMiniMap, compressed);
@@ -752,11 +753,11 @@ namespace ZONEDOCTOR
             if (size > lRemBytesInRegBank)
             {
                 // file is expanded, park the data in expanded section
-                if (Model.GetFileSize() == 0x400000)  // LJ: only deal with 32-Mbit expansion for the moment
+                if (Model.GetFileSize() == 0x400000) // LJ: only deal with 32-Mbit expansion for the moment
                 {
                     if (size <= lRemBytesInExpBank)
                     {
-                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOR] = Model.SMCToHiROM((ulong)lSmcOffsetExpBank);
+                        Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOR] = Model.SMCToHiROM((ulong) lSmcOffsetExpBank);
                         Bits.SetBytes(Model.ROM, lSmcOffsetExpBank, compressed, 0, size);
                         lSmcOffsetExpBank += size;
                         lRemBytesInExpBank -= size;
@@ -784,16 +785,129 @@ namespace ZONEDOCTOR
             else
             {
                 lRemBytesInRegBank -= size;
-                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOR] = Model.SMCToHiROM((ulong)lSmcOffsetRegBank);
+                Model.m_varCompDataAbsPtrs[Model.IDX_VARP_MMAP_WOR] = Model.SMCToHiROM((ulong) lSmcOffsetRegBank);
                 Bits.SetBytes(Model.ROM, lSmcOffsetRegBank, compressed, 0, size);
                 lSmcOffsetRegBank += size;
             }
             progressBar.PerformStep("COMPRESSING WOR MINI-MAP...");
+
             #endregion
+
             // LJ 2011-12-28: we're finished taking expanded bytes for now, update the amount counter:
             // Model.m_savedExpandedBytes = lSmcOffsetExpBank - Model.OFFS_FF3ED_DTE_D_EX;
-            Model.m_savedExpandedBytes = lSmcOffsetExpBank - ((m_expBank - 0xC0) * 0x10000);
+            Model.m_savedExpandedBytes = lSmcOffsetExpBank - ((m_expBank - 0xC0)*0x10000);
+
+            //madsiur, CE Edition
+            int offset = 0;
+            for (int i = 0; i < Model.NUM_LOC_NAMES; i++)
+            {
+                byte[] nameArray = SetLocNameArray(Model.LocationNames[i], i);
+                
+                if (offset + nameArray.Length < Model.SIZE_LOC_NAMES)
+                {
+                    Bits.SetShort(Model.ROM, i * 2 + Model.BASE_LOC_NAMES_PTR, (ushort)offset);
+                    Bits.SetBytes(Model.ROM, offset + Model.BASE_LOC_NAMES, nameArray);
+                    offset += nameArray.Length;
+                    progressBar.PerformStep("SAVING LOCATION NAME 0x" + i.ToString("X2"));
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Location Names exceed allotted space ($" + Model.SIZE_LOC_NAMES.ToString("X4") + " bytes).\n" +
+                        "The editor stopped saving at Location Name $" + i.ToString("X2"),
+                        "WARNING: NOT ENOUGH SPACE FOR LOCATION NAMES",
+                        MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    break;
+                }
+            }
+
         }
+
+        //madsiur, CE Edition
+        private byte[] SetLocNameArray(string s, int index)
+        {
+            char[] ch = s.ToCharArray();
+            byte[] tc = new byte[ch.Length + 1];
+            bool error = false;
+
+            if (!(s.Equals("") || s.Equals(" ") || s.Length == 0))
+            {
+                for (int j = 0; j < ch.Length; j++)
+                {
+                    if (!error)
+                    {
+                        for (int k = 0; k < dialogueTable.Length; k++)
+                        {
+                            if (ch[j].ToString().Equals(dialogueTable[k]))
+                            {
+                                tc[j] = (byte)k;
+                                k = dialogueTable.Length;
+
+                                if (k == dialogueTable.Length - 1)
+                                {
+                                    MessageBox.Show("Unable to save message name " + index.ToString("X3") + " \"" +
+                                                    Model.LocationNames[index] +
+                                                    "\"). Default entry \"INN\" will be saved instead.", Model.APPNAME, MessageBoxButtons.OK);
+
+                                    error = true;
+                                }
+                            }
+                        }
+                    }
+
+                    tc[tc.Length - 1] = 0;
+                }
+
+                if (error)
+                {
+                    tc = Expansion.DEFAULT_LOC_NAME;
+                }
+            }
+            else
+            {
+                tc = new byte[] { 0x00 };
+            }
+
+            return tc;
+        }
+
+        //madsiur, CE Edition
+        private string[] dialogueTable = new string[]
+            {
+                "", "*", "<TERRA>", "<LOCKE>", "<CYAN>", "<SHADOW>", "<EDGAR>", "<SABIN>",
+                "<CELES>", "<STRAGO>", "<RELM>", "<SETZER>", "<MOG>", "<GAU>", "<GOGO>", "<UMARO>",
+                "", "", "", "*", "", "", "", "",
+                "", "", "", "", "", "", "", "",
+                "A", "B", "C", "D", "E", "F", "G", "H",
+                "I", "J", "K", "L", "M", "N", "O", "P",
+                "Q", "R", "S", "T", "U", "V", "W", "X",
+                "Y", "Z", "a", "b", "c", "d", "e", "f",
+                "g", "h", "i", "j", "k", "l", "m", "n",
+                "o", "p", "q", "r", "s", "t", "u", "v",
+                "w", "x", "y", "z", "0", "1", "2", "3",
+                "4", "5", "6", "7", "8", "9", "!", "?",
+                "", ":", "\"", "'", "-", ".", ",", "...",
+                ";", "#", "+", "(", ")", "%", "~", "",
+                "@", "<note>", "=", "\"", "74", "75", "<pearl>", "<death>",
+                "<lit>", "<wind>", "<earth>", "<ice>", "<fire>", "<water>", "<poison>", " ",
+                "e ", " t", ": ", "th", "t ", "he", "s ", "er",
+                " a", "re", "in", "ou", "d ", " w", " s", "an",
+                "o ", " h", " o", "r ", "n ", "at", "to", " i",
+                ", ", "ve", "ng", "ha", " m", "Th", "st", "on",
+                "yo", " b", "me", "y ", "en", "it", "ar", "ll",
+                "ea", "I ", "ed", " f", " y", "hi", "is", "es",
+                "or", "l ", " c", "ne", "'s", "nd", "le", "se",
+                " I", "a ", "te", " l", "pe", "as", "ur", "u ",
+                "al", " p", "g ", "om", " d", "f ", " g", "ow",
+                "rs", "be", "ro", "us", "ri", "wa", "we", "Wh",
+                "et", " r", "nt", "m ", "ma", "I'", "li", "ho",
+                "of", "Yo", "h ", " n", "ee", "de", "so", "gh",
+                "ca", "ra", "n'", "ta", "ut", "el", "! ", "fo",
+                "ti", "We", "lo", "e!", "ld", "no", "ac", "ce",
+                "k ", " u", "oo", "ke", "ay", "w ", "!!", "ag",
+                "il", "ly", "co", ". ", "ch", "go", "ge", "e..."
+            };
+
         public void RefreshLocationName()
         {
             this.Refreshing = true;
@@ -813,7 +927,7 @@ namespace ZONEDOCTOR
         private bool VerifyReset(string name)
         {
             if (MessageBox.Show("You're about to undo all changes to the current " + name + ". Go ahead with reset?",
-                "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return false;
             return true;
         }
@@ -831,7 +945,7 @@ namespace ZONEDOCTOR
             }
             catch
             {
-                MessageBox.Show("Sorry, there was an error trying to create the directory : " + dir, "ZONE DOCTOR");
+                MessageBox.Show("Sorry, there was an error trying to create the directory : " + dir, Model.APPNAME);
                 return false;
             }
         }
@@ -925,15 +1039,15 @@ namespace ZONEDOCTOR
             if (!this.Refreshing)
                 RefreshLocation();
             if (CalculateFreeNPCSpace() < 0)
-                MessageBox.Show("The total number of NPCs for all locations has exceeded the maximum allotted space.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The total number of NPCs for all locations has exceeded the maximum allotted space.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (CalculateFreeTreasureSpace() < 0)
-                MessageBox.Show("The total number of treasures for all locations has exceeded the maximum allotted space.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The total number of treasures for all locations has exceeded the maximum allotted space.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (CalculateFreeExitShortSpace() < 0)
-                MessageBox.Show("The total number of short exit fields for all locations has exceeded the maximum allotted space.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The total number of short exit fields for all locations has exceeded the maximum allotted space.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (CalculateFreeExitLongSpace() < 0)
-                MessageBox.Show("The total number of long exit fields for all locations has exceeded the maximum allotted space.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The total number of long exit fields for all locations has exceeded the maximum allotted space.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (CalculateFreeEventSpace() < 0)
-                MessageBox.Show("The total number of event fields for all locations has exceeded the maximum allotted space.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The total number of event fields for all locations has exceeded the maximum allotted space.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void exportLocationDataAll_Click(object sender, EventArgs e)
         {
@@ -1002,11 +1116,10 @@ namespace ZONEDOCTOR
             DialogResult result = MessageBox.Show(
                 "You are about to clear all location data, tilesets, tilemaps, physical maps and battlefields.\n" +
                 "This will essentially wipe the slate clean for anything having to do with locations.\n\n" +
-                "Are you sure you want to do this?", "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                "Are you sure you want to do this?", Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result != DialogResult.Yes)
                 return;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 locations[i].LocationMap.Clear();
@@ -1102,7 +1215,7 @@ namespace ZONEDOCTOR
             DialogResult result = MessageBox.Show(
                 "You are about to clear all UNUSED graphic sets.\n\n" +
                 "Do you wish to continue?",
-                "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.No)
                 return;
             // Clear unused tilesets
@@ -1134,7 +1247,7 @@ namespace ZONEDOCTOR
             DialogResult result = MessageBox.Show(
                 "You are about to clear all UNUSED tilesets.\n\n" +
                 "Do you wish to continue?",
-                "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.No)
                 return;
             // Clear unused tilesets
@@ -1163,7 +1276,7 @@ namespace ZONEDOCTOR
             DialogResult result = MessageBox.Show(
               "You are about to clear all UNUSED tilemaps.\n\n" +
               "Do you wish to continue?",
-              "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+              Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.No)
                 return;
             // Clear unused tilemaps
@@ -1193,7 +1306,7 @@ namespace ZONEDOCTOR
             DialogResult result = MessageBox.Show(
               "You are about to clear all UNUSED solidity sets.\n\n" +
               "Do you wish to continue?",
-              "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+              Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.No)
                 return;
             // Clear unused physical maps
@@ -1328,7 +1441,7 @@ namespace ZONEDOCTOR
             }
             catch
             {
-                MessageBox.Show("There was a problem importing the arrays.", "ZONE DOCTOR");
+                MessageBox.Show("There was a problem importing the arrays.", Model.APPNAME);
             }
         }
         private void graphicSetsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1351,7 +1464,7 @@ namespace ZONEDOCTOR
             }
             catch (Exception ioexc)
             {
-                MessageBox.Show("Zone Doctor was unable to save the graphic sets.\n\n" + ioexc.Message, "ZONE DOCTOR");
+                MessageBox.Show("Zone Doctor was unable to save the graphic sets.\n\n" + ioexc.Message, Model.APPNAME);
             }
         }
         private void graphicSetsToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1374,7 +1487,7 @@ namespace ZONEDOCTOR
                 FileInfo fInfo = new FileInfo(filename);
                 if (fInfo.Length != 8192)
                 {
-                    MessageBox.Show("File is incorrect size, Graphic Sets are 8192 bytes", "ZONE DOCTOR");
+                    MessageBox.Show("File is incorrect size, Graphic Sets are 8192 bytes", Model.APPNAME);
                     return;
                 }
                 FileStream fStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
@@ -1389,7 +1502,7 @@ namespace ZONEDOCTOR
             }
             catch (Exception ioexc)
             {
-                MessageBox.Show("Zone Doctor was unable to Import the Graphic Set.\n\n" + ioexc.Message, "ZONE DOCTOR");
+                MessageBox.Show("Zone Doctor was unable to Import the Graphic Set.\n\n" + ioexc.Message, Model.APPNAME);
                 return;
             }
         }
@@ -1508,11 +1621,6 @@ namespace ZONEDOCTOR
                 Model.STTilemap = Comp.Decompress(Model.ROM, 0x2F9D17, 0x4000);
             else
             {
-                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
                 Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
                 Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
@@ -1543,7 +1651,7 @@ namespace ZONEDOCTOR
         private void resetAllComponentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("You're about to undo all changes to all components. Go ahead with reset?",
-                "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return;
             locationMap = new LocationMap(index);
             npcs = new LocationNPCs(index);
@@ -1595,12 +1703,7 @@ namespace ZONEDOCTOR
                 //
                 Model.Decompress(Model.Tilesets, 0x1FBA00, 0x1E0000, "", 0x800, 3, locationMap.TilesetL1, locationMap.TilesetL1 + 1, null);
                 Model.Decompress(Model.Tilesets, 0x1FBA00, 0x1E0000, "", 0x800, 3, locationMap.TilesetL2, locationMap.TilesetL2 + 1, null);
-
-                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-                //Model.Decompress(Model.Tilemaps, 0x19CD90, 0x19D1B0, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                
                 Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
                 Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
                 Model.Decompress(Model.Tilemaps, Model.BASE_TILEMAP_PTR, Model.BASE_TILEMAP, "", 0x4000, 3, locationMap.TilemapL1, locationMap.TilemapL1 + 1, Model.TilemapSizes);
@@ -1615,9 +1718,6 @@ namespace ZONEDOCTOR
         // hex editor
         private void hexEditor_Click(object sender, EventArgs e)
         {
-            //Model.HexEditor.SetOffset((index * 33) + 0x2D8F00);
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             Model.HexEditor.SetOffset((index * 33) + Model.BASE_LOCATION);
 
             Model.HexEditor.Compare();
@@ -1640,7 +1740,7 @@ namespace ZONEDOCTOR
             state.TileGrid = false;
             state.IsometricGrid = false;
             DialogResult result;
-            result = MessageBox.Show("Locations have not been saved.\n\nWould you like to save changes?", "ZONE DOCTOR", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            result = MessageBox.Show("Locations have not been saved.\n\nWould you like to save changes?", Model.APPNAME, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
                 Assemble();
             else if (result == DialogResult.No)
@@ -1713,7 +1813,7 @@ namespace ZONEDOCTOR
             {
                 if (!Bits.IsValidMapName(mess))
                 {
-                    MessageBox.Show("Invalid Message name: \"" + tbLocation.Text + "\". For allowed characters, see readme.", "FF6LE",
+                    MessageBox.Show("Invalid Message name: \"" + tbLocation.Text + "\". For allowed characters, see readme.", Model.APPNAME,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     tbLocation.Text = Model.LocationNames[messageName.SelectedIndex];
@@ -1731,7 +1831,7 @@ namespace ZONEDOCTOR
             else
             {
                 MessageBox.Show("Invalid Message Name length. Message Name byte count must be inferior or equal to 37.",
-                    "FF6LE",
+                   Model.APPNAME,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tbLocation.Text = Model.LocationNames[messageName.SelectedIndex];
                 tbLocation.Focus();
@@ -1754,5 +1854,9 @@ namespace ZONEDOCTOR
             exitDestination.Items.AddRange(locNames);
         }
 
+        private void entranceEvent_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

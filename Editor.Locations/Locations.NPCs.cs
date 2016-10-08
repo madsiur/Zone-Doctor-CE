@@ -81,17 +81,13 @@ namespace ZONEDOCTOR
         private int CalculateFreeNPCSpace()
         {
             int used = 0;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 for (int a = 0; a < locations[i].LocationNPCs.Npcs.Count; a++)
                     used += 9;
             }
-
-            //return 0x4D6E - used;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             return Model.SIZE_NPC_DATA - used;
         }
         //
@@ -123,11 +119,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more NPCs. The maximum number of NPCs allowed per location is 32.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the NPC. " + MaximumSpaceExceeded("NPCs"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void AddNewNPC(NPC e)
         {
@@ -157,11 +153,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more NPCs. The maximum number of NPCs allowed per location is 32.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the NPC. " + MaximumSpaceExceeded("NPCs"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
         #region Event Handlers

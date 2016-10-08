@@ -19,7 +19,7 @@ namespace ZONEDOCTOR
         {
             this.Updating = true;
 
-            // madsiur, for location renaming feature [3.18.4-0.1]
+            //madsiur, CE Edition
             this.messageName.SelectedIndex = locationMap.MessageBox;
             this.tbLocation.Text = this.messageName.SelectedItem.ToString();
 
@@ -77,7 +77,7 @@ namespace ZONEDOCTOR
         #region Event Handlers
         private void layerMessageBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // madsiur, for location renaming feature [3.18.4-0.1]
+            //madsiur, CE Edition
             locationMap.MessageBox = (byte)messageName.SelectedIndex;
             tbLocation.Text = messageName.SelectedItem.ToString();
         }
@@ -393,7 +393,7 @@ namespace ZONEDOCTOR
             if (this.Updating)
                 return;
 
-            // madsiur, for location renaming feature [3.18.4-0.1]
+            //madsiur, CE Edition
             locationMap.MessageBox = (byte)messageName.SelectedIndex;
             tbLocation.Text = messageName.SelectedItem.ToString();
         }

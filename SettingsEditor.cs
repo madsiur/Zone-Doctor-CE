@@ -16,8 +16,7 @@ namespace ZONEDOCTOR
     public partial class SettingsEditor : NewForm
     {
         private Settings settings = Settings.Default;
-
-        //madsiur
+        
         private int numBanks;
         private int dataBank;
         private int tilemapBank;
@@ -77,7 +76,7 @@ namespace ZONEDOCTOR
                     catch (Exception e)
                     {
 
-                        MessageBox.Show("Error readiong XML settings file.\n\n Error: " + e.Message, "FF6LE",
+                        MessageBox.Show("Error readiong XML settings file.\n\n Error: " + e.Message, Model.APPNAME,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
@@ -151,7 +150,7 @@ namespace ZONEDOCTOR
         {
             DialogResult result = MessageBox.Show(
                 "You are about to reset the application's settings. You will lose all custom settings.\n\n" +
-                "Are you sure you want to do this?", "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                "Are you sure you want to do this?", Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
                 settings.Reset();
             InitializeSettings();
@@ -182,12 +181,12 @@ namespace ZONEDOCTOR
                 if (!folders.Exists)
                 {
                     valid = false;
-                    MessageBox.Show("Folder path does not exists!", "FF6LE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Folder path does not exists!", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else if (!Bits.IsValidFilePath(f))
                 {
                     valid = false;
-                    MessageBox.Show("Invalid file path!", "FF6LE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Invalid file path!", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 if (valid)
@@ -411,7 +410,7 @@ namespace ZONEDOCTOR
                     MessageBox.Show("You want to expand data at $" + dataOffset.ToString("X6") + " to $" +
                                     (dataOffset + 0xFFFF).ToString("X6") +
                                     " and expand tilemaps data at $" + tilemapOffset.ToString("X6") + " to $" +
-                                    (tilemapOffset + tilemapSize - 1).ToString("X6") + "?", "ZONE DOCTOR",
+                                    (tilemapOffset + tilemapSize - 1).ToString("X6") + "?", Model.APPNAME,
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
 
@@ -423,7 +422,7 @@ namespace ZONEDOCTOR
                     if (isZplus)
                     {
                         d = MessageBox.Show("Coming from Zone Doctor+ of FF6LE+ skips most of the ROM ASM validation.",
-                             "FF6LE", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                             Model.APPNAME, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
                     }
 
                     if (d == DialogResult.OK)
@@ -432,7 +431,7 @@ namespace ZONEDOCTOR
 
                         if (faults.Count == 0)
                         {
-                            ExpandMap(dataBank, tilemapBank, tilemapSize, isZplus);
+                            ExpandMap(dataOffset, tilemapOffset, tilemapSize, isZplus);
                         }
                         else
                         {
@@ -453,12 +452,12 @@ namespace ZONEDOCTOR
                             dialog =
                                 MessageBox.Show(
                                     message + "\nThere WILL be problems with the ROM after expansion. Continue anyway?",
-                                    "FF6LE", MessageBoxButtons.YesNo,
+                                    Model.APPNAME, MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Exclamation);
 
                             if (dialog == DialogResult.Yes)
                             {
-                                ExpandMap(dataBank, tilemapBank, tilemapSize, isZplus);
+                                ExpandMap(dataOffset, tilemapOffset, tilemapSize, isZplus);
                             }
                         }
                     }
@@ -466,11 +465,11 @@ namespace ZONEDOCTOR
             }
             else
             {
-                MessageBox.Show("Error! " + message, "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error! " + message, Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void ExpandMap(byte dataOffset, byte tilemapOffset, int tilemapSize, bool isZplus)
+        private void ExpandMap(int dataOffset, int tilemapOffset, int tilemapSize, bool isZplus)
         {
             Model.InitExpansionFields(false);
 
@@ -479,10 +478,10 @@ namespace ZONEDOCTOR
                 try
                 {
                     string[] locNames = Lists.expandedLocations;
-                    Model.BuildSettingXml(Bits.ToHiROM(tilemapBank), Bits.ToHiROM(dataBank), numBanks, true, false, isZplus, locNames);
+                    Model.BuildSettingXml(Bits.ToHiROM((byte)tilemapBank), Bits.ToHiROM((byte)dataBank), numBanks, true, false, isZplus, locNames);
                     Model.SettingsFile.Save(Settings.Default.SettingsFile);
 
-                    MessageBox.Show("Expansion completed!", "FF6LE", MessageBoxButtons.OK,
+                    MessageBox.Show("Expansion completed!", Model.APPNAME, MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
                     tbExpansionData.Enabled = false;
@@ -494,17 +493,10 @@ namespace ZONEDOCTOR
                 catch (Exception f)
                 {
                     MessageBox.Show(
-                        "Error creating XML file. You must select a folder with write rights and redo expansion.",
-                        "FF6LE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "Error creating XML file. You must select a folder with write rights and redo expansion.\n\n Error: " + f.Message,
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Expansion has failed for an unknow reason. Check the file log.txt in the executable folder and report this!",
-                    "FF6LE", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
             }
         }
 
@@ -514,7 +506,7 @@ namespace ZONEDOCTOR
             string message = "";
 
             DialogResult dialog =
-                    MessageBox.Show("This will add $20 bytes available for chest memory. The range will now be $1E20 to $1E7F for a total of 768 bits. Proceed?", "FF6LE",
+                    MessageBox.Show("This will add $20 bytes available for chest memory. The range will now be $1E20 to $1E7F for a total of 768 bits. Proceed?", Model.APPNAME,
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
 
@@ -533,14 +525,14 @@ namespace ZONEDOCTOR
                                 btnExpandChests.Enabled = false;
                             }
 
-                            MessageBox.Show("Chest memory expansion completed!", "FF6LE", MessageBoxButtons.OK,
+                            MessageBox.Show("Chest memory expansion completed!", Model.APPNAME, MessageBoxButtons.OK,
                                 MessageBoxIcon.Information);
                         }
                         catch (Exception g)
                         {
                             MessageBox.Show(
                             "Unable to save XML settings file. You may not have write rights or file may not exist.\n\n  Error: " +
-                            g.Message, "FF6LE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            g.Message, Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -557,7 +549,7 @@ namespace ZONEDOCTOR
 
                     dialog = MessageBox.Show(message +
                             "\nThere might be problems with the ROM after chest expansion. Continue anyway?",
-                            "FF6LE", MessageBoxButtons.YesNo,
+                            Model.APPNAME, MessageBoxButtons.YesNo,
                             MessageBoxIcon.Exclamation);
 
                     if (dialog == DialogResult.Yes)
@@ -573,14 +565,14 @@ namespace ZONEDOCTOR
                                     btnExpandChests.Enabled = false;
                                 }
 
-                                MessageBox.Show("Chest memory expansion completed!", "FF6LE", MessageBoxButtons.OK,
+                                MessageBox.Show("Chest memory expansion completed!", Model.APPNAME, MessageBoxButtons.OK,
                                     MessageBoxIcon.Information);
                             }
                             catch (Exception g)
                             {
                                 MessageBox.Show(
                                 "Unable to save XML settings file. You may not have write rights or file may not exist.\n\n  Error: " +
-                                g.Message, "FF6LE", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                g.Message, Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }

@@ -26,6 +26,7 @@ namespace ZONEDOCTOR
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HexEditor));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.gotoAddress = new System.Windows.Forms.ToolStripTextBox();
@@ -443,9 +444,9 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HexEditor";
-            this.Text = "HEX EDITOR - Zone Doctor";
+            this.Text = "HEX EDITOR - Zone Doctor CE";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HexViewer_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

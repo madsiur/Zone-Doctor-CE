@@ -14,11 +14,9 @@ namespace ZONEDOCTOR
         public static int Register = 0;
         private static void ShowError(int offset, int length)
         {
-            /*MessageBox.Show(
+            MessageBox.Show(
                 "Error accessing data at $" + offset.ToString("X6") + " in " + length.ToString("X6") + " byte array.\n\n" + "Please report this.",
-                "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);*/
-
-            throw new Exception("Error accessing data at $" + offset.ToString("X6") + " in " + length.ToString("X6") + " byte array.");
+                Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         #region get functions
         public static bool GetBit(byte[] data, int offset, int bit)
@@ -640,7 +638,7 @@ namespace ZONEDOCTOR
             valueB = temp;
         }
 
-        //madsiur, general conversion and validation methods
+        #region madsiur: Misc CE Edition methods
         public static bool IsValidFilePath(string path)
         {
             string pattern = @"^(([a-zA-Z]:)|((\\|/){1,2}\w+)\$?)((\\|/)(\w[\w ]*.*))+\.([xml]+)$";
@@ -655,14 +653,6 @@ namespace ZONEDOCTOR
             return Regex.IsMatch(id, pattern, RegexOptions.CultureInvariant);
         }
 
-        public static bool IsValidMapNameDTE(string name)
-        {
-            string pattern =
-                @"[A-Za-z0-9]|\x20|\*|!|\?|:|\\|'|-|\.|,|\.\.\.|;|#|\+|\(|\)|%|~|@|=|<TERRA>|<LOCKE>|<CYAN>|<SHADOW>|<EDGAR>|<SABIN>|<CELES>|<STRAGO>|<RELM>|<SETZER>|<MOG>|<GAU>|<GOGO>|<UMARO>|<note>|<pearl>|<death>|<lit>|<wind>|<earth>|<ice>|<fire>|<water>|<poison>";
-
-            return Regex.IsMatch(name, pattern, RegexOptions.CultureInvariant);
-        }
-
         public static bool IsValidMapName(string name)
         {
             string pattern =
@@ -671,18 +661,6 @@ namespace ZONEDOCTOR
             return Regex.IsMatch(name, pattern, RegexOptions.CultureInvariant);
         }
 
-        public static MatchCollection GetMatchCollectionDTE(string message)
-        {
-            string pattern =
-                @"<TERRA>|<LOCKE>|<CYAN>|<SHADOW>|<EDGAR>|<SABIN>|<CELES>|<STRAGO>|<RELM>|<SETZER>|<MOG>|<GAU>|<GOGO>|<UMARO>|<note>|74|75|<pearl>|<death>|<lit>|<wind>|<earth>|<ice>|<fire>|<water>|<poison>|e\x20|\x20t|:\x20|th|t\x20|he|s\x20|er|\x20a|re|in|ou|d\x20|\x20w|\x20s|an|o\x20|\x20h|\x20o|r\x20|n\x20|at|to|\x20i|,\x20|ve|ng|ha|\x20m|Th|st|on|yo|\x20b|me|\x20y|y\x20|en|it|ar|ll|ea|I\x20|ed|\x20f|hi|is|es|or|l\x20|\x20c|ne|'s|nd|le|se|\x20I|a\x20|te|\x20l|pe|as|ur|u\x20|al|\x20p|g\x20|om|\x20d|f\x20|\x20g|ow|rs|be|ro|us|ri|wa|we|Wh|et|\x20r|nt|m\x20|ma|I'|li|ho|of|Yo|h\x20|\x20n|ee|de|so|gh|ca|ra|n'|ta|ut|el|!\x20|fo|ti|We|lo|e!|ld|no|ac|ce|k\x20|\x20u|oo|ke|ay|w\x20|!!|ag|il|ly|co|\.\x20|ch|go|ge";
-
-            return Regex.Matches(message, pattern);
-        }
-
-        public static string AddMapId(int id, string mapName)
-        {
-            return "[$" + id.ToString("X3") + "] " + mapName;
-        }
         public static void SetInt(byte[] data, int offset, int value)
         {
             data[offset++] = (byte)(value & 0xFF);
@@ -722,16 +700,6 @@ namespace ZONEDOCTOR
             return value;
         }
 
-        public static bool IsValidBank(byte value)
-        {
-            return (value <= 0x6F) || (value >= 0xC0 && value <= 0xFF);
-        }
-
-        public static bool IsValidOffset(int value)
-        {
-            return (value <= 0x6FFFFF) || (value >= 0xC00000 && value <= 0xFFFFFF);
-        }
-
         public static bool IsMatchingOffset(byte[] data, int offset, int offsetROM, ref List<int[]> faults)
         {
             int offsetB = Bits.GetInt24(data, ToAbs(offsetROM) + 1);
@@ -742,9 +710,6 @@ namespace ZONEDOCTOR
                 return false;
             }
 
-            Log.SetEntry("IsMatchingOffset(true)");
-            Log.SetEntry("IsMatchingOffset", "match", "offsetROM", offsetROM + 1);
-            Log.SetEntry("IsMatchingOffset", "match", "offset", offset);
             return true;
         }
 
@@ -758,9 +723,6 @@ namespace ZONEDOCTOR
                 return false;
             }
 
-            Log.SetEntry("IsMatchingShort(true)");
-            Log.SetEntry("IsMatchingShort", "match", "offsetROM", offsetROM);
-            Log.SetEntry("IsMatchingShort", "match", "offset", val);
             return true;
         }
 
@@ -774,9 +736,6 @@ namespace ZONEDOCTOR
                 return false;
             }
 
-            Log.SetEntry("IsMatchingShort(true)");
-            Log.SetEntry("IsMatchingShort", "match", "offsetROM", offsetROM);
-            Log.SetEntry("IsMatchingShort", "match", "offset", val);
             return true;
         }
 
@@ -813,8 +772,7 @@ namespace ZONEDOCTOR
                         max = current;
                 }
             }
-
-            Log.SetEntry("findArrayMax", "max found", "max", max);
+            
             return max;
         }
 
@@ -860,16 +818,9 @@ namespace ZONEDOCTOR
 
         public static void setAsmArray(byte[] data, int[] asmArray, int[] varArray, int offset)
         {
-            if (asmArray.Length != varArray.Length)
-            {
-                throw new Exception("ASM and variation arrays are not equal: " + asmArray.Length + " - " + varArray.Length);
-            }
-
             for (int i = 0; i < asmArray.Length; i++)
             {
                 SetInt(data, ToAbs(asmArray[i]) + 1, offset + varArray[i]);
-                Log.SetEntry("setAsmArray", "int", "ROM offset", ToAbs(asmArray[i]) + 1);
-                Log.SetEntry("setAsmArray", "int", "value set", offset + varArray[i]);
             }
         }
 
@@ -878,8 +829,6 @@ namespace ZONEDOCTOR
             for (int i = 0; i < asmArray.Length; i++)
             {
                 Bits.SetShort(data, ToAbs(asmArray[i]), val);
-                Log.SetEntry("setAsmArray", "short", "ROM offset", ToAbs(asmArray[i]));
-                Log.SetEntry("setAsmArray", "short", "value set", val);
             }
         }
 
@@ -888,24 +837,19 @@ namespace ZONEDOCTOR
             for (int i = 0; i < asmArray.Length; i++)
             {
                 data[ToAbs(asmArray[i])] = val;
-                Log.SetEntry("setAsmArray", "byte", "ROM offset", ToAbs(asmArray[i]));
-                Log.SetEntry("setAsmArray", "byte", "value set", val);
             }
         }
 
         public static void setData(byte[] dest, int offset, byte[] data, byte[] data2, byte[] data3)
         {
             Bits.SetBytes(dest, offset, data);
-            Log.SetEntry("setData", "SetBytes A", "offset", offset);
-            Log.SetEntry("data", data.Length);
             offset += data.Length;
             Bits.SetBytes(dest, offset, data2);
-            Log.SetEntry("setData", "SetBytes B", "offset", offset);
-            Log.SetEntry("data2", data2.Length);
             offset += data2.Length;
             Bits.SetBytes(dest, offset, data3);
-            Log.SetEntry("setData", "SetBytes C", "offset", offset);
-            Log.SetEntry("data3", data3.Length);
         }
+
+        #endregion
+
     }
 }

@@ -505,7 +505,7 @@ namespace ZONEDOCTOR
                 {
                     MessageBox.Show(
                         "Imported graphics were too large to fit into the tileset.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 }
                 Bits.SetShort(culledTileset, c * tileLength, (ushort)(tile.Index + tileIndexStart));
@@ -4427,7 +4427,7 @@ namespace ZONEDOCTOR
                     results += "Mismatched index: " + i + "\r\n";
             }
             if (results == "")
-                MessageBox.Show("Found no mismatched indexes.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Found no mismatched indexes.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
                 NewMessage.Show("MISMATCHED INDEXES", "Found the following mismatched indexes", results);
         }

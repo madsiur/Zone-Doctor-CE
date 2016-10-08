@@ -77,8 +77,7 @@ namespace ZONEDOCTOR
             foreach (TreeNode tn in e.Node.Nodes)
                 tn.Checked = e.Node.Checked;
         }
-
-        //madsiur, hardcoded values to variables
+        
         private void buttonOK_Click(object sender, EventArgs e)
         {
             // Event Scripts
@@ -89,9 +88,6 @@ namespace ZONEDOCTOR
             // Locations
             if (elements.Nodes["Locations"].Nodes["Maps"].Checked)   // maps
             {
-                //Buffer.BlockCopy(romSrc, 0x2D8F00, romDst, 0x2D8F00, 0x3580); // location maps
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 Buffer.BlockCopy(romSrc, Model.BASE_LOCATION, romDst, Model.BASE_LOCATION, Model.SIZE_LOCATION); 
                 
                 Buffer.BlockCopy(romSrc, 0xFE00, romDst, 0xFE00, 0x40);  // priority sets
@@ -101,42 +97,25 @@ namespace ZONEDOCTOR
             }
             if (elements.Nodes["Locations"].Nodes["NPCs"].Checked)   // npcs
             {
-                //Bits.SetInt24(romDst, 0x0052C3, 0xC41A10); // pointer location
-                //Buffer.BlockCopy(romSrc, 0x041A10, romDst, 0x041A10, 415 * 2); // pointers
-                //Buffer.BlockCopy(romSrc, 0x041D52, romDst, 0x041D52, 0x4D6E);
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 Buffer.BlockCopy(romSrc, Model.BASE_NPC_PTR, romDst, Model.BASE_NPC_PTR, Model.SIZE_NPC_PTR); 
                 Buffer.BlockCopy(romSrc, Model.BASE_NPC, romDst, Model.BASE_NPC, Model.SIZE_NPC_DATA);
             }
             if (elements.Nodes["Locations"].Nodes["Treasures"].Checked)   // treasures
             {
-                //Buffer.BlockCopy(romSrc, 0x2D82F4, romDst, 0x2D82F4, 0xB67);
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 Buffer.BlockCopy(romSrc, Model.BASE_CHEST_PTR, romDst, Model.BASE_CHEST_PTR, Model.SIZE_CHEST_PTR + Model.SIZE_CHEST_DATA);
             }
             if (elements.Nodes["Locations"].Nodes["Exits"].Checked)   // exits
             {
-                //Buffer.BlockCopy(romSrc, 0x1FBB00, romDst, 0x1FBB00, 0x1F00);
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 Buffer.BlockCopy(romSrc, Model.BASE_SHORT_EXIT_PTR, romDst, Model.BASE_SHORT_EXIT_PTR, Model.SIZE_SHORT_EXIT_PTR + Model.SIZE_SHORT_EXIT_DATA);
             }
             if (elements.Nodes["Locations"].Nodes["Events"].Checked)   // events
             {
                 Buffer.BlockCopy(romSrc, 0x11FA00, romDst, 0x11FA00, 0x600);  // entrance events
-
-                //Buffer.BlockCopy(romSrc, 0x040000, romDst, 0x040000, 0x1A10);
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+                
                 Buffer.BlockCopy(romSrc, Model.BASE_EVENT_PTR, romDst, Model.BASE_EVENT_PTR, Model.SIZE_EVENT_PTR + Model.SIZE_EVENT_DATA);
             }
             if (elements.Nodes["Locations"].Nodes["Tilemaps"].Checked)   // tilemaps
             {
-                //Buffer.BlockCopy(romSrc, 0x19CD90, romDst, 0x19CD90, 0x43270); // location tilemaps
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 Buffer.BlockCopy(romSrc, Model.BASE_TILEMAP_PTR, romDst, Model.BASE_TILEMAP_PTR, Model.SIZE_TILEMAP_PTR);
                 Buffer.BlockCopy(romSrc, Model.BASE_TILEMAP, romDst, Model.BASE_TILEMAP, Model.SIZE_TILEMAP_DATA);
 
@@ -159,7 +138,7 @@ namespace ZONEDOCTOR
                 Buffer.BlockCopy(romSrc, 0x19A800, romDst, 0x19A800, 0x244C);
                 Buffer.BlockCopy(romSrc, 0x2E9B14, romDst, 0x2E9B14, 0x400); // WOB and WOR solidity
             }
-            // madsiur: Locations renaming feature (3.18.4-0.1)
+            //madsiur, CE Edition
             if (elements.Nodes["Locations"].Nodes["LocationNames"].Checked)
             {
                 Buffer.BlockCopy(romSrc, Model.BASE_LOC_NAMES, romDst, Model.BASE_LOC_NAMES, Model.SIZE_LOC_NAMES);

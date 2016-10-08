@@ -46,14 +46,14 @@ namespace ZONEDOCTOR
             }
             // store animation graphics
             int pointer = Bits.GetShort(Model.ROM, locationMap.AnimationL2 * 2 + 0x0091D5) + 2;
-            for (int y = 0; y < 32; y++) // 8 rows
+            /*for (int y = 0; y < 32; y++) // 8 rows
             {
                 for (int i = 0; i < 0x80; i++) // 128 bytes each tile
                 {
                     int offset = Bits.GetShort(Model.ROM, pointer + 0x0091FF + (y * 10));
                     graphics[y * 0x80 + i + 0x5000] = Model.AnimatedGraphics[i + offset];
                 }
-            }
+            }*/
             // initialize 16x16 tile arrays
             if (locationMap.TilemapL1 != 0)
                 tilesets_tiles[0] = new Tile[16 * 16];

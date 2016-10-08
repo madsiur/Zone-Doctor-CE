@@ -51,11 +51,16 @@ namespace ZONEDOCTOR
                 catch (Exception e)
                 {
                     MessageBox.Show("Could not load most recently used ROM.\n\n" + e.Message,
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             // create backup list collections BEFORE loading notes
+            if (Model.LevelNames.Length == 0 || Model.LevelNames == null)
+            {
+                Model.LevelNames = Lists.originalLocations;
+            }
             Model.CreateListCollections();
+
             if (settings.LoadNotes && settings.NotePathCustom != "")
             {
                 try
@@ -65,7 +70,7 @@ namespace ZONEDOCTOR
                 catch (Exception e)
                 {
                     MessageBox.Show("Could not load most recently used project database.\n\n" + e.Message,
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             this.History = new History(this);
@@ -85,7 +90,7 @@ namespace ZONEDOCTOR
         {
             if (AppControl.AssembleAndCloseWindows())
             {
-                MessageBox.Show("All of the editor's windows must be closed before loading a new ROM.", "ZONE DOCTOR");
+                MessageBox.Show("All of the editor's windows must be closed before loading a new ROM.", Model.APPNAME);
                 return;
             }
             else if (Model.HexEditor != null && Model.HexEditor.Visible)
@@ -99,7 +104,7 @@ namespace ZONEDOCTOR
             {
                 if (AppControl.GameCode() != "F6  ")
                 {
-                    MessageBox.Show("The game code for this ROM is invalid. There will likely be problems editing the ROM.", "ZONE DOCTOR");
+                    MessageBox.Show("The game code for this ROM is invalid. There will likely be problems editing the ROM.", Model.APPNAME);
                     return;
                 }
                 toolStrip2.Enabled = true;
@@ -141,7 +146,7 @@ namespace ZONEDOCTOR
             if (!File.Exists(filename))
             {
                 MessageBox.Show("Error loading last used database. The file has been moved, renamed, or no longer exists.",
-                    "ZONE DOCTOR");
+                    Model.APPNAME);
                 return;
             }
             Stream s = File.OpenRead(filename);
@@ -185,7 +190,7 @@ namespace ZONEDOCTOR
             {
                 result = MessageBox.Show(
                     "There are changes to the rom that have not been saved.\n\n" +
-                    "Would you like to save them now" + (assembleFlag == 1 ? " and quit?" : "?"), "ZONE DOCTOR",
+                    "Would you like to save them now" + (assembleFlag == 1 ? " and quit?" : "?"), Model.APPNAME,
                     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
@@ -193,7 +198,7 @@ namespace ZONEDOCTOR
                     {
                         MessageBox.Show(
                             "There was an error saving to \"" + Model.FileName + "\"",
-                            "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                           Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -239,7 +244,7 @@ namespace ZONEDOCTOR
             catch (Exception e)
             {
                 MessageBox.Show("Could not load most recently used ROM(s).\n\n" + e.Message,
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void LoadSettingsFromRegistry()
@@ -314,7 +319,7 @@ namespace ZONEDOCTOR
             }
             catch
             {
-                MessageBox.Show("Zone Doctor could not save the ROM.\n\nThe file is currently in use by another application.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Zone Doctor could not save the ROM.\n\nThe file is currently in use by another application.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             // Now, save the file
@@ -330,13 +335,13 @@ namespace ZONEDOCTOR
                 settings.Save();
             }
             else
-                MessageBox.Show("Zone Doctor could not save the ROM.\n\nMake sure that the file is not currently in use by another appliaction.", "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Zone Doctor could not save the ROM.\n\nMake sure that the file is not currently in use by another appliaction.", Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void restoreElementsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (AppControl.AssembleAndCloseWindows())
             {
-                MessageBox.Show("All of the editor's windows must be closed before importing data from another ROM.", "ZONE DOCTOR");
+                MessageBox.Show("All of the editor's windows must be closed before importing data from another ROM.", Model.APPNAME);
                 return;
             }
             restore = new Restore();
@@ -373,7 +378,7 @@ namespace ZONEDOCTOR
             }
             catch
             {
-                MessageBox.Show("Could not load the index help file. Try unzipping the program's files again.", "ZONE DOCTOR");
+                MessageBox.Show("Could not load the index help file. Try unzipping the program's files again.", Model.APPNAME);
             }
         }
         private void aboutToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -414,7 +419,7 @@ namespace ZONEDOCTOR
         private void openAll_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("You are about to open all 15 editor windows.\n\nAre you sure you want to do this?",
-                "ZONE DOCTOR", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                Model.APPNAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
             AppControl.OpenAll();
         }
@@ -433,7 +438,7 @@ namespace ZONEDOCTOR
         private void loadAllData_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(
-                "You are about to reset the editor's memory of all elements. Continue?", "ZONE DOCTOR",
+                "You are about to reset the editor's memory of all elements. Continue?", Model.APPNAME,
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
             AppControl.ClearAll();
@@ -442,7 +447,7 @@ namespace ZONEDOCTOR
         private void clearModel_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(
-                "You are about to clear the editor's memory of all elements. Continue?", "ZONE DOCTOR",
+                "You are about to clear the editor's memory of all elements. Continue?", Model.APPNAME,
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
             AppControl.ClearAll();

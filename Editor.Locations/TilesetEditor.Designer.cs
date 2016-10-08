@@ -27,6 +27,7 @@ namespace ZONEDOCTOR
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TilesetEditor));
             this.pictureBoxTilesetL1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cutToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,7 +125,7 @@ namespace ZONEDOCTOR
             this.saveImageAsToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip2.Size = new System.Drawing.Size(159, 308);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(160, 286);
             this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
             // 
             // cutToolStripMenuItem2
@@ -132,7 +133,7 @@ namespace ZONEDOCTOR
             this.cutToolStripMenuItem2.Image = global::ZONEDOCTOR.Properties.Resources.cut_small;
             this.cutToolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cutToolStripMenuItem2.Name = "cutToolStripMenuItem2";
-            this.cutToolStripMenuItem2.Size = new System.Drawing.Size(158, 22);
+            this.cutToolStripMenuItem2.Size = new System.Drawing.Size(159, 22);
             this.cutToolStripMenuItem2.Text = "Cut";
             this.cutToolStripMenuItem2.Click += new System.EventHandler(this.buttonEditCut_Click);
             // 
@@ -141,7 +142,7 @@ namespace ZONEDOCTOR
             this.copyToolStripMenuItem2.Image = global::ZONEDOCTOR.Properties.Resources.copy_small;
             this.copyToolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.copyToolStripMenuItem2.Name = "copyToolStripMenuItem2";
-            this.copyToolStripMenuItem2.Size = new System.Drawing.Size(158, 22);
+            this.copyToolStripMenuItem2.Size = new System.Drawing.Size(159, 22);
             this.copyToolStripMenuItem2.Text = "Copy";
             this.copyToolStripMenuItem2.Click += new System.EventHandler(this.buttonEditCopy_Click);
             // 
@@ -150,7 +151,7 @@ namespace ZONEDOCTOR
             this.pasteToolStripMenuItem2.Image = global::ZONEDOCTOR.Properties.Resources.paste_small;
             this.pasteToolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.pasteToolStripMenuItem2.Name = "pasteToolStripMenuItem2";
-            this.pasteToolStripMenuItem2.Size = new System.Drawing.Size(158, 22);
+            this.pasteToolStripMenuItem2.Size = new System.Drawing.Size(159, 22);
             this.pasteToolStripMenuItem2.Text = "Paste";
             this.pasteToolStripMenuItem2.Click += new System.EventHandler(this.buttonEditPaste_Click);
             // 
@@ -159,21 +160,21 @@ namespace ZONEDOCTOR
             this.deleteToolStripMenuItem2.Image = global::ZONEDOCTOR.Properties.Resources.delete_small;
             this.deleteToolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
-            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(158, 22);
+            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(159, 22);
             this.deleteToolStripMenuItem2.Text = "Delete";
             this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.buttonEditDelete_Click);
             // 
             // toolStripSeparator27
             // 
             this.toolStripSeparator27.Name = "toolStripSeparator27";
-            this.toolStripSeparator27.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator27.Size = new System.Drawing.Size(156, 6);
             // 
             // setPaletteToolStripMenuItem
             // 
             this.setPaletteToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.setPalette;
             this.setPaletteToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.setPaletteToolStripMenuItem.Name = "setPaletteToolStripMenuItem";
-            this.setPaletteToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.setPaletteToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.setPaletteToolStripMenuItem.Text = "Set Palette...";
             this.setPaletteToolStripMenuItem.Click += new System.EventHandler(this.setPaletteToolStripMenuItem_Click);
             // 
@@ -182,7 +183,7 @@ namespace ZONEDOCTOR
             this.setSolidity.Image = global::ZONEDOCTOR.Properties.Resources.buttonPhysical;
             this.setSolidity.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.setSolidity.Name = "setSolidity";
-            this.setSolidity.Size = new System.Drawing.Size(158, 22);
+            this.setSolidity.Size = new System.Drawing.Size(159, 22);
             this.setSolidity.Text = "Make solid";
             this.setSolidity.Click += new System.EventHandler(this.setSolidity_Click);
             // 
@@ -191,21 +192,21 @@ namespace ZONEDOCTOR
             this.clearSolidity.Image = global::ZONEDOCTOR.Properties.Resources.solidityOff;
             this.clearSolidity.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.clearSolidity.Name = "clearSolidity";
-            this.clearSolidity.Size = new System.Drawing.Size(158, 22);
+            this.clearSolidity.Size = new System.Drawing.Size(159, 22);
             this.clearSolidity.Text = "Make passable";
             this.clearSolidity.Click += new System.EventHandler(this.clearSolidity_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(156, 6);
             // 
             // priority1SetToolStripMenuItem
             // 
             this.priority1SetToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.priority1ON;
             this.priority1SetToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.priority1SetToolStripMenuItem.Name = "priority1SetToolStripMenuItem";
-            this.priority1SetToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.priority1SetToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.priority1SetToolStripMenuItem.Text = "Priority 1 set";
             this.priority1SetToolStripMenuItem.Click += new System.EventHandler(this.priority1SetToolStripMenuItem_Click);
             // 
@@ -214,7 +215,7 @@ namespace ZONEDOCTOR
             this.priority1ClearToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.priority1OFF;
             this.priority1ClearToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.priority1ClearToolStripMenuItem.Name = "priority1ClearToolStripMenuItem";
-            this.priority1ClearToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.priority1ClearToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.priority1ClearToolStripMenuItem.Text = "Priority 1 clear";
             this.priority1ClearToolStripMenuItem.Click += new System.EventHandler(this.priority1ClearToolStripMenuItem_Click);
             // 
@@ -223,7 +224,7 @@ namespace ZONEDOCTOR
             this.mirrorToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.mirror_small;
             this.mirrorToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mirrorToolStripMenuItem.Name = "mirrorToolStripMenuItem";
-            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.mirrorToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.mirrorToolStripMenuItem.Text = "Mirror";
             this.mirrorToolStripMenuItem.Click += new System.EventHandler(this.mirrorToolStripMenuItem_Click);
             // 
@@ -232,21 +233,21 @@ namespace ZONEDOCTOR
             this.invertToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.flip_small;
             this.invertToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.invertToolStripMenuItem.Name = "invertToolStripMenuItem";
-            this.invertToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.invertToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.invertToolStripMenuItem.Text = "Invert";
             this.invertToolStripMenuItem.Click += new System.EventHandler(this.invertToolStripMenuItem_Click);
             // 
             // toolStripSeparator25
             // 
             this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(155, 6);
+            this.toolStripSeparator25.Size = new System.Drawing.Size(156, 6);
             // 
             // saveImageAsToolStripMenuItem
             // 
             this.saveImageAsToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.exportImage;
             this.saveImageAsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveImageAsToolStripMenuItem.Name = "saveImageAsToolStripMenuItem";
-            this.saveImageAsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.saveImageAsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.saveImageAsToolStripMenuItem.Text = "Save Image As...";
             this.saveImageAsToolStripMenuItem.Click += new System.EventHandler(this.saveImageAsToolStripMenuItem_Click);
             // 
@@ -274,7 +275,7 @@ namespace ZONEDOCTOR
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(272, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(268, 25);
             this.toolStrip1.TabIndex = 443;
             // 
             // buttonToggleTileEditor
@@ -453,7 +454,7 @@ namespace ZONEDOCTOR
             this.tabControl1.Location = new System.Drawing.Point(0, 46);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(272, 287);
+            this.tabControl1.Size = new System.Drawing.Size(268, 287);
             this.tabControl1.TabIndex = 444;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
@@ -466,7 +467,7 @@ namespace ZONEDOCTOR
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(264, 260);
+            this.tabPage1.Size = new System.Drawing.Size(260, 260);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "LAYER 1";
             // 
@@ -477,7 +478,7 @@ namespace ZONEDOCTOR
             this.tabPage2.Location = new System.Drawing.Point(4, 23);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(260, 260);
+            this.tabPage2.Size = new System.Drawing.Size(264, 260);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "LAYER 2";
             // 
@@ -508,7 +509,7 @@ namespace ZONEDOCTOR
             this.tabPage3.Location = new System.Drawing.Point(4, 23);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(260, 260);
+            this.tabPage3.Size = new System.Drawing.Size(264, 260);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "LAYER 3";
             // 
@@ -538,7 +539,7 @@ namespace ZONEDOCTOR
             this.labelTileIndex.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTileIndex.Location = new System.Drawing.Point(0, 25);
             this.labelTileIndex.Name = "labelTileIndex";
-            this.labelTileIndex.Size = new System.Drawing.Size(272, 21);
+            this.labelTileIndex.Size = new System.Drawing.Size(268, 21);
             this.labelTileIndex.TabIndex = 445;
             this.labelTileIndex.Text = "Tile index: 0 ($00)";
             this.labelTileIndex.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -551,7 +552,7 @@ namespace ZONEDOCTOR
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 333);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(272, 26);
+            this.panel1.Size = new System.Drawing.Size(268, 26);
             this.panel1.TabIndex = 446;
             // 
             // buttonUpdate
@@ -559,7 +560,7 @@ namespace ZONEDOCTOR
             this.buttonUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonUpdate.Location = new System.Drawing.Point(203, 0);
             this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(69, 26);
+            this.buttonUpdate.Size = new System.Drawing.Size(65, 26);
             this.buttonUpdate.TabIndex = 2;
             this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = true;
@@ -595,7 +596,7 @@ namespace ZONEDOCTOR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 485);
+            this.ClientSize = new System.Drawing.Size(268, 481);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
@@ -603,7 +604,7 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TilesetEditor";

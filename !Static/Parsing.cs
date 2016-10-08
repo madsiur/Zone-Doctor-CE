@@ -121,7 +121,7 @@ namespace ZONEDOCTOR._Static
                     temp = new byte[1];
                     temp[0] = 0x00;
                     MessageBox.Show("Inavlid location name: '" + locs[i] + "', index " + i.ToString("X2") +
-                                    ". A empty entry will be written in ROM.");
+                                    ". A empty entry will be written in ROM.", Model.APPNAME, MessageBoxButtons.OK);
 
                 }
 
@@ -133,7 +133,7 @@ namespace ZONEDOCTOR._Static
                 }
                 else
                 {
-                    MessageBox.Show("Cannot save location names beyond index " + i.ToString("X2") + ".Max space alloted for location names is " + Model.SIZE_LOC_NAMES.ToString("X4") + ".");
+                    MessageBox.Show("Cannot save location names beyond index " + i.ToString("X2") + ".Max space alloted for location names is " + Model.SIZE_LOC_NAMES.ToString("X4") + ".", Model.APPNAME, MessageBoxButtons.OK);
                     i = Model.NUM_LOC_NAMES;
 
                 }

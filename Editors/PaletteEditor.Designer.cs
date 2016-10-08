@@ -27,6 +27,7 @@ namespace ZONEDOCTOR
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteEditor));
             this.pictureBoxPalette = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -1146,14 +1147,14 @@ namespace ZONEDOCTOR
             this.exportPaletteSetToolStripMenuItem});
             this.contextMenuStrip3.Name = "contextMenuStrip3";
             this.contextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip3.Size = new System.Drawing.Size(174, 48);
+            this.contextMenuStrip3.Size = new System.Drawing.Size(177, 48);
             // 
             // importPaletteSetToolStripMenuItem
             // 
             this.importPaletteSetToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.importData;
             this.importPaletteSetToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.importPaletteSetToolStripMenuItem.Name = "importPaletteSetToolStripMenuItem";
-            this.importPaletteSetToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.importPaletteSetToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.importPaletteSetToolStripMenuItem.Text = "Import palette set...";
             // 
             // exportPaletteSetToolStripMenuItem
@@ -1161,7 +1162,7 @@ namespace ZONEDOCTOR
             this.exportPaletteSetToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.exportData;
             this.exportPaletteSetToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exportPaletteSetToolStripMenuItem.Name = "exportPaletteSetToolStripMenuItem";
-            this.exportPaletteSetToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exportPaletteSetToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.exportPaletteSetToolStripMenuItem.Text = "Export palette set...";
             // 
             // autoUpdate
@@ -1315,11 +1316,11 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.buttonCancel);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PaletteEditor";
-            this.Text = "PALETTE EDITOR";
+            this.Text = "PALETTE EDITOR - Zone Doctor CE";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PaletteEditor_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPalette)).EndInit();

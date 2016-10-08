@@ -124,9 +124,6 @@ namespace ZONEDOCTOR
         
         private void Disassemble()
         {
-            //int offset = (index * 33) + 0x2D8F00;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             int offset = (index * 33) + Model.BASE_LOCATION;
 
             messageBox = rom[offset++];
@@ -185,14 +182,9 @@ namespace ZONEDOCTOR
             prioritySet = rom[offset];
             battleZone = rom[index + 0x0F5600];
         }
-
-        // madsiur
-        // hardcoded value to variable for expansion purpose
+        
         public void Assemble()
         {
-            //int offset = (index * 33) + 0x2D8F00;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             int offset = (index * 33) + Model.BASE_LOCATION;
 
             rom[offset] = messageBox; offset++;

@@ -26,6 +26,7 @@ namespace ZONEDOCTOR
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Editor));
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.romInfo = new System.Windows.Forms.RichTextBox();
@@ -543,7 +544,7 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.toolStrip4);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(5, 5);
             this.Name = "Editor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

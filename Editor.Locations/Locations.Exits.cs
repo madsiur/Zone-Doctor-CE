@@ -85,37 +85,28 @@ namespace ZONEDOCTOR
         private int CalculateFreeExitShortSpace()
         {
             int used = 0;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 foreach (Exit exit in locations[i].LocationExits.Exits)
                     if (exit.Width == 0)
                         used += 6;
             }
-
-            //return 0x1AFE - used;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             return Model.SIZE_SHORT_EXIT_DATA - used;
         }
-
-        // madsiur, hardocoded value to variable
+        
         private int CalculateFreeExitLongSpace()
         {
             int used = 0;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 foreach (Exit exit in locations[i].LocationExits.Exits)
                     if (exit.Width > 1)
                         used += 7;
             }
-
-            //return 0x57E - used;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             return Model.SIZE_LONG_EXIT_DATA - used;
         }
         //
@@ -144,11 +135,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more exit fields. The maximum number of exit fields allowed per location is 64.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the field. " + MaximumSpaceExceeded("exit"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
         #region Event Handlers
@@ -187,11 +178,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more exit fields. The maximum number of exit fields allowed per location is 64.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the field. " + MaximumSpaceExceeded("exit"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void buttonDeleteExit_Click(object sender, EventArgs e)
         {
@@ -240,14 +231,14 @@ namespace ZONEDOCTOR
             if (exits.Width == 0 && exitWidth.Value > 1 && CalculateFreeExitLongSpace() < 7)
             {
                 MessageBox.Show("Could not change the width. " + MaximumSpaceExceeded("exit"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             // if original exit is long, and changing to short, and if enough space in short exit data
             if (exits.Width > 0 && exitWidth.Value == 1 && CalculateFreeExitShortSpace() < 6)
             {
                 MessageBox.Show("Could not change the width. " + MaximumSpaceExceeded("exit"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             exits.Width = (byte)(exitWidth.Value - 1);

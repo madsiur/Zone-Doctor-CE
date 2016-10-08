@@ -26,6 +26,7 @@ namespace ZONEDOCTOR
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Project));
             this.indexDescription = new System.Windows.Forms.RichTextBox();
             this.indexLabel = new System.Windows.Forms.TextBox();
             this.buttonMoveUp = new System.Windows.Forms.Button();
@@ -119,9 +120,9 @@ namespace ZONEDOCTOR
             // 
             // indexDescription
             // 
-            this.indexDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.indexDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.indexDescription.Location = new System.Drawing.Point(6, 100);
             this.indexDescription.Name = "indexDescription";
             this.indexDescription.Size = new System.Drawing.Size(214, 348);
@@ -131,8 +132,8 @@ namespace ZONEDOCTOR
             // 
             // indexLabel
             // 
-            this.indexLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.indexLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.indexLabel.Location = new System.Drawing.Point(6, 60);
             this.indexLabel.Name = "indexLabel";
             this.indexLabel.Size = new System.Drawing.Size(214, 21);
@@ -234,9 +235,9 @@ namespace ZONEDOCTOR
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.indexLabel);
             this.groupBox1.Controls.Add(this.label3);
@@ -321,8 +322,8 @@ namespace ZONEDOCTOR
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.Controls.Add(this.buttonLoad);
             this.panel1.Controls.Add(this.buttonDelete);
             this.panel1.Controls.Add(this.buttonMoveUp);
@@ -337,8 +338,8 @@ namespace ZONEDOCTOR
             // elementIndexes
             // 
             this.elementIndexes.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.elementIndexes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.elementIndexes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.elementIndexes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.index,
             this.label});
@@ -379,8 +380,8 @@ namespace ZONEDOCTOR
             // 
             // projectFile
             // 
-            this.projectFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.projectFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.projectFile.Location = new System.Drawing.Point(12, 30);
             this.projectFile.Name = "projectFile";
             this.projectFile.ReadOnly = true;
@@ -389,9 +390,9 @@ namespace ZONEDOCTOR
             // 
             // projectOtherInfo
             // 
-            this.projectOtherInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.projectOtherInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.projectOtherInfo.Location = new System.Drawing.Point(6, 20);
             this.projectOtherInfo.Name = "projectOtherInfo";
             this.projectOtherInfo.Size = new System.Drawing.Size(228, 453);
@@ -401,9 +402,9 @@ namespace ZONEDOCTOR
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.projectInformation);
             this.tabControl1.Controls.Add(this.elementLists);
             this.tabControl1.Controls.Add(this.elementNotes);
@@ -428,8 +429,8 @@ namespace ZONEDOCTOR
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.label8);
@@ -494,8 +495,8 @@ namespace ZONEDOCTOR
             // 
             // projectDescription
             // 
-            this.projectDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.projectDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.projectDescription.Location = new System.Drawing.Point(72, 128);
             this.projectDescription.Multiline = true;
             this.projectDescription.Name = "projectDescription";
@@ -537,9 +538,9 @@ namespace ZONEDOCTOR
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.projectOtherInfo);
             this.groupBox3.Location = new System.Drawing.Point(334, 6);
             this.groupBox3.Name = "groupBox3";
@@ -563,9 +564,9 @@ namespace ZONEDOCTOR
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.listLabel);
             this.groupBox2.Controls.Add(this.listDescription);
@@ -589,8 +590,8 @@ namespace ZONEDOCTOR
             // 
             // listLabel
             // 
-            this.listLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listLabel.Location = new System.Drawing.Point(6, 33);
             this.listLabel.Name = "listLabel";
             this.listLabel.Size = new System.Drawing.Size(214, 21);
@@ -599,9 +600,9 @@ namespace ZONEDOCTOR
             // 
             // listDescription
             // 
-            this.listDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.listDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listDescription.Location = new System.Drawing.Point(6, 73);
             this.listDescription.Multiline = true;
             this.listDescription.Name = "listDescription";
@@ -621,8 +622,8 @@ namespace ZONEDOCTOR
             // 
             // listViewList
             // 
-            this.listViewList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.listViewList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listViewList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.indexNum,
             this.indexName});
@@ -929,11 +930,11 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.buttonBrowse);
             this.Controls.Add(this.projectFile);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(5, 5);
             this.Name = "Project";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "PROJECT - Zone Doctor";
+            this.Text = "PROJECT - Zone Doctor CE";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Project_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.indexNumber)).EndInit();
             this.groupBox1.ResumeLayout(false);

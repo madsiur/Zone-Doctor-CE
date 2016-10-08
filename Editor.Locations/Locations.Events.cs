@@ -56,17 +56,13 @@ namespace ZONEDOCTOR
         private int CalculateFreeEventSpace()
         {
             int used = 0;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             for (int i = 0; i < Model.NUM_LOCATIONS; i++)
             {
                 for (int a = 0; a < locations[i].LocationEvents.Events.Count; a++)
                     used += 5;
             }
-
-            //return 0x16CE - used;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             return Model.SIZE_EVENT_DATA - used;
         }
         //
@@ -95,11 +91,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more event fields. The maximum number of event fields allowed is 72.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the field. " + MaximumSpaceExceeded("events"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
         #region Event Handlers
@@ -145,11 +141,11 @@ namespace ZONEDOCTOR
                 }
                 else
                     MessageBox.Show("Could not insert any more event fields. The maximum number of event fields allowed per location is 72.",
-                        "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
                 MessageBox.Show("Could not insert the field. " + MaximumSpaceExceeded("events"),
-                    "ZONE DOCTOR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Model.APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void buttonDeleteEvent_Click(object sender, EventArgs e)
         {

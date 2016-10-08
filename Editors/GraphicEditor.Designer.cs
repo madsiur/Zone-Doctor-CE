@@ -27,6 +27,7 @@ namespace ZONEDOCTOR
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphicEditor));
             this.panelColor = new System.Windows.Forms.Panel();
             this.pictureBoxColor = new System.Windows.Forms.PictureBox();
             this.panelGraphics = new System.Windows.Forms.Panel();
@@ -132,9 +133,9 @@ namespace ZONEDOCTOR
             // 
             // panelGraphics
             // 
-            this.panelGraphics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGraphics.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGraphics.BackColor = System.Drawing.SystemColors.ControlText;
             this.panelGraphics.Controls.Add(this.panelGraphicSet);
             this.panelGraphics.Controls.Add(this.toolStrip3);
@@ -147,9 +148,9 @@ namespace ZONEDOCTOR
             // 
             // panelGraphicSet
             // 
-            this.panelGraphicSet.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelGraphicSet.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGraphicSet.AutoScroll = true;
             this.panelGraphicSet.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panelGraphicSet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -194,7 +195,7 @@ namespace ZONEDOCTOR
             this.applyBorderToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
             this.contextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip.Size = new System.Drawing.Size(142, 120);
+            this.contextMenuStrip.Size = new System.Drawing.Size(144, 120);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // importToolStripMenuItem
@@ -202,7 +203,7 @@ namespace ZONEDOCTOR
             this.importToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.importImage;
             this.importToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.importToolStripMenuItem.Text = "Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -211,7 +212,7 @@ namespace ZONEDOCTOR
             this.exportToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.exportBinary;
             this.exportToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.exportToolStripMenuItem.Text = "Export...";
             this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
@@ -220,21 +221,21 @@ namespace ZONEDOCTOR
             this.saveImageToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.exportImage;
             this.saveImageToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.saveImageToolStripMenuItem.Text = "Save image...";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator36
             // 
             this.toolStripSeparator36.Name = "toolStripSeparator36";
-            this.toolStripSeparator36.Size = new System.Drawing.Size(138, 6);
+            this.toolStripSeparator36.Size = new System.Drawing.Size(140, 6);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Image = global::ZONEDOCTOR.Properties.Resources.clear_small;
             this.clearToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
@@ -242,7 +243,7 @@ namespace ZONEDOCTOR
             // 
             this.applyBorderToolStripMenuItem.Enabled = false;
             this.applyBorderToolStripMenuItem.Name = "applyBorderToolStripMenuItem";
-            this.applyBorderToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.applyBorderToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.applyBorderToolStripMenuItem.Text = "Apply border";
             // 
             // toolStrip3
@@ -632,7 +633,7 @@ namespace ZONEDOCTOR
             // 
             this.toolStripSeparator33.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripSeparator33.Name = "toolStripSeparator33";
-            this.toolStripSeparator33.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator33.Size = new System.Drawing.Size(6, 26);
             this.toolStripSeparator33.Visible = false;
             // 
             // syncTileset
@@ -643,7 +644,7 @@ namespace ZONEDOCTOR
             this.syncTileset.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.syncTileset.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.syncTileset.Name = "syncTileset";
-            this.syncTileset.Size = new System.Drawing.Size(23, 22);
+            this.syncTileset.Size = new System.Drawing.Size(23, 23);
             this.syncTileset.Text = "Sync Tileset";
             this.syncTileset.Visible = false;
             this.syncTileset.VisibleChanged += new System.EventHandler(this.syncTileset_VisibleChanged);
@@ -651,7 +652,7 @@ namespace ZONEDOCTOR
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(31, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(31, 23);
             this.toolStripLabel1.Text = " Size ";
             this.toolStripLabel1.Visible = false;
             // 
@@ -665,7 +666,7 @@ namespace ZONEDOCTOR
             0,
             0,
             0});
-            this.brushSize.Location = new System.Drawing.Point(316, 3);
+            this.brushSize.Location = new System.Drawing.Point(256, 3);
             this.brushSize.Maximum = new decimal(new int[] {
             16,
             0,
@@ -701,8 +702,8 @@ namespace ZONEDOCTOR
             // 
             // coordsLabel
             // 
-            this.coordsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.coordsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.coordsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.coordsLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.coordsLabel.Location = new System.Drawing.Point(75, 0);
@@ -857,8 +858,8 @@ namespace ZONEDOCTOR
             // 
             // panelButtons
             // 
-            this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelButtons.Controls.Add(this.buttonUpdate);
             this.panelButtons.Controls.Add(this.buttonReset);
             this.panelButtons.Controls.Add(this.buttonCancel);
@@ -871,8 +872,8 @@ namespace ZONEDOCTOR
             // 
             // panelLabels
             // 
-            this.panelLabels.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelLabels.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelLabels.Controls.Add(this.sizeLabel);
             this.panelLabels.Controls.Add(this.coordsLabel);
             this.panelLabels.Location = new System.Drawing.Point(12, 532);
@@ -891,10 +892,10 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.panelGraphics);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.Name = "GraphicEditor";
-            this.Text = "GRAPHICS EDITOR - Zone Doctor";
+            this.Text = "GRAPHICS EDITOR - Zone Doctor CE";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GraphicEditor_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GraphicEditor_KeyDown);

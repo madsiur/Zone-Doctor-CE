@@ -67,21 +67,13 @@ namespace ZONEDOCTOR
             ushort offsetStart = 0;
             ushort offsetEnd = 0;
             Exit tExit;
-
-            //int pointerOffset = (index * 2) + 0x1FBB00;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             int pointerOffset = (index * 2) + Model.BASE_SHORT_EXIT_PTR;
 
             offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
             offsetEnd = Bits.GetShort(rom, pointerOffset);
             if (offsetStart < offsetEnd)
             {
-                /*offset = offsetStart + 0x1FBB00;
-                while (offset < offsetEnd + 0x1FBB00)
-                {*/
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 offset = offsetStart + Model.BASE_SHORT_EXIT_PTR;
                 while (offset < offsetEnd + Model.BASE_SHORT_EXIT_PTR)
                 {
@@ -91,21 +83,13 @@ namespace ZONEDOCTOR
                     offset += 6;
                 }
             }
-
-            //pointerOffset = (index * 2) + 0x2DF480;
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
+            
             pointerOffset = (index * 2) + Model.BASE_LONG_EXIT_PTR;
 
             offsetStart = Bits.GetShort(rom, pointerOffset); pointerOffset += 2;
             offsetEnd = Bits.GetShort(rom, pointerOffset);
             if (offsetStart < offsetEnd)
             {
-                /*offset = offsetStart + 0x2DF480;
-                while (offset < offsetEnd + 0x2DF480)
-                {*/
-
-                // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                 offset = offsetStart + Model.BASE_LONG_EXIT_PTR;
                 while (offset < offsetEnd + Model.BASE_LONG_EXIT_PTR)
                 {
@@ -119,10 +103,6 @@ namespace ZONEDOCTOR
         
         public void Assemble(ref int offsetShort, ref int offsetLong)
         {
-            //Bits.SetShort(rom, (index * 2) + 0x1FBB00, offsetShort);  // set the new pointer for the fields
-            //Bits.SetShort(rom, (index * 2) + 0x2DF480, offsetLong);  // set the new pointer for the fields
-
-            // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
             Bits.SetShort(rom, (index * 2) + Model.BASE_SHORT_EXIT_PTR, offsetShort);  // set the new pointer for the fields
             Bits.SetShort(rom, (index * 2) + Model.BASE_LONG_EXIT_PTR, offsetLong);  // set the new pointer for the fields
 
@@ -131,9 +111,6 @@ namespace ZONEDOCTOR
                 int offset;
                 if (exit.Width == 0)
                 {
-                    //offset = offsetShort + 0x1FBB00;
-
-                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                     offset = offsetShort + Model.BASE_SHORT_EXIT_PTR;
 
                     exit.Assemble(offset);
@@ -141,9 +118,6 @@ namespace ZONEDOCTOR
                 }
                 else
                 {
-                    //offset = offsetLong + 0x2DF480;
-
-                    // madsiur: hardcoded value to variable for expansion purpose (3.18.4-0.1)
                     offset = offsetLong + Model.BASE_LONG_EXIT_PTR;
 
                     exit.Assemble(offset);

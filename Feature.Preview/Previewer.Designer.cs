@@ -26,6 +26,7 @@ namespace ZONEDOCTOR
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Previewer));
             this.emuPathLabel = new System.Windows.Forms.Label();
             this.changeEmuButton = new System.Windows.Forms.Button();
             this.eventListBox = new System.Windows.Forms.ListBox();
@@ -166,8 +167,8 @@ namespace ZONEDOCTOR
             // 
             // emuPathTextBox
             // 
-            this.emuPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.emuPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.emuPathTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.emuPathTextBox.Location = new System.Drawing.Point(90, 18);
             this.emuPathTextBox.Name = "emuPathTextBox";
@@ -177,8 +178,8 @@ namespace ZONEDOCTOR
             // 
             // romPathTextBox
             // 
-            this.romPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.romPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.romPathTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.romPathTextBox.Location = new System.Drawing.Point(90, 39);
             this.romPathTextBox.Name = "romPathTextBox";
@@ -188,8 +189,8 @@ namespace ZONEDOCTOR
             // 
             // zsnesArgs
             // 
-            this.zsnesArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.zsnesArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.zsnesArgs.Location = new System.Drawing.Point(90, 81);
             this.zsnesArgs.Name = "zsnesArgs";
             this.zsnesArgs.Size = new System.Drawing.Size(432, 21);
@@ -277,8 +278,8 @@ namespace ZONEDOCTOR
             // 
             // snes9xArgs
             // 
-            this.snes9xArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.snes9xArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.snes9xArgs.Location = new System.Drawing.Point(90, 60);
             this.snes9xArgs.Name = "snes9xArgs";
             this.snes9xArgs.Size = new System.Drawing.Size(432, 21);
@@ -386,7 +387,7 @@ namespace ZONEDOCTOR
             this.equipSprintShoes.CheckState = System.Windows.Forms.CheckState.Checked;
             this.equipSprintShoes.Location = new System.Drawing.Point(7, 12);
             this.equipSprintShoes.Name = "equipSprintShoes";
-            this.equipSprintShoes.Size = new System.Drawing.Size(116, 17);
+            this.equipSprintShoes.Size = new System.Drawing.Size(115, 17);
             this.equipSprintShoes.TabIndex = 39;
             this.equipSprintShoes.Text = "Equip Sprint Shoes";
             this.equipSprintShoes.UseVisualStyleBackColor = true;
@@ -399,7 +400,7 @@ namespace ZONEDOCTOR
             this.equipMoogleCharm.CheckState = System.Windows.Forms.CheckState.Checked;
             this.equipMoogleCharm.Location = new System.Drawing.Point(7, 29);
             this.equipMoogleCharm.Name = "equipMoogleCharm";
-            this.equipMoogleCharm.Size = new System.Drawing.Size(124, 17);
+            this.equipMoogleCharm.Size = new System.Drawing.Size(123, 17);
             this.equipMoogleCharm.TabIndex = 39;
             this.equipMoogleCharm.Text = "Equip Moogle Charm";
             this.equipMoogleCharm.UseVisualStyleBackColor = true;
@@ -523,7 +524,7 @@ namespace ZONEDOCTOR
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox5);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = global::ZONEDOCTOR.Properties.Resources.ZONEDOCTOR_icon;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Previewer";
             ((System.ComponentModel.ISupportInitialize)(this.selectIndex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.adjustX)).EndInit();
