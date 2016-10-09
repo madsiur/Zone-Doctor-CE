@@ -467,7 +467,7 @@ namespace ZONEDOCTOR
             0,
             0,
             0});
-            this.locationNum.Location = new System.Drawing.Point(211, 3);
+            this.locationNum.Location = new System.Drawing.Point(211, 2);
             this.locationNum.Maximum = new decimal(new int[] {
             414,
             0,
@@ -507,7 +507,7 @@ namespace ZONEDOCTOR
             this.tabPage8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(260, 661);
+            this.tabPage8.Size = new System.Drawing.Size(260, 659);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "NPCS";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -523,7 +523,7 @@ namespace ZONEDOCTOR
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(260, 661);
+            this.panel9.Size = new System.Drawing.Size(260, 659);
             this.panel9.TabIndex = 0;
             // 
             // groupBox14
@@ -832,7 +832,7 @@ namespace ZONEDOCTOR
             this.npcListBox.IntegralHeight = false;
             this.npcListBox.Location = new System.Drawing.Point(0, 51);
             this.npcListBox.Name = "npcListBox";
-            this.npcListBox.Size = new System.Drawing.Size(126, 610);
+            this.npcListBox.Size = new System.Drawing.Size(126, 608);
             this.npcListBox.TabIndex = 496;
             this.npcListBox.SelectedIndexChanged += new System.EventHandler(this.npcListBox_SelectedIndexChanged);
             // 
@@ -1059,7 +1059,7 @@ namespace ZONEDOCTOR
             this.tabPage9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(260, 661);
+            this.tabPage9.Size = new System.Drawing.Size(260, 659);
             this.tabPage9.TabIndex = 3;
             this.tabPage9.Text = "FIELDS";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1075,7 +1075,7 @@ namespace ZONEDOCTOR
             this.panel52.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel52.Location = new System.Drawing.Point(0, 0);
             this.panel52.Name = "panel52";
-            this.panel52.Size = new System.Drawing.Size(260, 405);
+            this.panel52.Size = new System.Drawing.Size(260, 403);
             this.panel52.TabIndex = 0;
             // 
             // panel1
@@ -1338,7 +1338,7 @@ namespace ZONEDOCTOR
             this.exitListBox.IntegralHeight = false;
             this.exitListBox.Location = new System.Drawing.Point(0, 44);
             this.exitListBox.Name = "exitListBox";
-            this.exitListBox.Size = new System.Drawing.Size(125, 361);
+            this.exitListBox.Size = new System.Drawing.Size(125, 359);
             this.exitListBox.TabIndex = 498;
             this.exitListBox.SelectedIndexChanged += new System.EventHandler(this.exitListBox_SelectedIndexChanged);
             // 
@@ -1441,7 +1441,7 @@ namespace ZONEDOCTOR
             this.panel68.BackgroundImage = global::ZONEDOCTOR.Properties.Resources._bg;
             this.panel68.Location = new System.Drawing.Point(119, 608);
             this.panel68.Name = "panel68";
-            this.panel68.Size = new System.Drawing.Size(121, 82);
+            this.panel68.Size = new System.Drawing.Size(121, 80);
             this.panel68.TabIndex = 493;
             // 
             // label61
@@ -1465,7 +1465,7 @@ namespace ZONEDOCTOR
             this.panel2.Controls.Add(this.label63);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel2.Location = new System.Drawing.Point(0, 405);
+            this.panel2.Location = new System.Drawing.Point(0, 403);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(260, 256);
             this.panel2.TabIndex = 498;
@@ -1681,7 +1681,7 @@ namespace ZONEDOCTOR
             this.tabControl.Name = "tabControl";
             this.tabControl.Padding = new System.Drawing.Point(5, 4);
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(268, 685);
+            this.tabControl.Size = new System.Drawing.Size(268, 687);
             this.tabControl.TabIndex = 6;
             this.tabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl_Selecting);
             // 
@@ -1695,7 +1695,7 @@ namespace ZONEDOCTOR
             this.tabPage4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(260, 659);
+            this.tabPage4.Size = new System.Drawing.Size(260, 661);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "MAPS";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2145,7 +2145,7 @@ namespace ZONEDOCTOR
             this.tabPage3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(260, 661);
+            this.tabPage3.Size = new System.Drawing.Size(260, 659);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "LAYERS";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -3124,7 +3124,7 @@ namespace ZONEDOCTOR
             this.tabPage1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(260, 661);
+            this.tabPage1.Size = new System.Drawing.Size(260, 659);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "TREASURES";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3139,7 +3139,7 @@ namespace ZONEDOCTOR
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(260, 661);
+            this.panel8.Size = new System.Drawing.Size(260, 659);
             this.panel8.TabIndex = 1;
             // 
             // groupBox19
@@ -3354,7 +3354,7 @@ namespace ZONEDOCTOR
             this.treasureListBox.IntegralHeight = false;
             this.treasureListBox.Location = new System.Drawing.Point(0, 51);
             this.treasureListBox.Name = "treasureListBox";
-            this.treasureListBox.Size = new System.Drawing.Size(126, 610);
+            this.treasureListBox.Size = new System.Drawing.Size(126, 608);
             this.treasureListBox.TabIndex = 497;
             this.treasureListBox.SelectedIndexChanged += new System.EventHandler(this.treasureListBox_SelectedIndexChanged);
             // 
@@ -3503,7 +3503,7 @@ namespace ZONEDOCTOR
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(858, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(858, 25);
             this.toolStrip1.TabIndex = 2;
             // 
             // navigateBck
@@ -3514,7 +3514,7 @@ namespace ZONEDOCTOR
             this.navigateBck.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.navigateBck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.navigateBck.Name = "navigateBck";
-            this.navigateBck.Size = new System.Drawing.Size(23, 24);
+            this.navigateBck.Size = new System.Drawing.Size(23, 22);
             this.navigateBck.ToolTipText = "Navigate Backward";
             this.navigateBck.Click += new System.EventHandler(this.navigateBck_Click);
             // 
@@ -3526,7 +3526,7 @@ namespace ZONEDOCTOR
             this.navigateFwd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.navigateFwd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.navigateFwd.Name = "navigateFwd";
-            this.navigateFwd.Size = new System.Drawing.Size(23, 24);
+            this.navigateFwd.Size = new System.Drawing.Size(23, 22);
             this.navigateFwd.ToolTipText = "Navigate Forward";
             this.navigateFwd.Click += new System.EventHandler(this.navigateFwd_Click);
             // 
@@ -3542,18 +3542,18 @@ namespace ZONEDOCTOR
             // loadingLocationLabel
             // 
             this.loadingLocationLabel.Name = "loadingLocationLabel";
-            this.loadingLocationLabel.Size = new System.Drawing.Size(0, 24);
+            this.loadingLocationLabel.Size = new System.Drawing.Size(0, 22);
             this.loadingLocationLabel.Visible = false;
             // 
             // toolStripSeparator19
             // 
             this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator19.Size = new System.Drawing.Size(6, 25);
             // 
             // searchBox
             // 
             this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(145, 23);
+            this.searchBox.Size = new System.Drawing.Size(145, 25);
             // 
             // searchLocationNames
             // 
@@ -3562,7 +3562,7 @@ namespace ZONEDOCTOR
             this.searchLocationNames.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.searchLocationNames.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.searchLocationNames.Name = "searchLocationNames";
-            this.searchLocationNames.Size = new System.Drawing.Size(23, 17);
+            this.searchLocationNames.Size = new System.Drawing.Size(23, 22);
             this.searchLocationNames.Text = "Search Location Names";
             // 
             // toolStripSeparator3
@@ -3575,7 +3575,7 @@ namespace ZONEDOCTOR
             this.buttonGotoC.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.buttonGotoC.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonGotoC.Name = "buttonGotoC";
-            this.buttonGotoC.Size = new System.Drawing.Size(52, 15);
+            this.buttonGotoC.Size = new System.Drawing.Size(52, 22);
             this.buttonGotoC.Text = "EVENT #";
             this.buttonGotoC.ToolTipText = "Click to edit event";
             this.buttonGotoC.Click += new System.EventHandler(this.buttonGotoC_Click);
@@ -3591,7 +3591,7 @@ namespace ZONEDOCTOR
             0,
             0,
             0});
-            this.entranceEvent.Location = new System.Drawing.Point(1, 66);
+            this.entranceEvent.Location = new System.Drawing.Point(551, 2);
             this.entranceEvent.Maximum = new decimal(new int[] {
             3538942,
             0,
@@ -3621,7 +3621,7 @@ namespace ZONEDOCTOR
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(39, 11);
+            this.toolStripLabel2.Size = new System.Drawing.Size(39, 22);
             this.toolStripLabel2.Text = "MUSIC";
             // 
             // musicName
@@ -3632,7 +3632,7 @@ namespace ZONEDOCTOR
             this.musicName.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.musicName.IntegralHeight = false;
             this.musicName.Name = "musicName";
-            this.musicName.Size = new System.Drawing.Size(170, 23);
+            this.musicName.Size = new System.Drawing.Size(170, 25);
             this.musicName.SelectedIndexChanged += new System.EventHandler(this.musicName_SelectedIndexChanged);
             // 
             // toolStripSeparator4
@@ -3667,9 +3667,9 @@ namespace ZONEDOCTOR
             this.panelLocations.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelLocations.Controls.Add(this.tabControl);
             this.panelLocations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLocations.Location = new System.Drawing.Point(0, 52);
+            this.panelLocations.Location = new System.Drawing.Point(0, 50);
             this.panelLocations.Name = "panelLocations";
-            this.panelLocations.Size = new System.Drawing.Size(858, 689);
+            this.panelLocations.Size = new System.Drawing.Size(858, 691);
             this.panelLocations.TabIndex = 506;
             // 
             // toolStrip2

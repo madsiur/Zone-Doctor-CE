@@ -55,10 +55,11 @@ namespace ZONEDOCTOR
                 }
             }
             // create backup list collections BEFORE loading notes
-            if (Model.LevelNames.Length == 0 || Model.LevelNames == null)
+            if (Model.LevelNames == null)
             {
                 Model.LevelNames = Lists.originalLocations;
             }
+
             Model.CreateListCollections();
 
             if (settings.LoadNotes && settings.NotePathCustom != "")

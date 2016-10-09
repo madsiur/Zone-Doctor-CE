@@ -84,7 +84,7 @@ namespace ZONEDOCTOR
             }
             else
             {
-                filePath = Directory.GetCurrentDirectory() + "settings.xml";
+                filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.xml");
             }
 
             if (numBanks <= 4 || numBanks >= 8)
@@ -451,7 +451,7 @@ namespace ZONEDOCTOR
 
                             dialog =
                                 MessageBox.Show(
-                                    message + "\nThere WILL be problems with the ROM after expansion. Continue anyway?",
+                                    message + "\nThere might be problems with the ROM after expansion. Continue anyway?",
                                     Model.APPNAME, MessageBoxButtons.YesNo,
                                     MessageBoxIcon.Exclamation);
 
