@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBox1.Text" xml:space="preserve">
-    <value>Zone Doctor CE, version 0.2.1 (previously Zone Doctor 3.18.4)
+    <value>Zone Doctor CE, version 0.2.2 (previously Zone Doctor 3.18.4)
 
 Copyright © 2008-2013  giangurgolo
 http://home.comcast.net/~giangurgolo/ff6/
 
-CE Edition 0.2.1 by madsiur (2016) 
+CE Edition 0.2.2 by madsiur (2016) 
 http://madsiur.net
 
 Credits:

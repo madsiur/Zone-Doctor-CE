@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZONE DOCTOR")]
+[assembly: AssemblyTitle("Zone Doctor CE")]
 [assembly: AssemblyDescription("Final Fantasy 6 Editor")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ZONE DOCTOR")]
+[assembly: AssemblyProduct("Zone Doctor CE")]
 [assembly: AssemblyCopyright("Copyright ©  2008-2013  giangurgolo")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -25,5 +25,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("3.18.4.0")]
-[assembly: AssemblyFileVersion("3.18.4.0")]
+[assembly: AssemblyVersion("0.2.2")]
+[assembly: AssemblyFileVersion("0.2.2")]
