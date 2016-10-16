@@ -920,10 +920,8 @@ namespace ZONEDOCTOR.ScriptsEditor.Commands
         }
         private string GetLocationName(ushort value)
         {
-            if ((value & 0x01FF) <= 0x019E)
-                return Model.LocationNames[(value & 0x01FF)];
-            else if ((value & 0x01FF) == 0x01FE)
-                return "previous world map, skipping reposition function";
+            if ((value & 0x01FF) <= 0x01FE)
+                return Model.LevelNames[(value & 0x01FF)];
             else if ((value & 0x01FF) == 0x01FF)
                 return "world map";
             else

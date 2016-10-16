@@ -272,7 +272,7 @@ namespace ZONEDOCTOR
                     labelEvtA5.Text = "@ X";
                     labelEvtA6.Text = "@ Y";
                     map = Bits.GetShort(esc.CommandData, 1);
-                    evtNameA1.Items.AddRange(Model.LocationNames);
+                    evtNameA1.Items.AddRange(Model.LevelNames);
                     evtNameA1.Items.Add("previous world map, skipping reposition function");
                     evtNameA1.Items.Add("world map");
                     evtNameA1.Items.Add("<unknown or out-of-range map index>");

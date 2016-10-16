@@ -84,7 +84,7 @@ namespace ZONEDOCTOR
             }
             else
             {
-                filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.xml");
+                filePath = AppDomain.CurrentDomain.BaseDirectory + "\\settings.xml";
             }
 
             if (numBanks <= 4 || numBanks >= 8)

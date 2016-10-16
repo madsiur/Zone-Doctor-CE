@@ -54,11 +54,6 @@ namespace ZONEDOCTOR._Static
                 offset = Bits.GetShort(Model.ROM, i * 2 + Model.BASE_LOC_NAMES_PTR) + Model.BASE_LOC_NAMES;
                 names[i] = "";
 
-                string s = "s";
-                if (i == 254)
-                {
-                    s.ToString();
-                }
                 while (Model.ROM[offset] != 0)
                 {
                     temp = Model.ROM[offset];
